@@ -86,4 +86,4 @@ async def on_message(message):
         await message.channel.send(embed=embedVar)
 
 
-client.run('ODUyNzI0MjcxOTk3Nzc5OTg4.YMK_XQ.xD-c7Out36NRvzYSIjT26NUJjyc')
+client.run('TOKEN')
