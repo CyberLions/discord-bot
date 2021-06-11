@@ -85,5 +85,5 @@ async def on_message(message):
         embedVar.add_field(name="Field2", value="balls in my face 2", inline=False)
         await message.channel.send(embed=embedVar)
 
-
-client.run('TOKEN')
+token = input("Please enter token:\n")
+client.run(token)
