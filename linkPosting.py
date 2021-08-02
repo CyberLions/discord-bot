@@ -23,7 +23,9 @@ from datetime import datetime
 # checks if new vids have been uploaded in the past hour
 
 # GCP key
-
+api_key = 'AIzaSyAhwdqhmemItC802nSKAgBVHezeldhlOYs'
+client = discord.Client()
+disc_key = "ODUyNzI0MjcxOTk3Nzc5OTg4.YMK_XQ.2KDpTkD5VeZ7xXIUiy7OffciHlI"
 
 def getTime():
     # datetime object containing current date and time
@@ -119,5 +121,22 @@ vidTest = links[0]
 # links = "blergh"
 
 sendMessage(vidTest)
+
+import sched, time
+s = sched.scheduler(time.time, time.sleep)
+def do_something(sc): 
+    print("Doing stuff...")
+    
+    # do your stuff
+    links = get_all_video_in_channel('UC4eYXhJI4-7wSWc8UNRwD4A')
+    vidTest = links[0]
+    # links = "blergh"
+
+    sendMessage(vidTest)
+
+    s.enter(15, 1, do_something, (sc,))
+
+s.enter(15, 1, do_something, (s,))
+s.run()
 
 # client.run(disc_key)
