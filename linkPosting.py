@@ -14,7 +14,6 @@ import discord
 import requests
 # for http reqs for webhooks
 
-
 # npr music
 # https://www.youtube.com/channel/UC4eYXhJI4-7wSWc8UNRwD4A
 
@@ -24,9 +23,6 @@ from datetime import datetime
 # checks if new vids have been uploaded in the past hour
 
 # GCP key
-api_key = 'AIzaSyAhwdqhmemItC802nSKAgBVHezeldhlOYs'
-client = discord.Client()
-disc_key = "ODUyNzI0MjcxOTk3Nzc5OTg4.YMK_XQ.2KDpTkD5VeZ7xXIUiy7OffciHlI"
 
 
 def getTime():
