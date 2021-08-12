@@ -1,11 +1,15 @@
 import discord
-import os
 import time
-import reactionBot
 
-# Intents library required for the on_raw_reaction_add function
-intents = discord.Intents.default()
-intents.reactions = True
+from discord import webhook
+import reactionBot
+import creds
+import ContentScheduler
+import requests
+
+# Main: Handles main bot code and links everything together. Will use commands to run, start, and stop features. 
+
+# ------------------------------------------------------------------------------------------------------------
 
 # Emojis for roles
 emojis = {
@@ -15,23 +19,72 @@ emojis = {
     '<:coolspot:854115885013663774>'
 }
 
+# Intents library required for the on_raw_reaction_add function
+intents = discord.Intents.default()
+intents.reactions = True
 
-# Initial log in and check from the bot
 client = discord.Client(intents=intents)
 
+# ------------------------------------- Bot commands / events -------------------------------------
+# ------------------------------------- 1) Reaction Role Message -------------------------------------
+# Takes an emoji and returns a role based on the input, default case is None, this return is handled in on_raw__reaction_add()
 
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
-    message = await client.get_channel(852925086238900225).fetch_message(852925110939287624)
+    #channel and message id of msg to react to for roles 
+    channel_id = 852925086238900225
+    message_id = 852925086238900225
+
+    message = await client.get_channel(channel_id).fetch_message(message_id)
 
     # Adds the emoji reactions to the message initially
     for emoji in emojis:
         await message.add_reaction(emoji)
 
-# Takes an emoji and returns a role based on the input, default case is None, this return is handled in on_raw__reaction_add()
+# ------------------------------------- 2) Youtube Parsing/Messaging -------------------------------------
+def grabContent():
+    gcpKey = creds.getGCPKey()
+    print(gcpKey)
 
+    videos = ContentScheduler.do_something(gcpKey)
+    print(videos)
+
+    video = videos[0]
+
+    # now, to send the message 
+    # REMOVE THIS CODE AND REPLACE W DISCORD API OR HIGHER LEVEL FUNC FOR MESSAGING 
+
+    webhookUrl = creds.getWebhookUrl()
+
+    params = {'username': 'webhook-test',
+            'avatar_url': "", 'content': "New video from {}!".format(video['channelTitle']), }
+    params["embeds"] = [
+        {
+            'image': {
+                "url": video['thumbnail'],
+            }, 
+            "description": video['description'],
+            "title": video['title'],
+            "url": video['url'],
+            "color" : 4, #colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+            "author": {
+                "name": video['channelTitle'],
+                "url": video['channelId'],
+            }
+        }   
+    ]
+
+    try:
+        requests.post(webhookUrl, json=params)
+
+    except:
+        print("request error")
+
+    
+
+# ------------------------------------- Talk to josh abt. modularizing these -------------------------------------
 
 def rolePicker(string, message):
     role1 = discord.utils.get(message.guild.roles, name="test role 1")
@@ -122,5 +175,16 @@ async def on_message(message):
             if counter > 10:
                 return False
 
-token = input("Please enter token:\n")
-client.run(token)
+# ------------------------------------------------------------------------------------------------------------
+
+def bootstrapping(): 
+
+    # Initial log in and check from the bot
+    #grab Discord API token from creds.py file 
+    token = creds.getDiscordKey()
+
+    grabContent()
+
+    client.run(token)
+
+bootstrapping()
