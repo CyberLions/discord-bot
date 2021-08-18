@@ -6,6 +6,8 @@ import ccsoBotReactions
 import ccsoBotCreds
 import ccsoBotScheduler
 import requests
+import random
+from discord.ext import tasks, commands
 
 # Main: Handles main bot code and links everything together. Will use commands to run, start, and stop features.
 
@@ -29,10 +31,11 @@ emojis = {
 }
 
 staticRoles = {
-    '⚪',
-    '🔵',
-    '🟤',
-    '⚫',
+    '1️⃣',
+    '2️⃣',
+    '3️⃣',
+    '4️⃣',
+    '⭐' 
 }
 
 dynamicRoles = {
@@ -58,13 +61,20 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
     # channel and message id of msg to react to for roles
-    channel_id = 852925086238900225
-    message_id = 876803239385923584
+    # TEST SERVER
+    # channel_id = 852925086238900225
+    # message_id = 876803239385923584
 
-    static_id = 876806469939519489
-    dynamic_id = 876806477745127494
+    # static_id = 876806469939519489
+    # dynamic_id = 876806477745127494
+
+    # FOR LIVE CCSO SERVER
+    channel_id = 876897589889495070
+    static_id = 876897950914187284
+    dynamic_id = 876898145185964063
     
-    message = await client.get_channel(channel_id).fetch_message(message_id)
+    
+    # message = await client.get_channel(channel_id).fetch_message(message_id)
 
     staticMessage = await client.get_channel(channel_id).fetch_message(static_id)
     dynamicMessage = await client.get_channel(channel_id).fetch_message(dynamic_id)
@@ -72,7 +82,8 @@ async def on_ready():
 
     # Adds the emoji reactions to the message initially
     for emoji in emojis:
-        await message.add_reaction(emoji)
+        # await message.add_reaction(emoji)
+        print("")
 
     for role in staticRoles:
         await staticMessage.add_reaction(role)
@@ -87,6 +98,17 @@ def startContentScheduler(gcpKey):
     print('...starting scheduler')
     ccsoBotScheduler.startScheduler()
 
+# content test
+# https://discordpy.readthedocs.io/en/latest/ext/tasks/
+@tasks.loop(seconds=10.0)
+async def grabSomeContent():
+    print("ddddddddddddd")
+
+    # SAVE API CALLS 
+    # videos = ccsoBotScheduler.checkForUpdates()
+    # print("mainvids: ", videos)
+
+    # sendWebhookMessage(videos)
 
 
 def sendWebhookMessage(videos):
@@ -94,6 +116,8 @@ def sendWebhookMessage(videos):
     video = videos[0]
 
     webhookUrl = ccsoBotCreds.getWebhookUrl()
+    # for testing
+    webhookUrl = "https://discord.com/api/webhooks/877404142178557963/LduzUUPzaxzVCJV2u5uTPzkH4-aapzWHI_1GEuZj4KKMJRxkxOXXrnM5YGt2UyFnvbx3"
 
     # TODO: branch for articles VS videos 
 
@@ -131,14 +155,14 @@ def rolePicker(string, message):
     role4 = discord.utils.get(message.guild.roles, name="server-manager"),
     
     ctfRole = discord.utils.get(message.guild.roles, name="CTF")
-    cptcRole = discord.utils.get(message.guild.roles, name="CPTC")
-    ccdcRole = discord.utils.get(message.guild.roles, name="CCDC")
+    cptcRole = discord.utils.get(message.guild.roles, name="Offense (CPTC)")
+    ccdcRole = discord.utils.get(message.guild.roles, name="Defense (CCDC)")
     gamingRole = discord.utils.get(message.guild.roles, name="Gaming")
 
-    firstYear = discord.utils.get(message.guild.roles, name="First Year")
-    secondYear = discord.utils.get(message.guild.roles, name="Second Year")
-    thirdYear = discord.utils.get(message.guild.roles, name="Third Year")
-    fourthYear = discord.utils.get(message.guild.roles, name="Fourth Year")
+    firstYear = discord.utils.get(message.guild.roles, name="Freshman")
+    secondYear = discord.utils.get(message.guild.roles, name="Sophomore")
+    thirdYear = discord.utils.get(message.guild.roles, name="Junior")
+    fourthYear = discord.utils.get(message.guild.roles, name="Senior")
 
 
     switcher = {
@@ -151,10 +175,15 @@ def rolePicker(string, message):
         '🛡️': ccdcRole,
         '🎮': gamingRole,
 
-        '⚪': firstYear,
-        '🔵': secondYear,
-        '🟤': thirdYear,
-        '⚫': fourthYear, 
+        # '⚪': firstYear,
+        # '🔵': secondYear,
+        # '🟤': thirdYear,
+        # '⚫': fourthYear, 
+        '1️⃣': firstYear,
+        '2️⃣': secondYear,
+        '3️⃣': thirdYear,
+        '4️⃣': fourthYear,
+        '⭐': ""
     }
     return switcher.get(string, None)
 
@@ -164,57 +193,12 @@ def rolePicker(string, message):
 @client.event
 async def on_raw_reaction_add(payload):
     # Defines the message, reaction, user, and role variables
-    message = await client.get_channel(payload.channel_id).fetch_message(payload.message_id)
-    message_channel = client.get_channel(payload.channel_id)
-
-    emoji = str(payload.emoji)
-    user = payload.member
-    userId = payload.user_id
-    print(emoji, user)
-
-    # Check to make sure the user isnt the bot, so the bot doesn't react to the message then immeadietly remove the react
-    if userId != client.user.id:
-        # Check to see if the react is in the correct channel so it doesnt trigger in other channels
-        if discord.utils.get(client.get_all_channels(), name="reactions-channel") == message_channel:
-            try:
-                # Gets the role based on the emoji and adds it to the user w/ a print
-                role = rolePicker(emoji, message)
-
-                if role in user.roles:
-                    await user.remove_roles(role, message)
-                    print("removed role " + str(role))
-                else:
-                    # check if its static or dynamic
-                    # if dynamic, remove other dynamic roles before adding 
-
-                    for staticRole in staticRoles:
-
-                        if emoji == staticRole:
-
-                            firstYear = discord.utils.get(message.guild.roles, name="First Year")
-                            secondYear = discord.utils.get(message.guild.roles, name="Second Year")
-                            thirdYear = discord.utils.get(message.guild.roles, name="Third Year")
-                            fourthYear = discord.utils.get(message.guild.roles, name="Fourth Year")
-
-                            rolesToRemove = [firstYear, secondYear, thirdYear, fourthYear]
-                            roleToKeep = rolePicker(emoji, message)
-
-                            rolesToRemove.remove(roleToKeep)
-                            for toRemove in rolesToRemove:
-                                await user.remove_roles(toRemove)
+    
+    await ccsoBotReactions.addRoleReaction(payload, client)
+    # passing the client is probably doodoo; do this @ bootstrapping
 
 
-                    await user.add_roles(role, message)
-                    print("added role " + str(role))
 
-            # Error handling
-            except AttributeError as err:
-                print(err)
-                print("role does not exist")
-            except discord.errors.NotFound:
-                print("tried to add role user already has")
-
-            await message.remove_reaction(emoji, user)
 
 
 @client.event
@@ -255,6 +239,15 @@ async def on_message(message):
             if counter > 10:
                 return False
 
+    # pop smoke command 
+    elif message.content == "!pop":
+        
+        popSmokeSongs = ["https://www.youtube.com/watch?v=AzQJO6AyfaQ", "https://www.youtube.com/watch?v=Q9pjm4cNsfc", "https://www.youtube.com/watch?v=uuodbSVO3z0", "https://www.youtube.com/watch?v=usu0XY4QNB0"]
+        aSong = random.choice(popSmokeSongs)
+        await message.channel.send("RIP the goat" + "\n" + aSong)
+
+
+
 # ------------------------------------------------------------------------------------------------------------
 
 
@@ -268,8 +261,11 @@ def bootstrapping():
     print("bootstrapping done")
     # startContentScheduler(gcpKey)
 
-
+    grabSomeContent.start()
+    # starts the content scheduler
+    # getting it done...
     client.run(token)
+    
 
 
 

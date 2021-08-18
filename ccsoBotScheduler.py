@@ -3,7 +3,7 @@ import time
 import sched
 from datetime import datetime
 
-import ccsoBotReactions
+import ccsoBotYtParse
 import ccsoBotCreds
 
 # Content and time: Links the content features and has the main timing logic for posting articles.
@@ -65,9 +65,10 @@ def checkForUpdates():
     # RFC formatted time
     date = '2021-03-01T00:00:00Z'
 
-    videos = ccsoBotReactions.search_videos(channel_id, date, gcpKey)
+    videos = ccsoBotYtParse.search_videos(channel_id, date, gcpKey)
 
     # print(videos)
+    return videos
 
 
 def getVideos():
