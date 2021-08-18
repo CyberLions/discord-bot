@@ -1,39 +1,52 @@
 import feedparser
 from dhooks import Embed, Webhook
+import ccsoBotCreds
 
-hook = Webhook("https://discord.com/api/webhooks/854120969223012352/tH_ksryZu32e8ZorRj4kCkAUW3pULvGkWmOHHjOoM5VmR6DfSsYIisE2tU-X8IcDEtmt")
+# hook = Webhook("https://discord.com/api/webhooks/854120969223012352/tH_ksryZu32e8ZorRj4kCkAUW3pULvGkWmOHHjOoM5VmR6DfSsYIisE2tU-X8IcDEtmt")
 
-link = "https://www.darkreading.com/rss_simple.asp?f_n=644&f_ln=Attacks/Breaches"
+hook = Webhook(ccsoBotCreds.getWebhookUrl())
+hook = Webhook("https://discord.com/api/webhooks/877404142178557963/LduzUUPzaxzVCJV2u5uTPzkH4-aapzWHI_1GEuZj4KKMJRxkxOXXrnM5YGt2UyFnvbx3")
 
-dReadArticle = feedparser.parse(link)
+def grabAnArticle(link):
 
-#Test out print stuff
+    link = "https://www.darkreading.com/rss_simple.asp?f_n=644&f_ln=Attacks/Breaches"
 
-print(len(dReadArticle.entries))
+    dReadArticle = feedparser.parse(link)
 
-enNum = 0
+    #Test out print stuff
 
-dReadEmbedArticle = Embed(
+    print(len(dReadArticle.entries))
 
-    title= dReadArticle.entries[enNum].title,
-    image_url= 'https://img.deusm.com/darkreading/dr_staff_125x125.jpg', #Can't find image within feed or entries for Dark reading
-    url= dReadArticle.entries[enNum].link,
-    description= dReadArticle.entries[enNum].summary,
-    color= 1 #colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
-    
-)
+    enNum = 0
+
+    dReadEmbedArticle = Embed(
+
+        title= dReadArticle.entries[enNum].title,
+        image_url= 'https://img.deusm.com/darkreading/dr_staff_125x125.jpg', #Can't find image within feed or entries for Dark reading
+        url= dReadArticle.entries[enNum].link,
+        description= dReadArticle.entries[enNum].summary,
+        color= 1 #colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+        
+    )
 
 
-#Have to add footer and author afterwards (read API doc)
+    #Have to add footer and author afterwards (read API doc)
 
-dReadEmbedArticle.set_footer(text= dReadArticle.entries[enNum].published)
-dReadEmbedArticle.set_author(name= dReadArticle.feed.title)
-dReadEmbedArticle.add_field(name= "Author", value= dReadArticle.entries[enNum].author, inline= True)
+    dReadEmbedArticle.set_footer(text= dReadArticle.entries[enNum].published)
+    dReadEmbedArticle.set_author(name= dReadArticle.feed.title)
+    dReadEmbedArticle.add_field(name= "Author", value= dReadArticle.entries[enNum].author, inline= True)
 
-#https://feedparser.readthedocs.io/en/latest/common-rss-elements.html (API Doc) 
+    #https://feedparser.readthedocs.io/en/latest/common-rss-elements.html (API Doc) 
 
-def postArticle(Article):
+    hook.send(embed=dReadEmbedArticle)
 
-    hook.send(embed=Article)
 
-postArticle(dReadEmbedArticle)
+
+
+
+
+# def postArticle(Article):
+
+#     hook.send(embed=Article)
+
+# postArticle(dReadEmbedArticle)

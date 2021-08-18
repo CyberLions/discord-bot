@@ -1,6 +1,5 @@
 import discord
 import time
-import asyncio
 from discord import webhook
 import ccsoBotReactions
 import ccsoBotCreds
@@ -13,48 +12,15 @@ from discord.ext import tasks, commands
 
 # ------------------------------------------------------------------------------------------------------------
 
-# Emojis for roles
-emojis = {
-    '👍',
-    '👀',
-    '🍉',
-    '<:coolspot:854115885013663774>',
-    '🏳️',
-    '⚔️',
-    '🛡️',
-    '🎮',
-    '⚪',
-    '🔵',
-    '🟤',
-    '⚫',
-    
-}
-
-staticRoles = {
-    '1️⃣',
-    '2️⃣',
-    '3️⃣',
-    '4️⃣',
-    '⭐' 
-}
-
-dynamicRoles = {
-    '🏳️',
-    '⚔️',
-    '🛡️',
-    '🎮',
-}
 
 # Intents library required for the on_raw_reaction_add function
 intents = discord.Intents.default()
 intents.reactions = True
-
 client = discord.Client(intents=intents)
 
 # ------------------------------------- Bot commands / events -------------------------------------
 # ------------------------------------- 1) Reaction Role Message -------------------------------------
 # Takes an emoji and returns a role based on the input, default case is None, this return is handled in on_raw__reaction_add()
-
 
 @client.event
 async def on_ready():
@@ -69,46 +35,41 @@ async def on_ready():
     # dynamic_id = 876806477745127494
 
     # FOR LIVE CCSO SERVER
+    # can grab from disc by shift-clicking "copy id"
     channel_id = 876897589889495070
     static_id = 876897950914187284
     dynamic_id = 876898145185964063
     
-    
+    # rules message
     # message = await client.get_channel(channel_id).fetch_message(message_id)
 
+    # role selection messages
     staticMessage = await client.get_channel(channel_id).fetch_message(static_id)
     dynamicMessage = await client.get_channel(channel_id).fetch_message(dynamic_id)
 
-
-    # Adds the emoji reactions to the message initially
-    for emoji in emojis:
-        # await message.add_reaction(emoji)
-        print("")
-
-    for role in staticRoles:
-        await staticMessage.add_reaction(role)
-
-    for role in dynamicRoles:
-        await dynamicMessage.add_reaction(role)
+    await ccsoBotReactions.addReactionsToMessage(staticMessage, dynamicMessage)
 
 # ------------------------------------- 2) Youtube Parsing/Messaging -------------------------------------
 
-
-def startContentScheduler(gcpKey):
-    print('...starting scheduler')
-    ccsoBotScheduler.startScheduler()
-
-# content test
+# Checks for new content and posts
 # https://discordpy.readthedocs.io/en/latest/ext/tasks/
 @tasks.loop(seconds=10.0)
 async def grabSomeContent():
-    print("ddddddddddddd")
+    print("fetching content...")
 
-    # SAVE API CALLS 
-    # videos = ccsoBotScheduler.checkForUpdates()
-    # print("mainvids: ", videos)
+    mustHaveChannels = ["UC0ArlFuFYMpEewyRBzdLHiw", "UCByOX6pW9k1OYKpDA2UHvJw", "UCLDnEn-TxejaDB8qm2AUhHQ", "UCKGe7fZ_S788Jaspxg-_5Sg", "UCVeW9qkBjo3zosnqUbG7CFw", "UC0ZTPkdxlAKf-V33tqXwi3Q"]
 
-    # sendWebhookMessage(videos)
+    for channel in mustHaveChannels:
+        print("sending")
+
+        # SAVE API CALLS    
+        # videos = ccsoBotScheduler.checkForUpdates(channel)
+        # print("mainvids: ", videos)
+
+        # sendWebhookMessage(videos)
+
+    print("fetching new articles...")
+    ccsoBotScheduler.checkForArticles()
 
 
 def sendWebhookMessage(videos):
@@ -117,7 +78,6 @@ def sendWebhookMessage(videos):
 
     webhookUrl = ccsoBotCreds.getWebhookUrl()
     # for testing
-    webhookUrl = "https://discord.com/api/webhooks/877404142178557963/LduzUUPzaxzVCJV2u5uTPzkH4-aapzWHI_1GEuZj4KKMJRxkxOXXrnM5YGt2UyFnvbx3"
 
     # TODO: branch for articles VS videos 
 
@@ -146,60 +106,19 @@ def sendWebhookMessage(videos):
         print("request error")
 
 
-# ------------------------------------- Talk to josh abt. modularizing these -------------------------------------
-
-def rolePicker(string, message):
-    role1 = discord.utils.get(message.guild.roles, name="test role 1")
-    role2 = discord.utils.get(message.guild.roles, name="balls")
-    role3 = discord.utils.get(message.guild.roles, name="super")
-    role4 = discord.utils.get(message.guild.roles, name="server-manager"),
-    
-    ctfRole = discord.utils.get(message.guild.roles, name="CTF")
-    cptcRole = discord.utils.get(message.guild.roles, name="Offense (CPTC)")
-    ccdcRole = discord.utils.get(message.guild.roles, name="Defense (CCDC)")
-    gamingRole = discord.utils.get(message.guild.roles, name="Gaming")
-
-    firstYear = discord.utils.get(message.guild.roles, name="Freshman")
-    secondYear = discord.utils.get(message.guild.roles, name="Sophomore")
-    thirdYear = discord.utils.get(message.guild.roles, name="Junior")
-    fourthYear = discord.utils.get(message.guild.roles, name="Senior")
-
-
-    switcher = {
-        '👍': role1,
-        '👀': role2,
-        '🍉': role3,
-        '<:coolspot:854115885013663774>': role4,
-        '🏳️': ctfRole,
-        '⚔️': cptcRole,
-        '🛡️': ccdcRole,
-        '🎮': gamingRole,
-
-        # '⚪': firstYear,
-        # '🔵': secondYear,
-        # '🟤': thirdYear,
-        # '⚫': fourthYear, 
-        '1️⃣': firstYear,
-        '2️⃣': secondYear,
-        '3️⃣': thirdYear,
-        '4️⃣': fourthYear,
-        '⭐': ""
-    }
-    return switcher.get(string, None)
-
-# Waits for a specific message to be reacted to, then adds a user to a specific role
-
+# ------------------------------------- 3) Role Reactions -------------------------------------
 
 @client.event
 async def on_raw_reaction_add(payload):
     # Defines the message, reaction, user, and role variables
-    
+
+    # Waits for a specific message to be reacted to, then adds a user to a specific role
     await ccsoBotReactions.addRoleReaction(payload, client)
     # passing the client is probably doodoo; do this @ bootstrapping
 
 
 
-
+# ------------------------------------- 4) Bot Commands -------------------------------------
 
 @client.event
 async def on_message(message):
@@ -247,7 +166,6 @@ async def on_message(message):
         await message.channel.send("RIP the goat" + "\n" + aSong)
 
 
-
 # ------------------------------------------------------------------------------------------------------------
 
 
@@ -258,15 +176,11 @@ def bootstrapping():
     token = ccsoBotCreds.getDiscordKey()
     gcpKey = ccsoBotCreds.getGCPKey()
 
-    print("bootstrapping done")
-    # startContentScheduler(gcpKey)
+    ccsoBotReactions.sendClientToken(client)
 
-    grabSomeContent.start()
     # starts the content scheduler
-    # getting it done...
+    grabSomeContent.start()
+    print("bootstrapping done")
     client.run(token)
     
-
-
-
 bootstrapping()

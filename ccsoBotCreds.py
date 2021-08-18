@@ -19,7 +19,7 @@ def getGCPKey():
     return gcpKey 
 
 def getWebhookUrl():
-    webhookUrl = "https://discord.com/api/webhooks/875255639385985044/2NUyLhV5G7ZDcz_ILdkzsywI8avp04OmX7DB9MtOLx_irXfUi0NYjo0WZ8B1E1j0M-Ww"
+    webhookUrl = "https://discord.com/api/webhooks/877404142178557963/LduzUUPzaxzVCJV2u5uTPzkH4-aapzWHI_1GEuZj4KKMJRxkxOXXrnM5YGt2UyFnvbx3"
     return webhookUrl
 
 #add more as needed 

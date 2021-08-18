@@ -6,11 +6,31 @@ import time
 intents = discord.Intents.default()
 intents.reactions = True
 
+client = discord.Client()
+
+
+def sendClientToken(token):
+    print("client set!")
+    global client
+    client = token
+    # sets global var pog
+
+
 # Emojis for roles
 emojis = {
     '👍',
     '👀',
-    '🍉'
+    '🍉',
+    '<:coolspot:854115885013663774>',
+    '🏳️',
+    '⚔️',
+    '🛡️',
+    '🎮',
+    '⚪',
+    '🔵',
+    '🟤',
+    '⚫',
+
 }
 
 staticRoles = {
@@ -18,19 +38,23 @@ staticRoles = {
     '2️⃣',
     '3️⃣',
     '4️⃣',
-    '⭐' 
+    '⭐'
 }
 
+dynamicRoles = {
+    '🏳️',
+    '⚔️',
+    '🛡️',
+    '🎮',
+}
 
-# Initial log in and check from the bot
-client = discord.Client(intents=intents)
 
 def rolePicker(string, message):
     role1 = discord.utils.get(message.guild.roles, name="test role 1")
     role2 = discord.utils.get(message.guild.roles, name="balls")
     role3 = discord.utils.get(message.guild.roles, name="super")
     role4 = discord.utils.get(message.guild.roles, name="server-manager"),
-    
+
     ctfRole = discord.utils.get(message.guild.roles, name="CTF")
     cptcRole = discord.utils.get(message.guild.roles, name="Offense (CPTC)")
     ccdcRole = discord.utils.get(message.guild.roles, name="Defense (CCDC)")
@@ -40,7 +64,6 @@ def rolePicker(string, message):
     secondYear = discord.utils.get(message.guild.roles, name="Sophomore")
     thirdYear = discord.utils.get(message.guild.roles, name="Junior")
     fourthYear = discord.utils.get(message.guild.roles, name="Senior")
-
 
     switcher = {
         '👍': role1,
@@ -55,7 +78,7 @@ def rolePicker(string, message):
         # '⚪': firstYear,
         # '🔵': secondYear,
         # '🟤': thirdYear,
-        # '⚫': fourthYear, 
+        # '⚫': fourthYear,
         '1️⃣': firstYear,
         '2️⃣': secondYear,
         '3️⃣': thirdYear,
@@ -64,9 +87,38 @@ def rolePicker(string, message):
     }
     return switcher.get(string, None)
 
-async def addRoleReaction(payload, a): 
 
-    client = a
+async def addReactionsToMessage(staticMessage, dynamicMessage):
+
+    # Adds the emoji reactions to the message initially
+    for emoji in emojis:
+        # await message.add_reaction(emoji)
+        print("")
+
+    # to be in order
+    # this doesn't work since add_reaction is a coroutine
+    # staticRoles = ['1️⃣',
+    #                '2️⃣',
+    #                '3️⃣',
+    #                '4️⃣',
+    #                '⭐']
+
+    # staticMessage.add_reaction(staticRoles[0])
+    # staticMessage.add_reaction(staticRoles[1])
+    # staticMessage.add_reaction(staticRoles[2])
+    # staticMessage.add_reaction(staticRoles[3])
+    # staticMessage.add_reaction(staticRoles[4])
+
+    for role in staticRoles:
+        await staticMessage.add_reaction(role)
+
+    for role in dynamicRoles:
+        await dynamicMessage.add_reaction(role)
+
+
+async def addRoleReaction(payload, a):
+
+    # client = a
 
     print("sssss")
     print(payload.channel_id)
@@ -76,15 +128,11 @@ async def addRoleReaction(payload, a):
     message = await client.get_channel(payload.channel_id).fetch_message(payload.message_id)
     message_channel = client.get_channel(payload.channel_id)
 
-
-    
     emoji = str(payload.emoji)
     user = payload.member
     userId = payload.user_id
     print(emoji, user)
 
-
-    
     # Check to make sure the user isnt the bot, so the bot doesn't react to the message then immeadietly remove the react
     if userId != client.user.id:
         # Check to see if the react is in the correct channel so it doesnt trigger in other channels
@@ -98,24 +146,28 @@ async def addRoleReaction(payload, a):
                     print("removed role " + str(role))
                 else:
                     # check if its static or dynamic
-                    # if dynamic, remove other dynamic roles before adding 
+                    # if dynamic, remove other dynamic roles before adding
 
                     for staticRole in staticRoles:
 
                         if emoji == staticRole:
 
-                            firstYear = discord.utils.get(message.guild.roles, name="Freshman")
-                            secondYear = discord.utils.get(message.guild.roles, name="Sophomore")
-                            thirdYear = discord.utils.get(message.guild.roles, name="Junior")
-                            fourthYear = discord.utils.get(message.guild.roles, name="Senior")
+                            firstYear = discord.utils.get(
+                                message.guild.roles, name="Freshman")
+                            secondYear = discord.utils.get(
+                                message.guild.roles, name="Sophomore")
+                            thirdYear = discord.utils.get(
+                                message.guild.roles, name="Junior")
+                            fourthYear = discord.utils.get(
+                                message.guild.roles, name="Senior")
 
-                            rolesToRemove = [firstYear, secondYear, thirdYear, fourthYear]
+                            rolesToRemove = [firstYear,
+                                             secondYear, thirdYear, fourthYear]
                             roleToKeep = rolePicker(emoji, message)
 
                             rolesToRemove.remove(roleToKeep)
                             for toRemove in rolesToRemove:
                                 await user.remove_roles(toRemove)
-
 
                     await user.add_roles(role, message)
                     print("added role " + str(role))
@@ -134,8 +186,8 @@ class React:
     def __init__(self, balls):
         self.balls = balls
 
-
         # Takes an emoji and returns a role based on the input, default case is None, this return is handled in on_raw__reaction_add()
+
     def rolePicker(self, string, message):
         role1 = discord.utils.get(message.guild.roles, name="test role 1")
         role2 = discord.utils.get(message.guild.roles, name="balls")
@@ -179,5 +231,3 @@ class React:
                 print("tried to add role user already has")
 
             await message.remove_reaction(emoji, user)
-
-
