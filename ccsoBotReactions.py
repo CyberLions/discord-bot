@@ -33,20 +33,24 @@ emojis = {
 
 }
 
-staticRoles = {
+staticRoles = [
     '1️⃣',
     '2️⃣',
     '3️⃣',
     '4️⃣',
     '⭐'
-}
+]
 
-dynamicRoles = {
-    '🏳️',
+dynamicRoles = [
     '⚔️',
     '🛡️',
+    '🏳️',
     '🎮',
-}
+]
+
+
+def getRoleEmojis():
+    return staticRoles + dynamicRoles
 
 
 def rolePicker(string, message):
@@ -64,6 +68,8 @@ def rolePicker(string, message):
     secondYear = discord.utils.get(message.guild.roles, name="Sophomore")
     thirdYear = discord.utils.get(message.guild.roles, name="Junior")
     fourthYear = discord.utils.get(message.guild.roles, name="Senior")
+    alumni = discord.utils.get(message.guild.roles, name="Alumni")
+
 
     switcher = {
         '👍': role1,
@@ -83,7 +89,7 @@ def rolePicker(string, message):
         '2️⃣': secondYear,
         '3️⃣': thirdYear,
         '4️⃣': fourthYear,
-        '⭐': ""
+        '⭐': alumni
     }
     return switcher.get(string, None)
 
@@ -136,7 +142,8 @@ async def addRoleReaction(payload, a):
     # Check to make sure the user isnt the bot, so the bot doesn't react to the message then immeadietly remove the react
     if userId != client.user.id:
         # Check to see if the react is in the correct channel so it doesnt trigger in other channels
-        if discord.utils.get(client.get_all_channels(), name="react-test") == message_channel:
+        # REPLACE THIS CHANNEL NAME AS NEEDED
+        if discord.utils.get(client.get_all_channels(), name="bot-react-post-test") == message_channel:
             try:
                 # Gets the role based on the emoji and adds it to the user w/ a print
                 role = rolePicker(emoji, message)
@@ -160,9 +167,10 @@ async def addRoleReaction(payload, a):
                                 message.guild.roles, name="Junior")
                             fourthYear = discord.utils.get(
                                 message.guild.roles, name="Senior")
-
-                            rolesToRemove = [firstYear,
-                                             secondYear, thirdYear, fourthYear]
+                            alumni = discord.utils.get(
+                                message.guild.roles, name="Alumni")
+                            rolesToRemove = [
+                                firstYear, secondYear, thirdYear, fourthYear, alumni]
                             roleToKeep = rolePicker(emoji, message)
 
                             rolesToRemove.remove(roleToKeep)
