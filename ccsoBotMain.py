@@ -37,12 +37,8 @@ async def on_ready():
 
     # FOR LIVE CCSO SERVER
     # can grab from disc by shift-clicking "copy id"
-    channel_id = 876897589889495070
-    static_id = 876897950914187284
-    dynamic_id = 876898145185964063
 
     # rules message
-    # message = await client.get_channel(channel_id).fetch_message(message_id)
 
     # role selection messages
     staticMessage = await client.get_channel(channel_id).fetch_message(static_id)
@@ -128,15 +124,6 @@ async def on_raw_reaction_add(payload):
 async def on_message(message):
     if message.author == client.user:
         return
-    elif message.content == "!test":
-        print("recognize command")
-        embedVar = discord.Embed(
-            title="balls in my face title", description="awesome description")
-        embedVar.add_field(
-            name="Field1", value="balls in my face 1", inline=False)
-        embedVar.add_field(
-            name="Field2", value="balls in my face 2", inline=True)
-        await message.channel.send(embed=embedVar)
 
     # if the message !rules is sent, it will send the rules message into #rules ADD: check for server admin role
     elif message.content.startswith("!rules"):
