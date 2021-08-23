@@ -154,8 +154,6 @@ async def on_message(message):
 
     # this command purges the roles channel and sends the message to react to
     elif message.content == "!embedroles":
-        # 878313648618098709 - server
-        # 878313924347428884 - message
 
         mf1 = ccsoBotReactions.getRoleEmojis()[0]
         mf2 = ccsoBotReactions.getRoleEmojis()[1]
@@ -163,7 +161,7 @@ async def on_message(message):
         mf4 = ccsoBotReactions.getRoleEmojis()[3]
         mf5 = ccsoBotReactions.getRoleEmojis()[4]
 
-        rulesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Fifth Year/Alumni**".format(mf5)
+        rulesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
 
         rulesChannel = discord.utils.get(
             client.get_all_channels(), name="bot-react-post-test")
@@ -180,7 +178,7 @@ async def on_message(message):
         cr4 = ccsoBotReactions.getRoleEmojis()[8]
 
         dynamicRoles = discord.Embed(
-            title="Club Roles", description="React to receive a role that you are interested in!")
+            title="Club Roles", description="**React to receive a role that you are interested in!**")
         dynamicRoles.add_field(
             name="{} Offense (CPTC)".format(cr1), value="For people interested in offensive security and or penetration testing. This is also for people interested in our CPTC competition team!", inline=False)
         dynamicRoles.add_field(
@@ -200,21 +198,12 @@ async def on_message(message):
         rulesChanId = 878313648618098709
         print(static_id)
         print(dynamic_id)
-        
+
         staticMessage = await client.get_channel(rulesChanId).fetch_message(static_id)
         dynamicMessage = await client.get_channel(rulesChanId).fetch_message(dynamic_id)
 
         await ccsoBotReactions.addReactionsToMessage(staticMessage, dynamicMessage)
 
-    # best cmmand
-    elif message.content == "balls in my face":
-        counter = 0
-        while (True):
-            await message.channel.send(message.content)
-            time.sleep(1)
-            counter += 1
-            if counter > 10:
-                return False
 
     # pop smoke command
     elif message.content == "!pop":

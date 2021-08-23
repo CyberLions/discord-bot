@@ -64,11 +64,11 @@ def rolePicker(string, message):
     ccdcRole = discord.utils.get(message.guild.roles, name="Defense (CCDC)")
     gamingRole = discord.utils.get(message.guild.roles, name="Gaming")
 
-    firstYear = discord.utils.get(message.guild.roles, name="Freshman")
-    secondYear = discord.utils.get(message.guild.roles, name="Sophomore")
-    thirdYear = discord.utils.get(message.guild.roles, name="Junior")
-    fourthYear = discord.utils.get(message.guild.roles, name="Senior")
-    alumni = discord.utils.get(message.guild.roles, name="Alumni")
+    firstYear = discord.utils.get(message.guild.roles, name="First Year")
+    secondYear = discord.utils.get(message.guild.roles, name="Second Year")
+    thirdYear = discord.utils.get(message.guild.roles, name="Third Year")
+    fourthYear = discord.utils.get(message.guild.roles, name="Fourth Year")
+    alumni = discord.utils.get(message.guild.roles, name="Alumni / Other")
 
 
     switcher = {
@@ -126,7 +126,7 @@ async def addRoleReaction(payload, a):
 
     # client = a
 
-    print("sssss")
+    print("Adding role")
     print(payload.channel_id)
     print(client)
     print(client.get_channel(payload.channel_id))
@@ -160,15 +160,15 @@ async def addRoleReaction(payload, a):
                         if emoji == staticRole:
 
                             firstYear = discord.utils.get(
-                                message.guild.roles, name="Freshman")
+                                message.guild.roles, name="First Year")
                             secondYear = discord.utils.get(
-                                message.guild.roles, name="Sophomore")
+                                message.guild.roles, name="Second Year")
                             thirdYear = discord.utils.get(
-                                message.guild.roles, name="Junior")
+                                message.guild.roles, name="Third Year")
                             fourthYear = discord.utils.get(
-                                message.guild.roles, name="Senior")
+                                message.guild.roles, name="Fourth Year")
                             alumni = discord.utils.get(
-                                message.guild.roles, name="Alumni")
+                                message.guild.roles, name="Alumni / Other")
                             rolesToRemove = [
                                 firstYear, secondYear, thirdYear, fourthYear, alumni]
                             roleToKeep = rolePicker(emoji, message)
