@@ -196,16 +196,16 @@ async def embedrolemessage():
         mf4 = getRoleEmojis()[3]
         mf5 = getRoleEmojis()[4]
 
-        rulesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
+        rolesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
 
-        rulesChannel = discord.utils.get(
+        rolesChannel = discord.utils.get(
             client.get_all_channels(), name="bot-react-post-test")
-        # await rulesChannel.purge()
+        # await rolesChannel.purge()
         staticRoles = discord.Embed(
-            title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rulesText)
-        await rulesChannel.send(embed=staticRoles)
+            title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rolesText)
+        await rolesChannel.send(embed=staticRoles)
 
-        static_id = rulesChannel.last_message_id
+        static_id = rolesChannel.last_message_id
 
         cr1 = getRoleEmojis()[5]
         cr2 = getRoleEmojis()[6]
@@ -223,19 +223,19 @@ async def embedrolemessage():
         dynamicRoles.add_field(
             name="{} Gaming".format(cr4), value="For people interested in hanging out with club members and playing video games. Some of the games include Minecraft, Among Us, and Escape From Tarkov!", inline=False)
 
-        await rulesChannel.send(embed=dynamicRoles)
+        await rolesChannel.send(embed=dynamicRoles)
 
-        dynamic_id = rulesChannel.last_message_id
+        dynamic_id = rolesChannel.last_message_id
 
         # function that adds reactions if the message is deleted
         # get the messages, get the ids
         # IS AN INT NOT A STRING HAHAHAHA
-        rulesChanId = 878313648618098709
+        rolesChanId = 878313648618098709
         print(static_id)
         print(dynamic_id)
 
-        staticMessage = await client.get_channel(rulesChanId).fetch_message(static_id)
-        dynamicMessage = await client.get_channel(rulesChanId).fetch_message(dynamic_id)
+        staticMessage = await client.get_channel(rolesChanId).fetch_message(static_id)
+        dynamicMessage = await client.get_channel(rolesChanId).fetch_message(dynamic_id)
 
         await addReactionsToMessage(staticMessage, dynamicMessage)
 
