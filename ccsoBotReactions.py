@@ -70,7 +70,6 @@ def rolePicker(string, message):
     fourthYear = discord.utils.get(message.guild.roles, name="Fourth Year")
     alumni = discord.utils.get(message.guild.roles, name="Alumni / Other")
 
-
     switcher = {
         '👍': role1,
         '👀': role2,
@@ -188,4 +187,55 @@ async def addRoleReaction(payload, a):
                 print("tried to add role user already has")
 
             await message.remove_reaction(emoji, user)
+
+
+async def embedrolemessage():
+        mf1 = getRoleEmojis()[0]
+        mf2 = getRoleEmojis()[1]
+        mf3 = getRoleEmojis()[2]
+        mf4 = getRoleEmojis()[3]
+        mf5 = getRoleEmojis()[4]
+
+        rulesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
+
+        rulesChannel = discord.utils.get(
+            client.get_all_channels(), name="bot-react-post-test")
+        # await rulesChannel.purge()
+        staticRoles = discord.Embed(
+            title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rulesText)
+        await rulesChannel.send(embed=staticRoles)
+
+        static_id = rulesChannel.last_message_id
+
+        cr1 = getRoleEmojis()[5]
+        cr2 = getRoleEmojis()[6]
+        cr3 = getRoleEmojis()[7]
+        cr4 = getRoleEmojis()[8]
+
+        dynamicRoles = discord.Embed(
+            title="Club Roles", description="**React to receive a role that you are interested in!**")
+        dynamicRoles.add_field(
+            name="{} Offense (CPTC)".format(cr1), value="For people interested in offensive security and or penetration testing. This is also for people interested in our CPTC competition team!", inline=False)
+        dynamicRoles.add_field(
+            name="{} Defense (CCDC)".format(cr2), value="For people interested in defensive security and or security monitoring. This is also for people interested in our CCDC competition team!", inline=False)
+        dynamicRoles.add_field(
+            name="{} CTF".format(cr3), value="For people interested in competing in CTFs such as NCL and PicoCTF. This is also for people interested in other platforms such as Hack the box, TryHackMe, and Blue team labs online!", inline=False)
+        dynamicRoles.add_field(
+            name="{} Gaming".format(cr4), value="For people interested in hanging out with club members and playing video games. Some of the games include Minecraft, Among Us, and Escape From Tarkov!", inline=False)
+
+        await rulesChannel.send(embed=dynamicRoles)
+
+        dynamic_id = rulesChannel.last_message_id
+
+        # function that adds reactions if the message is deleted
+        # get the messages, get the ids
+        # IS AN INT NOT A STRING HAHAHAHA
+        rulesChanId = 878313648618098709
+        print(static_id)
+        print(dynamic_id)
+
+        staticMessage = await client.get_channel(rulesChanId).fetch_message(static_id)
+        dynamicMessage = await client.get_channel(rulesChanId).fetch_message(dynamic_id)
+
+        await addReactionsToMessage(staticMessage, dynamicMessage)
 

@@ -27,6 +27,10 @@ def search_videos(channel_id, time, gcpKey):
     # 1970-01-01T00:00:00Z
     # time = '2021-06-16T00:00:00Z'
     # time = '2021-08-01T00:00:00Z'
+
+    # FOR TESTING PURPOSES -- TIME SET 
+    time = '2021-08-17T00:00:00Z'
+
     first_url = base_search_url + \
         'key={}&channelId={}&publishedAfter={}&order=date&maxResults=10&part=snippet'.format(
             gcpKey, channel_id, time)

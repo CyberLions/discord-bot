@@ -25,26 +25,8 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
+    # What do you want the bot to do at login?
     print('We have logged in as {0.user}'.format(client))
-
-    # channel and message id of msg to react to for roles
-    # TEST SERVER
-    # channel_id = 852925086238900225
-    # message_id = 876803239385923584
-
-    # static_id = 876806469939519489
-    # dynamic_id = 876806477745127494
-
-    # FOR LIVE CCSO SERVER
-    # can grab from disc by shift-clicking "copy id"
-
-    # rules message
-
-    # role selection messages
-    staticMessage = await client.get_channel(channel_id).fetch_message(static_id)
-    dynamicMessage = await client.get_channel(channel_id).fetch_message(dynamic_id)
-
-    await ccsoBotReactions.addReactionsToMessage(staticMessage, dynamicMessage)
 
 # ------------------------------------- 2) Youtube Parsing/Messaging -------------------------------------
 
@@ -55,27 +37,55 @@ async def on_ready():
 
 @tasks.loop(hours=8)
 async def grabSomeContent():
-    print("fetching content...")
+    print("fetching videos...")
 
     mustHaveChannels = ["UC0ArlFuFYMpEewyRBzdLHiw", "UCByOX6pW9k1OYKpDA2UHvJw", "UCLDnEn-TxejaDB8qm2AUhHQ",
                         "UCKGe7fZ_S788Jaspxg-_5Sg", "UCVeW9qkBjo3zosnqUbG7CFw", "UC0ZTPkdxlAKf-V33tqXwi3Q"]
 
+    print("fetching new articles...")
+    # ccsoBotScheduler.checkForArticles()
+
+    contentEmbed = discord.Embed(
+        title="New Content for You!", description="**The hottest content, straight to your inbox.**")
+
+    latestVidEachChanel = []
+
     for channel in mustHaveChannels:
         print("sending")
-
+        videos = []
         # SAVE API CALLS
-        # videos = ccsoBotScheduler.checkForUpdates(channel)
-        # print("mainvids: ", videos)
+        # UGH
+        videos = ccsoBotScheduler.checkForUpdates(channel)
+        print("mainvids: ", videos)
+
+        latestVidEachChanel.append(videos[0])
 
         # sendWebhookMessage(videos)
 
-    print("fetching new articles...")
-    ccsoBotScheduler.checkForArticles()
+        # video = videos[0]
+        # contentEmbed.add_field(name=video['title'], value=video['url'], inline=False)
+
+
+    print(latestVidEachChanel)
+
+    # FOR TEST BIG MESSAGE 
+    # TODO: NOT FUCK IT UP LOL
+    sendWebhookMessage(latestVidEachChanel)
+
+
+    # channelToSend = discord.utils.get(
+    #             client.get_all_channels(), name="link-test-live")
+    # print(channelToSend)
+    # await channelToSend.send(embed=contentEmbed)
 
 
 def sendWebhookMessage(videos):
 
     video = videos[0]
+
+    descriptions = ""
+    for video in videos:
+        descriptions = descriptions + "\n" + "\n" + video['title']
 
     webhookUrl = ccsoBotCreds.getWebhookUrl()
     # for testing
@@ -89,7 +99,8 @@ def sendWebhookMessage(videos):
             'image': {
                 "url": video['thumbnail'],
             },
-            "description": video['description'],
+            # "description": video['description'],
+            "description": descriptions,
             "title": video['title'],
             "url": video['url'],
             "color": 4,  # colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
@@ -141,56 +152,8 @@ async def on_message(message):
 
     # this command purges the roles channel and sends the message to react to
     elif message.content == "!embedroles":
-
-        mf1 = ccsoBotReactions.getRoleEmojis()[0]
-        mf2 = ccsoBotReactions.getRoleEmojis()[1]
-        mf3 = ccsoBotReactions.getRoleEmojis()[2]
-        mf4 = ccsoBotReactions.getRoleEmojis()[3]
-        mf5 = ccsoBotReactions.getRoleEmojis()[4]
-
-        rulesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
-
-        rulesChannel = discord.utils.get(
-            client.get_all_channels(), name="bot-react-post-test")
-        # await rulesChannel.purge()
-        staticRoles = discord.Embed(
-            title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rulesText)
-        await rulesChannel.send(embed=staticRoles)
-
-        static_id = rulesChannel.last_message_id
-
-        cr1 = ccsoBotReactions.getRoleEmojis()[5]
-        cr2 = ccsoBotReactions.getRoleEmojis()[6]
-        cr3 = ccsoBotReactions.getRoleEmojis()[7]
-        cr4 = ccsoBotReactions.getRoleEmojis()[8]
-
-        dynamicRoles = discord.Embed(
-            title="Club Roles", description="**React to receive a role that you are interested in!**")
-        dynamicRoles.add_field(
-            name="{} Offense (CPTC)".format(cr1), value="For people interested in offensive security and or penetration testing. This is also for people interested in our CPTC competition team!", inline=False)
-        dynamicRoles.add_field(
-            name="{} Defense (CCDC)".format(cr2), value="For people interested in defensive security and or security monitoring. This is also for people interested in our CCDC competition team!", inline=False)
-        dynamicRoles.add_field(
-            name="{} CTF".format(cr3), value="For people interested in competing in CTFs such as NCL and PicoCTF. This is also for people interested in other platforms such as Hack the box, TryHackMe, and Blue team labs online!", inline=False)
-        dynamicRoles.add_field(
-            name="{} Gaming".format(cr4), value="For people interested in hanging out with club members and playing video games. Some of the games include Minecraft, Among Us, and Escape From Tarkov!", inline=False)
-
-        await rulesChannel.send(embed=dynamicRoles)
-
-        dynamic_id = rulesChannel.last_message_id
-
-        # function that adds reactions if the message is deleted
-        # get the messages, get the ids
-        #IS AN INT NOT A STRING HAHAHAHA
-        rulesChanId = 878313648618098709
-        print(static_id)
-        print(dynamic_id)
-
-        staticMessage = await client.get_channel(rulesChanId).fetch_message(static_id)
-        dynamicMessage = await client.get_channel(rulesChanId).fetch_message(dynamic_id)
-
-        await ccsoBotReactions.addReactionsToMessage(staticMessage, dynamicMessage)
-
+        # TODO: CHECK IF THE SENDER IS ADMIN SO THAT RANDOMS CAN'T JUST...
+        await ccsoBotReactions.embedrolemessage()
 
     # pop smoke command
     elif message.content == "!pop":
