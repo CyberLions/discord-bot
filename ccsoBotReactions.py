@@ -54,11 +54,6 @@ def getRoleEmojis():
 
 
 def rolePicker(string, message):
-    role1 = discord.utils.get(message.guild.roles, name="test role 1")
-    role2 = discord.utils.get(message.guild.roles, name="balls")
-    role3 = discord.utils.get(message.guild.roles, name="super")
-    role4 = discord.utils.get(message.guild.roles, name="server-manager"),
-
     ctfRole = discord.utils.get(message.guild.roles, name="CTF")
     cptcRole = discord.utils.get(message.guild.roles, name="Offense (CPTC)")
     ccdcRole = discord.utils.get(message.guild.roles, name="Defense (CCDC)")
@@ -71,19 +66,10 @@ def rolePicker(string, message):
     alumni = discord.utils.get(message.guild.roles, name="Alumni / Other")
 
     switcher = {
-        '👍': role1,
-        '👀': role2,
-        '🍉': role3,
-        '<:coolspot:854115885013663774>': role4,
         '🏳️': ctfRole,
         '⚔️': cptcRole,
         '🛡️': ccdcRole,
         '🎮': gamingRole,
-
-        # '⚪': firstYear,
-        # '🔵': secondYear,
-        # '🟤': thirdYear,
-        # '⚫': fourthYear,
         '1️⃣': firstYear,
         '2️⃣': secondYear,
         '3️⃣': thirdYear,
@@ -94,25 +80,9 @@ def rolePicker(string, message):
 
 
 async def addReactionsToMessage(staticMessage, dynamicMessage):
-
     # Adds the emoji reactions to the message initially
     for emoji in emojis:
-        # await message.add_reaction(emoji)
         print("")
-
-    # to be in order
-    # this doesn't work since add_reaction is a coroutine
-    # staticRoles = ['1️⃣',
-    #                '2️⃣',
-    #                '3️⃣',
-    #                '4️⃣',
-    #                '⭐']
-
-    # staticMessage.add_reaction(staticRoles[0])
-    # staticMessage.add_reaction(staticRoles[1])
-    # staticMessage.add_reaction(staticRoles[2])
-    # staticMessage.add_reaction(staticRoles[3])
-    # staticMessage.add_reaction(staticRoles[4])
 
     for role in staticRoles:
         await staticMessage.add_reaction(role)
@@ -122,9 +92,6 @@ async def addReactionsToMessage(staticMessage, dynamicMessage):
 
 
 async def addRoleReaction(payload, a):
-
-    # client = a
-
     print("Adding role")
     print(payload.channel_id)
     print(client)
@@ -184,7 +151,7 @@ async def addRoleReaction(payload, a):
                 print(err)
                 print("role does not exist")
             except discord.errors.NotFound:
-                print("tried to add role user already has")
+                print("tried to add role user already has and also i am cumming on zach rn loooool")
 
             await message.remove_reaction(emoji, user)
 
