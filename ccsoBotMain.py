@@ -60,24 +60,11 @@ async def grabSomeContent():
 
         latestVidEachChanel.append(videos[0])
 
-        # sendWebhookMessage(videos)
-
-        # video = videos[0]
-        # contentEmbed.add_field(name=video['title'], value=video['url'], inline=False)
-
 
     print(latestVidEachChanel)
 
     # FOR TEST BIG MESSAGE 
-    # TODO: NOT FUCK IT UP LOL
     sendWebhookMessage(latestVidEachChanel)
-
-
-    # channelToSend = discord.utils.get(
-    #             client.get_all_channels(), name="link-test-live")
-    # print(channelToSend)
-    # await channelToSend.send(embed=contentEmbed)
-
 
 def sendWebhookMessage(videos):
 
@@ -162,7 +149,9 @@ async def on_message(message):
                          "https://www.youtube.com/watch?v=uuodbSVO3z0", "https://www.youtube.com/watch?v=usu0XY4QNB0"]
         aSong = random.choice(popSmokeSongs)
         await message.channel.send("RIP the goat" + "\n" + aSong)
-
+    
+    elif message.content == "balls in my face":
+        await message.channel.send("balls in my face")
 
 # ------------------------------------------------------------------------------------------------------------
 
