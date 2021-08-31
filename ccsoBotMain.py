@@ -33,7 +33,7 @@ async def on_ready():
 # Checks for new content and posts
 # https://discordpy.readthedocs.io/en/latest/ext/tasks/
 # change the interval using this
-
+''' Move to Content and Time file
 
 @tasks.loop(hours=8)
 async def grabSomeContent():
@@ -103,7 +103,7 @@ def sendWebhookMessage(videos):
 
     except:
         print("request error")
-
+'''
 
 # ------------------------------------- 3) Role Reactions -------------------------------------
 
@@ -134,11 +134,11 @@ async def on_message(message):
                 rulesVar = discord.Embed(
                     title="CCSO Server Rules", description="")
                 rulesVar.add_field(
-                    name="Rules", value="I have a ginormous colkc and \nalso my balls are ginorumes", inline=False)
+                    name="Rules", value="Feature still in testing", inline=False)
                 await rulesChannel.send(embed=rulesVar)
 
     # this command purges the roles channel and sends the message to react to
-    elif message.content == "!embedroles":
+    elif message.content == "!embedRoles":
         # TODO: CHECK IF THE SENDER IS ADMIN SO THAT RANDOMS CAN'T JUST...
         await ccsoBotReactions.embedrolemessage()
 
@@ -150,8 +150,6 @@ async def on_message(message):
         aSong = random.choice(popSmokeSongs)
         await message.channel.send("RIP the goat" + "\n" + aSong)
     
-    elif message.content == "balls in my face":
-        await message.channel.send("balls in my face")
 
 # ------------------------------------------------------------------------------------------------------------
 
