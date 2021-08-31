@@ -140,7 +140,7 @@ async def on_message(message):
     # this command purges the roles channel and sends the message to react to
     elif message.content == "!embedRoles":
         # TODO: CHECK IF THE SENDER IS ADMIN SO THAT RANDOMS CAN'T JUST...
-        await ccsoBotReactions.embedrolemessage()
+        await ccsoBotReactions.embedRoleMessage()
 
     # pop smoke command
     elif message.content == "!pop":
@@ -161,7 +161,7 @@ def bootstrapping():
     token = ccsoBotCreds.getDiscordKey()
     gcpKey = ccsoBotCreds.getGCPKey()
 
-    ccsoBotReactions.sendClientToken(client)
+    ccsoBotReactions.setClientToken(client)
 
     # starts the content scheduler
     #grabSomeContent.start()
