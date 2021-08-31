@@ -9,7 +9,7 @@ intents.reactions = True
 client = discord.Client()
 
 
-def sendClientToken(token):
+def setClientToken(token):
     print("client set!")
     global client
     client = token
@@ -156,7 +156,7 @@ async def addRoleReaction(payload, a):
             await message.remove_reaction(emoji, user)
 
 
-async def embedrolemessage():
+async def embedRoleMessage():
         mf1 = getRoleEmojis()[0]
         mf2 = getRoleEmojis()[1]
         mf3 = getRoleEmojis()[2]
