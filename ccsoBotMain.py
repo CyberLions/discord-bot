@@ -3,10 +3,12 @@ import time
 from discord import webhook
 import ccsoBotReactions
 import ccsoBotCreds
+import ccsoBotPopSmoke
 import ccsoBotScheduler
 import requests
 import random
 from discord.ext import tasks, commands
+
 
 # Main: Handles main bot code and links everything together. Will use commands to run, start, and stop features.
 
@@ -144,11 +146,7 @@ async def on_message(message):
 
     # pop smoke command
     elif message.content == "!pop":
-
-        popSmokeSongs = ["https://www.youtube.com/watch?v=AzQJO6AyfaQ", "https://www.youtube.com/watch?v=Q9pjm4cNsfc",
-                         "https://www.youtube.com/watch?v=uuodbSVO3z0", "https://www.youtube.com/watch?v=usu0XY4QNB0"]
-        aSong = random.choice(popSmokeSongs)
-        await message.channel.send("RIP the goat" + "\n" + aSong)
+        await ccsoBotPopSmoke.youCannotSayPopAndForgetTheSmoke(message)
     
 
 # ------------------------------------------------------------------------------------------------------------
