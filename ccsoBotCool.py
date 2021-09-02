@@ -1,6 +1,11 @@
 import discord
+import random
 
-async def youCannotSayPopAndForgetTheSmoke():
+'''TODO add functionality in main
+    Have first command be !pop and the next following be !smoke 
+    maybe post a gif 
+    flag = w00_b4ck_b4by'''
+async def youCannotSayPopAndForgetTheSmoke(message):
         popSmokeSongs = ["https://www.youtube.com/watch?v=AzQJO6AyfaQ", # Coupe
                          "https://www.youtube.com/watch?v=Q9pjm4cNsfc", # For the night 
                          "https://www.youtube.com/watch?v=uuodbSVO3z0", # What u know bout love <3
