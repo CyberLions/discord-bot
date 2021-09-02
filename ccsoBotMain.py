@@ -2,8 +2,8 @@ import discord
 import time
 from discord import webhook
 import ccsoBotReactions
-import ccsoBotCreds
-import ccsoBotPopSmoke
+import botCreds
+import ccsoBotCool
 import ccsoBotScheduler
 import requests
 import random
@@ -146,7 +146,7 @@ async def on_message(message):
 
     # pop smoke command
     elif message.content == "!pop":
-        await ccsoBotPopSmoke.youCannotSayPopAndForgetTheSmoke(message)
+        await ccsoBotCool.youCannotSayPopAndForgetTheSmoke(message)
     
 
 # ------------------------------------------------------------------------------------------------------------
@@ -156,8 +156,8 @@ def bootstrapping():
 
     # Initial log in and check from the bot
     # grab Discord API token from creds.py file
-    token = ccsoBotCreds.getDiscordKey()
-    gcpKey = ccsoBotCreds.getGCPKey()
+    token = botCreds.getDiscordKey()
+    gcpKey = botCreds.getGCPKey()
 
     ccsoBotReactions.setClientToken(client)
 
