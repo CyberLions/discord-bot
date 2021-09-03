@@ -9,7 +9,7 @@ intents.reactions = True
 client = discord.Client()
 
 
-def sendClientToken(token):
+def setClientToken(token):
     print("client set!")
     global client
     client = token
@@ -54,11 +54,6 @@ def getRoleEmojis():
 
 
 def rolePicker(string, message):
-    role1 = discord.utils.get(message.guild.roles, name="test role 1")
-    role2 = discord.utils.get(message.guild.roles, name="balls")
-    role3 = discord.utils.get(message.guild.roles, name="super")
-    role4 = discord.utils.get(message.guild.roles, name="server-manager"),
-
     ctfRole = discord.utils.get(message.guild.roles, name="CTF")
     cptcRole = discord.utils.get(message.guild.roles, name="Offense (CPTC)")
     ccdcRole = discord.utils.get(message.guild.roles, name="Defense (CCDC)")
@@ -71,19 +66,10 @@ def rolePicker(string, message):
     alumni = discord.utils.get(message.guild.roles, name="Alumni / Other")
 
     switcher = {
-        '👍': role1,
-        '👀': role2,
-        '🍉': role3,
-        '<:coolspot:854115885013663774>': role4,
         '🏳️': ctfRole,
         '⚔️': cptcRole,
         '🛡️': ccdcRole,
         '🎮': gamingRole,
-
-        # '⚪': firstYear,
-        # '🔵': secondYear,
-        # '🟤': thirdYear,
-        # '⚫': fourthYear,
         '1️⃣': firstYear,
         '2️⃣': secondYear,
         '3️⃣': thirdYear,
@@ -94,25 +80,9 @@ def rolePicker(string, message):
 
 
 async def addReactionsToMessage(staticMessage, dynamicMessage):
-
     # Adds the emoji reactions to the message initially
     for emoji in emojis:
-        # await message.add_reaction(emoji)
         print("")
-
-    # to be in order
-    # this doesn't work since add_reaction is a coroutine
-    # staticRoles = ['1️⃣',
-    #                '2️⃣',
-    #                '3️⃣',
-    #                '4️⃣',
-    #                '⭐']
-
-    # staticMessage.add_reaction(staticRoles[0])
-    # staticMessage.add_reaction(staticRoles[1])
-    # staticMessage.add_reaction(staticRoles[2])
-    # staticMessage.add_reaction(staticRoles[3])
-    # staticMessage.add_reaction(staticRoles[4])
 
     for role in staticRoles:
         await staticMessage.add_reaction(role)
@@ -122,9 +92,6 @@ async def addReactionsToMessage(staticMessage, dynamicMessage):
 
 
 async def addRoleReaction(payload, a):
-
-    # client = a
-
     print("Adding role")
     print(payload.channel_id)
     print(client)
@@ -184,28 +151,28 @@ async def addRoleReaction(payload, a):
                 print(err)
                 print("role does not exist")
             except discord.errors.NotFound:
-                print("tried to add role user already has")
+                print("tried to add role user already has and also i am cumming on zach rn loooool")
 
             await message.remove_reaction(emoji, user)
 
 
-async def embedrolemessage():
+async def embedRoleMessage():
         mf1 = getRoleEmojis()[0]
         mf2 = getRoleEmojis()[1]
         mf3 = getRoleEmojis()[2]
         mf4 = getRoleEmojis()[3]
         mf5 = getRoleEmojis()[4]
 
-        rulesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
+        rolesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
 
-        rulesChannel = discord.utils.get(
+        rolesChannel = discord.utils.get(
             client.get_all_channels(), name="bot-react-post-test")
-        # await rulesChannel.purge()
+        # await rolesChannel.purge()
         staticRoles = discord.Embed(
-            title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rulesText)
-        await rulesChannel.send(embed=staticRoles)
+            title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rolesText)
+        await rolesChannel.send(embed=staticRoles)
 
-        static_id = rulesChannel.last_message_id
+        static_id = rolesChannel.last_message_id
 
         cr1 = getRoleEmojis()[5]
         cr2 = getRoleEmojis()[6]
@@ -223,19 +190,23 @@ async def embedrolemessage():
         dynamicRoles.add_field(
             name="{} Gaming".format(cr4), value="For people interested in hanging out with club members and playing video games. Some of the games include Minecraft, Among Us, and Escape From Tarkov!", inline=False)
 
-        await rulesChannel.send(embed=dynamicRoles)
+        await rolesChannel.send(embed=dynamicRoles)
 
-        dynamic_id = rulesChannel.last_message_id
+        dynamic_id = rolesChannel.last_message_id
 
         # function that adds reactions if the message is deleted
         # get the messages, get the ids
         # IS AN INT NOT A STRING HAHAHAHA
-        rulesChanId = 878313648618098709
+        rolesChanId = 878313648618098709
         print(static_id)
         print(dynamic_id)
 
-        staticMessage = await client.get_channel(rulesChanId).fetch_message(static_id)
-        dynamicMessage = await client.get_channel(rulesChanId).fetch_message(dynamic_id)
+        staticMessage = await client.get_channel(rolesChanId).fetch_message(static_id)
+        dynamicMessage = await client.get_channel(rolesChanId).fetch_message(dynamic_id)
 
         await addReactionsToMessage(staticMessage, dynamicMessage)
 
+def setLiveOrTesting(liveOrTest): 
+    print("changing from live to testing...")
+
+    
