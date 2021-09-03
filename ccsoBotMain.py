@@ -1,10 +1,5 @@
-import asyncio
 import discord
-import time
 from discord import webhook
-import requests
-import random
-from discord.ext import tasks, commands
 
 import ccsoBotReactions
 import botCreds
@@ -70,8 +65,6 @@ def setLiveOrTesting():
     ccsoBotScheduler.setLiveOrTesting(testingIds)
     
 
-    
-
 # Intents library required for the on_raw_reaction_add function
 intents = discord.Intents.default()
 intents.reactions = True
@@ -81,13 +74,7 @@ client =  discord.Client(intents=intents)
 # ------------------------------------- 1) Reaction Role Message -------------------------------------
 # Takes an emoji and returns a role based on the input, default case is None, this return is handled in on_raw__reaction_add()
 
-
-@client.event
-async def on_ready():
-    # What do you want the bot to do at login?
-    print('We have logged in as {0.user}'.format(client))
-    # start the contentscheduler 
-    ccsoBotScheduler.grabSomeContent.start()
+# moved to ccsoreactions! 
 
 
 # ------------------------------------- 2) Youtube Parsing/Messaging -------------------------------------
@@ -143,6 +130,14 @@ async def on_message(message):
     elif message.content == "!testformat":
         await ccsoBotScheduler.testFormmatedMessage()
 
+# ------------------------------------------------------------------------------------------------------------
+
+@client.event
+async def on_ready():
+    # What do you want the bot to do at login?
+    print('We have logged in as {0.user}'.format(client))
+    # start the contentscheduler 
+    ccsoBotScheduler.grabSomeContent.start()
 
 # ------------------------------------------------------------------------------------------------------------
 
