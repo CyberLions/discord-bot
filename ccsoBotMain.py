@@ -1,74 +1,23 @@
 import discord
 from discord import webhook
-
 import ccsoBotReactions
 import botCreds
 import ccsoBotCool
 import ccsoBotScheduler
+import requests
+import random
+from discord.ext import tasks, commands
+
 
 # Main: Handles main bot code and links everything together. Will use commands to run, start, and stop features.
-# FLAG FOR TEST BED VS LIVE 
-
-# TODO
-'''
-FLAG IN MAIN FOR WHETHER WE ARE ON TESTING OR LIVE 
-FORMATTING FOR CONTENT MESSAGE 
-WHAT IS THE INTERVAL WE WANT TO LOOK BACK TO FOR CONTENT? 
-'''
 
 # ------------------------------------------------------------------------------------------------------------
-def setLiveOrTesting():
 
-    areWeTesting = True
-    # what needs to change? 
-    # does each file need a method like this? (yes) 
-
-    rules_channel_id = 123
-    reaction_channel_id = 123
-    content_channel_id = 123
-
-
-    if(areWeTesting == True):
-        #TESTING THINGS 
-        rules_channel_id = 854122888771403807
-        reaction_channel_id = 852925086238900225
-        content_channel_id = 853734878034395167
-        # TESTING CHANNEL NAMES
-        # rules - "rules"
-        # content - "links-test"
-        # reactions - "reactions-channel"
-
-    else:
-        #LIVE THINGS 
-        # REAL CHANNELS 
-        rules_channel_id = 567055850292641792
-        reaction_channel_id = 879214780764798996
-        content_channel_id = 566484653331185675
-        # rules
-        # "role-selection"
-        # "links
-
-        #LIVE "BOT DEV"
-        rules_channel_id = 883101230614859836
-        reaction_channel_id = 878313648618098709
-        content_channel_id = 877403989619142666
-        # "react-test"
-        # "link-test-live"
-        # "bot-react-post-test"
-
-
-    testingIds = [rules_channel_id, reaction_channel_id, content_channel_id]
-
-    # CHANNEL NAMES 
-    ccsoBotReactions.setLiveOrTesting(testingIds)
-    ccsoBotCool.setLiveOrTesting(testingIds)
-    ccsoBotScheduler.setLiveOrTesting(testingIds)
-    
 
 # Intents library required for the on_raw_reaction_add function
 intents = discord.Intents.default()
 intents.reactions = True
-client =  discord.Client(intents=intents)
+client = discord.Client(intents=intents)
 
 # ------------------------------------- Bot commands / events -------------------------------------
 # ------------------------------------- 1) Reaction Role Message -------------------------------------
@@ -76,10 +25,87 @@ client =  discord.Client(intents=intents)
 
 # moved to ccsoreactions! 
 
+@client.event
+async def on_ready():
+    # What do you want the bot to do at login?
+    print('We have logged in as {0.user}'.format(client))
 
 # ------------------------------------- 2) Youtube Parsing/Messaging -------------------------------------
 
-#MOVED TO ccsoBotScheduler!
+# Checks for new content and posts
+# https://discordpy.readthedocs.io/en/latest/ext/tasks/
+# change the interval using this
+''' Move to Content and Time file
+
+@tasks.loop(hours=8)
+async def grabSomeContent():
+    print("fetching videos...")
+
+    mustHaveChannels = ["UC0ArlFuFYMpEewyRBzdLHiw", "UCByOX6pW9k1OYKpDA2UHvJw", "UCLDnEn-TxejaDB8qm2AUhHQ",
+                        "UCKGe7fZ_S788Jaspxg-_5Sg", "UCVeW9qkBjo3zosnqUbG7CFw", "UC0ZTPkdxlAKf-V33tqXwi3Q"]
+
+    print("fetching new articles...")
+    # ccsoBotScheduler.checkForArticles()
+
+    contentEmbed = discord.Embed(
+        title="New Content for You!", description="**The hottest content, straight to your inbox.**")
+
+    latestVidEachChanel = []
+
+    for channel in mustHaveChannels:
+        print("sending")
+        videos = []
+        # SAVE API CALLS
+        # UGH
+        videos = ccsoBotScheduler.checkForUpdates(channel)
+        print("mainvids: ", videos)
+
+        latestVidEachChanel.append(videos[0])
+
+
+    print(latestVidEachChanel)
+
+    # FOR TEST BIG MESSAGE 
+    sendWebhookMessage(latestVidEachChanel)
+
+def sendWebhookMessage(videos):
+
+    video = videos[0]
+
+    descriptions = ""
+    for video in videos:
+        descriptions = descriptions + "\n" + "\n" + video['title']
+
+    webhookUrl = ccsoBotCreds.getWebhookUrl()
+    # for testing
+
+    # TODO: branch for articles VS videos
+
+    params = {'username': 'webhook-test',
+              'avatar_url': "", 'content': "New video from {}!".format(video['channelTitle']), }
+    params["embeds"] = [
+        {
+            'image': {
+                "url": video['thumbnail'],
+            },
+            # "description": video['description'],
+            "description": descriptions,
+            "title": video['title'],
+            "url": video['url'],
+            "color": 4,  # colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+            "author": {
+                "name": video['channelTitle'],
+                "url": video['channelId'],
+            }
+        }
+    ]
+
+    try:
+        requests.post(webhookUrl, json=params)
+
+    except:
+        print("request error")
+'''
 
 # ------------------------------------- 3) Role Reactions -------------------------------------
 
@@ -122,22 +148,8 @@ async def on_message(message):
     elif message.content == "!pop":
         await ccsoBotCool.youCannotSayPopAndForgetTheSmoke(message)
     
-    elif message.content == "!stop":
-        await message.channel.send("stopping content scheduler...")
-        # code that stops the content scheduler 
-
-    # change the name of this command later 
-    elif message.content == "!testformat":
-        await ccsoBotScheduler.testFormmatedMessage()
 
 # ------------------------------------------------------------------------------------------------------------
-
-@client.event
-async def on_ready():
-    # What do you want the bot to do at login?
-    print('We have logged in as {0.user}'.format(client))
-    # start the contentscheduler 
-    ccsoBotScheduler.grabSomeContent.start()
 
 # ------------------------------------------------------------------------------------------------------------
 
@@ -148,17 +160,12 @@ def bootstrapping():
     token = botCreds.getDiscordKey()
     gcpKey = botCreds.getGCPKey()
 
-    # ARE WE TESTING? 
-    setLiveOrTesting()
-
     ccsoBotReactions.setClientToken(client)
-    # setting global client var for scheduler 
-    ccsoBotScheduler.setClientToken(client)
 
     # starts the content scheduler
-    # will this still work if...
-    
+    #grabSomeContent.start()
     print("bootstrapping done")
     client.run(token)
-    
+
+
 bootstrapping()

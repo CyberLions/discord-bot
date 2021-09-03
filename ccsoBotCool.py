@@ -20,6 +20,5 @@ async def youCannotSayPopAndForgetTheSmoke(message):
         aSong = random.choice(popSmokeSongs)
         await message.channel.send("Woo back baby 💫💫" + "\n" + aSong)
 
-def setLiveOrTesting(liveOrTest): 
-    print("changing from live to testing...")
+
 

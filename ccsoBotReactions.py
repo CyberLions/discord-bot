@@ -206,7 +206,3 @@ async def embedRoleMessage():
 
         await addReactionsToMessage(staticMessage, dynamicMessage)
 
-def setLiveOrTesting(liveOrTest): 
-    print("changing from live to testing...")
-
-    
