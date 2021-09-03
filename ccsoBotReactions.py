@@ -10,28 +10,13 @@ client = discord.Client()
 
 
 def setClientToken(token):
-    print("client set!")
+    print("Client set in Reactions")
     global client
     client = token
     # sets global var pog
 
 
 # Emojis for roles
-emojis = {
-    '👍',
-    '👀',
-    '🍉',
-    '<:coolspot:854115885013663774>',
-    '🏳️',
-    '⚔️',
-    '🛡️',
-    '🎮',
-    '⚪',
-    '🔵',
-    '🟤',
-    '⚫',
-
-}
 
 staticRoles = [
     '1️⃣',
@@ -81,9 +66,7 @@ def rolePicker(string, message):
 
 async def addReactionsToMessage(staticMessage, dynamicMessage):
     # Adds the emoji reactions to the message initially
-    for emoji in emojis:
-        print("")
-
+    
     for role in staticRoles:
         await staticMessage.add_reaction(role)
 
@@ -91,7 +74,7 @@ async def addReactionsToMessage(staticMessage, dynamicMessage):
         await dynamicMessage.add_reaction(role)
 
 
-async def addRoleReaction(payload, a):
+async def addRoleReaction(payload):
     print("Adding role")
     print(payload.channel_id)
     print(client)
@@ -109,14 +92,14 @@ async def addRoleReaction(payload, a):
     if userId != client.user.id:
         # Check to see if the react is in the correct channel so it doesnt trigger in other channels
         # REPLACE THIS CHANNEL NAME AS NEEDED
-        if discord.utils.get(client.get_all_channels(), name="bot-react-post-test") == message_channel:
+        if discord.utils.get(client.get_all_channels(), name="role-selection") == message_channel:
             try:
                 # Gets the role based on the emoji and adds it to the user w/ a print
                 role = rolePicker(emoji, message)
 
                 if role in user.roles:
                     await user.remove_roles(role, message)
-                    print("removed role " + str(role))
+                    print("Removed role " + str(role))
                 else:
                     # check if its static or dynamic
                     # if dynamic, remove other dynamic roles before adding
@@ -144,14 +127,14 @@ async def addRoleReaction(payload, a):
                                 await user.remove_roles(toRemove)
 
                     await user.add_roles(role, message)
-                    print("added role " + str(role))
+                    print("Added role " + str(role))
 
             # Error handling
             except AttributeError as err:
                 print(err)
                 print("role does not exist")
             except discord.errors.NotFound:
-                print("tried to add role user already has and also i am cumming on zach rn loooool")
+                print("Tried to add role user already has")
 
             await message.remove_reaction(emoji, user)
 
@@ -166,8 +149,8 @@ async def embedRoleMessage():
         rolesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
 
         rolesChannel = discord.utils.get(
-            client.get_all_channels(), name="bot-react-post-test")
-        # await rolesChannel.purge()
+            client.get_all_channels(), name="role-selection")
+        await rolesChannel.purge()
         staticRoles = discord.Embed(
             title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rolesText)
         await rolesChannel.send(embed=staticRoles)
