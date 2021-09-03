@@ -114,8 +114,8 @@ async def on_raw_reaction_add(payload):
     # Defines the message, reaction, user, and role variables
 
     # Waits for a specific message to be reacted to, then adds a user to a specific role
-    await ccsoBotReactions.addRoleReaction(payload, client)
-    # passing the client is probably doodoo; do this @ bootstrapping
+    await ccsoBotReactions.addRoleReaction(payload)
+    
 
 
 # ------------------------------------- 4) Bot Commands -------------------------------------
@@ -164,7 +164,7 @@ def bootstrapping():
 
     # starts the content scheduler
     #grabSomeContent.start()
-    print("bootstrapping done")
+    print("Bootstrapping done")
     client.run(token)
 
 
