@@ -33,79 +33,7 @@ async def on_ready():
 # ------------------------------------- 2) Youtube Parsing/Messaging -------------------------------------
 
 # Checks for new content and posts
-# https://discordpy.readthedocs.io/en/latest/ext/tasks/
-# change the interval using this
-''' Move to Content and Time file
 
-@tasks.loop(hours=8)
-async def grabSomeContent():
-    print("fetching videos...")
-
-    mustHaveChannels = ["UC0ArlFuFYMpEewyRBzdLHiw", "UCByOX6pW9k1OYKpDA2UHvJw", "UCLDnEn-TxejaDB8qm2AUhHQ",
-                        "UCKGe7fZ_S788Jaspxg-_5Sg", "UCVeW9qkBjo3zosnqUbG7CFw", "UC0ZTPkdxlAKf-V33tqXwi3Q"]
-
-    print("fetching new articles...")
-    # ccsoBotScheduler.checkForArticles()
-
-    contentEmbed = discord.Embed(
-        title="New Content for You!", description="**The hottest content, straight to your inbox.**")
-
-    latestVidEachChanel = []
-
-    for channel in mustHaveChannels:
-        print("sending")
-        videos = []
-        # SAVE API CALLS
-        # UGH
-        videos = ccsoBotScheduler.checkForUpdates(channel)
-        print("mainvids: ", videos)
-
-        latestVidEachChanel.append(videos[0])
-
-
-    print(latestVidEachChanel)
-
-    # FOR TEST BIG MESSAGE 
-    sendWebhookMessage(latestVidEachChanel)
-
-def sendWebhookMessage(videos):
-
-    video = videos[0]
-
-    descriptions = ""
-    for video in videos:
-        descriptions = descriptions + "\n" + "\n" + video['title']
-
-    webhookUrl = ccsoBotCreds.getWebhookUrl()
-    # for testing
-
-    # TODO: branch for articles VS videos
-
-    params = {'username': 'webhook-test',
-              'avatar_url': "", 'content': "New video from {}!".format(video['channelTitle']), }
-    params["embeds"] = [
-        {
-            'image': {
-                "url": video['thumbnail'],
-            },
-            # "description": video['description'],
-            "description": descriptions,
-            "title": video['title'],
-            "url": video['url'],
-            "color": 4,  # colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
-            "author": {
-                "name": video['channelTitle'],
-                "url": video['channelId'],
-            }
-        }
-    ]
-
-    try:
-        requests.post(webhookUrl, json=params)
-
-    except:
-        print("request error")
-'''
 
 # ------------------------------------- 3) Role Reactions -------------------------------------
 
@@ -139,10 +67,11 @@ async def on_message(message):
                     name="Rules", value="Feature still in testing", inline=False)
                 await rulesChannel.send(embed=rulesVar)
 
-    # this command purges the roles channel and sends the message to react to
+    # This command purges the roles channel and sends the message to react to
     elif message.content == "!embedRoles":
-        # TODO: CHECK IF THE SENDER IS ADMIN SO THAT RANDOMS CAN'T JUST...
-        await ccsoBotReactions.embedRoleMessage()
+        for role in message.author.roles:
+            if role.name == "server-manager":
+                await ccsoBotReactions.embedRoleMessage()
 
     # pop smoke command
     elif message.content == "!pop":
