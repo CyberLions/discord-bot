@@ -3,7 +3,6 @@ from discord import webhook
 import ccsoBotReactions
 import botCreds
 import ccsoBotCool
-import ccsoBotScheduler
 import requests
 import random
 from discord.ext import tasks, commands
@@ -90,6 +89,9 @@ def bootstrapping():
     gcpKey = botCreds.getGCPKey()
 
     ccsoBotReactions.setClientToken(client)
+    roleChanId = discord.utils.get(client.get_all_channels(), name="role-selection")
+    print(str(roleChanId))
+    ccsoBotReactions.setRoleChannelId(roleChanId)
 
     # starts the content scheduler
     print("Bootstrapping done")

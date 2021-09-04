@@ -15,10 +15,14 @@ def setClientToken(token):
     client = token
     # sets global var pog
 
+def setRoleChannelId(channelId):
+    print("Channel ID set for Roles")
+    global roleChannelId
+    roleChannelId = channelId
 
 # Emojis for roles
 
-staticRoles = [
+dynamicRoles = [
     '1️⃣',
     '2️⃣',
     '3️⃣',
@@ -26,7 +30,7 @@ staticRoles = [
     '⭐'
 ]
 
-dynamicRoles = [
+staticRoles = [
     '⚔️',
     '🛡️',
     '🏳️',
@@ -35,7 +39,7 @@ dynamicRoles = [
 
 
 def getRoleEmojis():
-    return staticRoles + dynamicRoles
+    return dynamicRoles + staticRoles
 
 
 def rolePicker(string, message):
@@ -64,18 +68,20 @@ def rolePicker(string, message):
     return switcher.get(string, None)
 
 
-async def addReactionsToMessage(staticMessage, dynamicMessage):
+async def addReactionsToMessage(dynamicMessage, staticMessage):
     # Adds the emoji reactions to the message initially
-    
-    for role in staticRoles:
-        await staticMessage.add_reaction(role)
 
     for role in dynamicRoles:
         await dynamicMessage.add_reaction(role)
 
+    for role in staticRoles:
+        await staticMessage.add_reaction(role)
+
+    
+
 
 async def addRoleReaction(payload):
-    print("Adding role")
+    print("Reaction seen")
     print(payload.channel_id)
     print(client)
     print(client.get_channel(payload.channel_id))
@@ -92,7 +98,7 @@ async def addRoleReaction(payload):
     if userId != client.user.id:
         # Check to see if the react is in the correct channel so it doesnt trigger in other channels
         # REPLACE THIS CHANNEL NAME AS NEEDED
-        if discord.utils.get(client.get_all_channels(), name="role-selection") == message_channel:
+        if roleChannelId == message_channel:
             try:
                 # Gets the role based on the emoji and adds it to the user w/ a print
                 role = rolePicker(emoji, message)
@@ -104,9 +110,9 @@ async def addRoleReaction(payload):
                     # check if its static or dynamic
                     # if dynamic, remove other dynamic roles before adding
 
-                    for staticRole in staticRoles:
+                    for dynamicRole in dynamicRoles:
 
-                        if emoji == staticRole:
+                        if emoji == dynamicRole:
 
                             firstYear = discord.utils.get(
                                 message.guild.roles, name="First Year")
@@ -132,7 +138,7 @@ async def addRoleReaction(payload):
             # Error handling
             except AttributeError as err:
                 print(err)
-                print("role does not exist")
+                print("Role does not exist")
             except discord.errors.NotFound:
                 print("Tried to add role user already has")
 
@@ -148,44 +154,39 @@ async def embedRoleMessage():
 
         rolesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
 
-        rolesChannel = discord.utils.get(
-            client.get_all_channels(), name="role-selection")
+        rolesChannel = roleChannelId
         await rolesChannel.purge()
-        staticRoles = discord.Embed(
+        dynamicRoles = discord.Embed(
             title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rolesText)
-        await rolesChannel.send(embed=staticRoles)
+        await rolesChannel.send(embed=dynamicRoles)
 
-        static_id = rolesChannel.last_message_id
+        dynamic_id = rolesChannel.last_message_id
 
         cr1 = getRoleEmojis()[5]
         cr2 = getRoleEmojis()[6]
         cr3 = getRoleEmojis()[7]
         cr4 = getRoleEmojis()[8]
 
-        dynamicRoles = discord.Embed(
+        staticRoles = discord.Embed(
             title="Club Roles", description="**React to receive a role that you are interested in!**")
-        dynamicRoles.add_field(
+        staticRoles.add_field(
             name="{} Offense (CPTC)".format(cr1), value="For people interested in offensive security and or penetration testing. This is also for people interested in our CPTC competition team!", inline=False)
-        dynamicRoles.add_field(
+        staticRoles.add_field(
             name="{} Defense (CCDC)".format(cr2), value="For people interested in defensive security and or security monitoring. This is also for people interested in our CCDC competition team!", inline=False)
-        dynamicRoles.add_field(
+        staticRoles.add_field(
             name="{} CTF".format(cr3), value="For people interested in competing in CTFs such as NCL and PicoCTF. This is also for people interested in other platforms such as Hack the box, TryHackMe, and Blue team labs online!", inline=False)
-        dynamicRoles.add_field(
+        staticRoles.add_field(
             name="{} Gaming".format(cr4), value="For people interested in hanging out with club members and playing video games. Some of the games include Minecraft, Among Us, and Escape From Tarkov!", inline=False)
 
-        await rolesChannel.send(embed=dynamicRoles)
+        await rolesChannel.send(embed=staticRoles)
 
-        dynamic_id = rolesChannel.last_message_id
+        static_id = rolesChannel.last_message_id
 
         # function that adds reactions if the message is deleted
         # get the messages, get the ids
-        # IS AN INT NOT A STRING HAHAHAHA
-        rolesChanId = 878313648618098709
-        print(static_id)
-        print(dynamic_id)
 
-        staticMessage = await client.get_channel(rolesChanId).fetch_message(static_id)
-        dynamicMessage = await client.get_channel(rolesChanId).fetch_message(dynamic_id)
+        dynamicMessage = await client.get_channel(roleChannelId).fetch_message(dynamic_id)
+        staticMessage = await client.get_channel(roleChannelId).fetch_message(static_id)
 
-        await addReactionsToMessage(staticMessage, dynamicMessage)
+        await addReactionsToMessage(dynamicMessage, staticMessage)
 
