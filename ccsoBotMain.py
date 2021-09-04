@@ -92,7 +92,6 @@ def bootstrapping():
     ccsoBotReactions.setClientToken(client)
 
     # starts the content scheduler
-    #grabSomeContent.start()
     print("Bootstrapping done")
     client.run(token)
 
