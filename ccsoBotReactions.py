@@ -15,10 +15,13 @@ def setClientToken(token):
     client = token
     # sets global var pog
 
+'''
 def setRoleChannelId(channelId):
     print("Channel ID set for Roles")
     global roleChannelId
     roleChannelId = channelId
+'''
+
 
 # Emojis for roles
 
@@ -77,7 +80,7 @@ async def addReactionsToMessage(dynamicMessage, staticMessage):
     for role in staticRoles:
         await staticMessage.add_reaction(role)
 
-    
+
 
 
 async def addRoleReaction(payload):
@@ -98,7 +101,7 @@ async def addRoleReaction(payload):
     if userId != client.user.id:
         # Check to see if the react is in the correct channel so it doesnt trigger in other channels
         # REPLACE THIS CHANNEL NAME AS NEEDED
-        if roleChannelId == message_channel:
+        if discord.utils.get(client.get_all_channels(), name="role-selection") == message_channel:
             try:
                 # Gets the role based on the emoji and adds it to the user w/ a print
                 role = rolePicker(emoji, message)
@@ -154,7 +157,7 @@ async def embedRoleMessage():
 
         rolesText = "{} **1st Year**".format(mf1) + "\n" + "{} **Second Year**".format(mf2) + "\n" + "{} **Third Year**".format(mf3) + "\n" + "{} **Fourth Year**".format(mf4) + "\n" + "{} **Alumni / Other**".format(mf5)
 
-        rolesChannel = roleChannelId
+        rolesChannel = discord.utils.get(client.get_all_channels(), name="role-selection")
         await rolesChannel.purge()
         dynamicRoles = discord.Embed(
             title="Class Roles", description="**React below to select your class/year!**" + "\n" + "\n" + rolesText)
@@ -184,6 +187,9 @@ async def embedRoleMessage():
 
         # function that adds reactions if the message is deleted
         # get the messages, get the ids
+        roleChannelId = 879214780764798996
+        print(static_id)
+        print(dynamic_id)
 
         dynamicMessage = await client.get_channel(roleChannelId).fetch_message(dynamic_id)
         staticMessage = await client.get_channel(roleChannelId).fetch_message(static_id)

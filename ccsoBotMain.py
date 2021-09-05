@@ -1,7 +1,7 @@
 import discord
 from discord import webhook
 import ccsoBotReactions
-import botCreds
+import ccsoBotCreds
 import ccsoBotCool
 import requests
 import random
@@ -22,7 +22,7 @@ client = discord.Client(intents=intents)
 # ------------------------------------- 1) Reaction Role Message -------------------------------------
 # Takes an emoji and returns a role based on the input, default case is None, this return is handled in on_raw__reaction_add()
 
-# moved to ccsoreactions! 
+# moved to ccsoreactions!
 
 @client.event
 async def on_ready():
@@ -42,7 +42,7 @@ async def on_raw_reaction_add(payload):
 
     # Waits for a specific message to be reacted to, then adds a user to a specific role
     await ccsoBotReactions.addRoleReaction(payload)
-    
+
 
 
 # ------------------------------------- 4) Bot Commands -------------------------------------
@@ -56,9 +56,9 @@ async def on_message(message):
     elif message.content.startswith("!rules"):
         print(message.author.roles)
         for role in message.author.roles:
-            if role.name == "server-manager":
+            if role.name == "Server Manager":
                 rulesChannel = discord.utils.get(
-                    client.get_all_channels(), name="rules")
+                    client.get_all_channels(), name="rules-test")
                 await rulesChannel.purge()
                 rulesVar = discord.Embed(
                     title="CCSO Server Rules", description="")
@@ -69,13 +69,13 @@ async def on_message(message):
     # This command purges the roles channel and sends the message to react to
     elif message.content == "!embedRoles":
         for role in message.author.roles:
-            if role.name == "server-manager":
+            if role.name == "Server Manager":
                 await ccsoBotReactions.embedRoleMessage()
 
     # pop smoke command
     elif message.content == "!pop":
         await ccsoBotCool.youCannotSayPopAndForgetTheSmoke(message)
-    
+
 
 # ------------------------------------------------------------------------------------------------------------
 
@@ -85,14 +85,15 @@ def bootstrapping():
 
     # Initial log in and check from the bot
     # grab Discord API token from creds.py file
-    token = botCreds.getDiscordKey()
-    gcpKey = botCreds.getGCPKey()
+    token = ccsoBotCreds.getDiscordKey()
+    gcpKey = ccsoBotCreds.getGCPKey()
 
     ccsoBotReactions.setClientToken(client)
+    '''
     roleChanId = discord.utils.get(client.get_all_channels(), name="role-selection")
-    print(str(roleChanId))
+    print(roleChanId)
     ccsoBotReactions.setRoleChannelId(roleChanId)
-
+    '''
     # starts the content scheduler
     print("Bootstrapping done")
     client.run(token)
