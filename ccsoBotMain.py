@@ -80,6 +80,12 @@ async def on_message(message):
     elif message.content == "!vim3":
         await ccsoBotCool.vimOnACube(message)
 
+    # lmao petr is a simp 
+    elif message.content == "!simp":
+        await ccsoBotCool.simpy(message)
+
+
+
 
 # ------------------------------------------------------------------------------------------------------------
 

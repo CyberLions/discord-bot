@@ -16,6 +16,7 @@ async def youCannotSayPopAndForgetTheSmoke(message):
                          "https://www.youtube.com/watch?v=EZkNUmVXg6U", # Element
                          "https://www.youtube.com/watch?v=Yr2Nq-7mQoY", # AP SPICY I BUST A CHECK ON MY NIKES
                          "https://www.youtube.com/watch?v=XLQ3O_SXw1I", # Ordinary
+                         "https://www.youtube.com/watch?v=3cQh0BWh6Tg", # Light it Up (Verse Only)
                          ]
         aSong = random.choice(popSmokeSongs)
         await message.channel.send("Woo back baby 💫💫" + "\n" + aSong)
@@ -23,4 +24,10 @@ async def youCannotSayPopAndForgetTheSmoke(message):
 async def vimOnACube(message):
     cubeLink = "https://github.com/oakes/vim_cubed"
     await message.channel.send("It's on a cube! " + cubeLink)
+
+async def simpy(message):
+    simpy = "images/simpy.png"
+    with open(simpy, "rb") as fh:
+        f = discord.File(fh, filename=simpy)
+    await message.channel.send(file=f)
 
