@@ -20,5 +20,7 @@ async def youCannotSayPopAndForgetTheSmoke(message):
         aSong = random.choice(popSmokeSongs)
         await message.channel.send("Woo back baby 💫💫" + "\n" + aSong)
 
-
+async def vimOnACube(message):
+    cubeLink = "https://github.com/oakes/vim_cubed"
+    await message.channel.send("It's on a cube! " + cubeLink)
 

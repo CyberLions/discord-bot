@@ -76,6 +76,10 @@ async def on_message(message):
     elif message.content == "!pop":
         await ccsoBotCool.youCannotSayPopAndForgetTheSmoke(message)
 
+    #vim on a cube (eugene)
+    elif message.content == "!vim3":
+        await ccsoBotCool.vimOnACube(message)
+
 
 # ------------------------------------------------------------------------------------------------------------
 
