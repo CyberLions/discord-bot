@@ -3,6 +3,7 @@ from discord import webhook
 import ccsoBotReactions
 import ccsoBotCreds
 import ccsoBotCool
+import ccsoBotPosts
 import requests
 import random
 from discord.ext import tasks, commands
@@ -28,6 +29,7 @@ client = discord.Client(intents=intents)
 async def on_ready():
     # What do you want the bot to do at login?
     print('We have logged in as {0.user}'.format(client))
+    await ccsoBotReactions.embedRoleMessage()
 
 # ------------------------------------- 2) Youtube Parsing/Messaging -------------------------------------
 
@@ -54,17 +56,15 @@ async def on_message(message):
 
     # if the message !rules is sent, it will send the rules message into #rules ADD: check for server admin role
     elif message.content.startswith("!rules"):
-        print(message.author.roles)
         for role in message.author.roles:
             if role.name == "Server Manager":
-                rulesChannel = discord.utils.get(
-                    client.get_all_channels(), name="rules-test")
+                rulesChannel = discord.utils.get(client.get_all_channels(), name="rules")
                 await rulesChannel.purge()
-                rulesVar = discord.Embed(
-                    title="CCSO Server Rules", description="")
-                rulesVar.add_field(
-                    name="Rules", value="Feature still in testing", inline=False)
-                await rulesChannel.send(embed=rulesVar)
+
+                await rulesChannel.send(embed=ccsoBotPosts.getRulePost())
+                await rulesChannel.send(embed=ccsoBotPosts.getRulePost2())
+                await rulesChannel.send(embed=ccsoBotPosts.getRulePost3())
+                await rulesChannel.send(embed=ccsoBotPosts.getRulePost4())
 
     # This command purges the roles channel and sends the message to react to
     elif message.content == "!embedRoles":
@@ -76,16 +76,17 @@ async def on_message(message):
     elif message.content == "!pop":
         await ccsoBotCool.youCannotSayPopAndForgetTheSmoke(message)
 
+    # capybara command
+    elif message.content == "!capy":
+        await ccsoBotCool.capybaraTime(message)
+
     #vim on a cube (eugene)
     elif message.content == "!vim3":
         await ccsoBotCool.vimOnACube(message)
 
-    # lmao petr is a simp 
+    # lmao petr is a simp
     elif message.content == "!simp":
         await ccsoBotCool.simpy(message)
-
-
-
 
 # ------------------------------------------------------------------------------------------------------------
 
