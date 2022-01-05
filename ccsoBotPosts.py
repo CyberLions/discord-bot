@@ -60,6 +60,53 @@ def getRulePost4():
 
 '''
 def getPlatformPost():
+	
+	embed1=discord.Embed(title="Top 5 Resources")
+
+	embed2=discord.Embed(title="TryHackMe", url="https://tryhackme.com", description="Best platform overall. Provides learning topics such as the basics and more advanced topics within offensive and defensive security. Great for any beginner.")
+
+	embed3=discord.Embed(title="TCM Academy", url="https://academy.tcm-sec.com/", description="Provides good courses that you can get a discount for or completely free. Most of the courses focus on offensive security but they plan on covering more subjects in the future. Some courses are beginner to intermediate level.")
+
+	embed4=discord.Embed(title="HackTheBox", url="https://www.hackthebox.com/", description="Best offensive security platform overall. This is the go to platform when it comes to pen testing. However, they mainly specialize with offensive security and lack defensive content. High learning curve, recommended for intermediates.")
+
+	embed5=discord.Embed(title="OverTheWire", url="https://overthewire.org", description="Good platform to practice linux skills. Recommended for all beginners and for experienced users to brush up on some things. Also check out its cousin: https://underthewire.tech/")
+
+	embed6=discord.Embed(title="INE", url="https://ine.com/", description="Provide free learning content. They host training for their eLearnSecurity certifications on the site as well. Beginner level.")
+
+	embed7=discord.Embed(title="Offensive Security Resources", color= 15158332)
+
+	embed8=discord.Embed(title="PortSwigger", url="https://portswigger.net/web-security", description="Provides an academy for web app pen testing. They are also the creators of BurpSuite.", color= 15158332)
+
+	embed9=discord.Embed(title="PentesterLab", url="https://pentesterlab.com/", description="Host a large collection of web app pen testing exercises.", color= 15158332)
+
+	embed10=discord.Embed(title="JuiceShop", url="https://owasp.org/www-project-juice-shop/", description="Web app designed for pen testing beginners. This was created by the people behind the OWASP Top 10 framework.", color= 15158332)
+
+	embed11=discord.Embed(title="CyberSecLabs", url="https://www.cyberseclabs.co.uk/", description="Another platform similar to TryHackMe. Based in the UK.", color= 15158332)
+
+	embed12=discord.Embed(title="VulnHub", url="https://www.vulnhub.com/", description="User created VMs that you can download and hack. Highly recommended for anyone that would like to work with VMs more and or interested in making a home lab.", color= 15158332)
+
+	embed13=discord.Embed(title="HackThisSite", url="https://www.hackthissite.org/", description="Site that hosts web pen testing exercises as well.", color= 15158332)
+
+	embed14=discord.Embed(title="Hack.Me", url="https://hack.me/", description="Web app pen testing resource.", color= 15158332)
+
+	embed15=discord.Embed(title="Defensive Security Resources”, color= 3447003)
+
+	embed16=discord.Embed(title="Blue Team Labs Online", url="https://blueteamlabs.online/", description="Only defensive security platform that has been found. They host challenges and exercises that are heavy in incident response and forensics. Made by Security Blue Team.", color= 3447003)
+
+	embed17=discord.Embed(title="VulnHub", url="https://www.vulnhub.com/", description="This is listed as defensive since you can download the VMs and try to harden them against the vulnerabilities you exploited. Best path to take is to look for guides on how to exploit the VMs and then research how to patch that certain exploit.", color= 3447003)
+
+	embed18=discord.Embed(title="Digital Forensics Association", url="http://www.digitalforensicsassociation.org/evidence-files/", description="Collection of forensic files that are free to use.", color= 3447003)
+
+	embed19=discord.Embed(title="Metasploitable 2 Hardening Guide", url="https://akvilekiskis.com/work/metasploitable/index.html", description="Guide on how to patch and fix vulnerabilities on Metasploitable 2. This overall represents what CCDC focuses on.", color= 3447003)
+
+	embed20=discord.Embed(title="CTF Resources”, color= 15105570)
+
+	embed21=discord.Embed(title="PicoCTF", url="https://www.picoctf.org/", description="A free beginner CTF that has a yearly competition. They also have a gymnasium full of all of their previous competitions.", color= 15105570)
+
+	embed22=discord.Embed(title="National Cyber League", url="https://nationalcyberleague.org/", description="Beginner CTF that you have to pay for. Provides great challenges to solve.", color= 15105570)
+
+	embed23=discord.Embed(title="CTF Time", url="https://ctftime.org/", description="Website dedicated to listing all future CTF events.", color= 15105570)
+
 '''
 
 
