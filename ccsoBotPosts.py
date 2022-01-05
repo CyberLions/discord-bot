@@ -106,6 +106,10 @@ def getPlatformPost():
 	embed22=discord.Embed(title="National Cyber League", url="https://nationalcyberleague.org/", description="Beginner CTF that you have to pay for. Provides great challenges to solve.", color= 15105570)
 
 	embed23=discord.Embed(title="CTF Time", url="https://ctftime.org/", description="Website dedicated to listing all future CTF events.", color= 15105570)
+	
+	platformList = [embed1, embed2, embed3,  embed4, embed5, embed6, embed7, embed8, embed9, embed10, embed11, embed12, embed13, embed14, embed15, embed16, embed17, embed18, embed19, embed20, embed21, embed22, embed23]
+
+	return platformList
 
 '''
 
