@@ -7,7 +7,6 @@ import os
 
 def getDiscordKey():
     discordKey = "INSERT DISCORD KEY HERE"
-    discordKey = os.environ.get('DISC_KEY')
     return discordKey
 
 def getGCPKey():
@@ -16,5 +15,4 @@ def getGCPKey():
 
 def getWebhookUrl():
     webhookUrl = "INSERT WEBHOOK KEY HERE"
-    webhookUrl = os.environ.get('WHOOK')
     return webhookUrl
