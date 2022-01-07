@@ -1,7 +1,7 @@
 import discord
 from discord import webhook
 import ccsoBotReactions
-import ccsoBotCreds
+import botCreds
 import ccsoBotCool
 import ccsoBotPosts
 import requests
@@ -25,6 +25,7 @@ client = discord.Client(intents=intents)
 
 # moved to ccsoreactions!
 
+
 @client.event
 async def on_ready():
     # What do you want the bot to do at login?
@@ -46,7 +47,6 @@ async def on_raw_reaction_add(payload):
     await ccsoBotReactions.addRoleReaction(payload)
 
 
-
 # ------------------------------------- 4) Bot Commands -------------------------------------
 
 @client.event
@@ -58,7 +58,8 @@ async def on_message(message):
     elif message.content.startswith("!rules"):
         for role in message.author.roles:
             if role.name == "Server Manager":
-                rulesChannel = discord.utils.get(client.get_all_channels(), name="rules")
+                rulesChannel = discord.utils.get(
+                    client.get_all_channels(), name="rules")
                 await rulesChannel.purge()
 
                 await rulesChannel.send(embed=ccsoBotPosts.getRulePost())
@@ -66,36 +67,20 @@ async def on_message(message):
                 await rulesChannel.send(embed=ccsoBotPosts.getRulePost3())
                 await rulesChannel.send(embed=ccsoBotPosts.getRulePost4())
 
-
     elif message.content.startswith("!platform"):
-            for role in message.author.roles:
-                if role.name == "Server Manager":
-                    resourceChannel = discord.utils.get(client.get_all_channels(), name="resource-test")
-                    await resourceChannel.purge()
+        for role in message.author.roles:
+            if role.name == "Server Manager":
+                resourceChannel = discord.utils.get(
+                    client.get_all_channels(), name="resource-test")
+                await resourceChannel.purge()
 
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost1())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost2())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost3())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost4())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost5())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost6())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost7())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost8())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost9())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost10())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost11())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost12())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost13())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost14())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost15())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost16())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost17())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost18())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost19())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost20())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost21())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost22())
+            # Grabbing the platform posts via index
+                for x in range(4):
+                    embeds = ccsoBotPosts.getPlatformPosts(x)
+
+                    # send each embed from the list returned above.
+                    for embed in embeds:
+                        await resourceChannel.send(embed)
 
     # This command purges the roles channel and sends the message to react to
     elif message.content == "!embedRoles":
@@ -111,7 +96,7 @@ async def on_message(message):
     elif message.content == "!capy":
         await ccsoBotCool.capybaraTime(message)
 
-    #vim on a cube (eugene)
+    # vim on a cube (eugene)
     elif message.content == "!vim":
         await ccsoBotCool.vimOnACube(message)
 
@@ -123,12 +108,13 @@ async def on_message(message):
 
 # ------------------------------------------------------------------------------------------------------------
 
+
 def bootstrapping():
 
     # Initial log in and check from the bot
     # grab Discord API token from creds.py file
-    token = ccsoBotCreds.getDiscordKey()
-    gcpKey = ccsoBotCreds.getGCPKey()
+    token = botCreds.getDiscordKey()
+    gcpKey = botCreds.getGCPKey()
 
     ccsoBotReactions.setClientToken(client)
     '''
