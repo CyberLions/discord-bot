@@ -4,6 +4,7 @@ import ccsoBotReactions
 import botCreds
 import ccsoBotCool
 import ccsoBotPosts
+import contentAndTime
 import requests
 import random
 from discord.ext import tasks, commands
@@ -30,7 +31,7 @@ client = discord.Client(intents=intents)
 async def on_ready():
     # What do you want the bot to do at login?
     print('We have logged in as {0.user}'.format(client))
-    await ccsoBotReactions.embedRoleMessage()
+    # await ccsoBotReactions.embedRoleMessage()
 
 # ------------------------------------- 2) Youtube Parsing/Messaging -------------------------------------
 
@@ -89,6 +90,12 @@ async def on_message(message):
             if role.name == "Server Manager":
                 await ccsoBotReactions.embedRoleMessage()
 
+    # this command starts/stops the content seeking scheduler 
+    elif message.content == "!toggleScheduler":
+        for role in message.author.roles:
+            if role.name == "Server Manager":
+                await contentAndTime.scheduler()
+
     # pop smoke command
     elif message.content == "!pop":
         await ccsoBotCool.youCannotSayPopAndForgetTheSmoke(message)
@@ -123,7 +130,7 @@ def bootstrapping():
     print(roleChanId)
     ccsoBotReactions.setRoleChannelId(roleChanId)
     '''
-    # starts the content scheduler
+
     print("Bootstrapping done")
     client.run(token)
 
