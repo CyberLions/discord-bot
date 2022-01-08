@@ -41,12 +41,17 @@ async def scheduler():
         print("Not currently looking for content - perhaps it is off hours, or the scheulder was toggled off?")
     else:
         # Check if we are within the bounds of time (8am-10pm)
-        current_time = datetime.now()   
-        timetime = current_time.time
+        current_hour = datetime.now().hour
+        if(current_hour >= 8 and current_hour < 22):
+            # If we are in the current bounds of time...
+            print("we live!")
+            # CALL THE METHODS THAT CHECK FOR CONTENT 
+            # article
+            # video
 
-
-        
-        print(timetime)
+        else:
+            # It's too early or late. 
+            print("outside of bot content checking hours")
 
         
 
