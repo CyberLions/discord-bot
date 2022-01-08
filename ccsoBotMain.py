@@ -79,8 +79,9 @@ async def on_message(message):
                     embeds = ccsoBotPosts.getPlatformPosts(x)
 
                     # send each embed from the list returned above.
-                    for embed in embeds:
-                        await resourceChannel.send(embed)
+                    for embed_to_send in embeds:
+                        # THIS KWARG IS IMPORTANT! WITHOUT IT, JUST SENDS THE RAW OBJECT INSTEAD OF AN EMBED.
+                        await resourceChannel.send(embed=embed_to_send)
 
     # This command purges the roles channel and sends the message to react to
     elif message.content == "!embedRoles":
