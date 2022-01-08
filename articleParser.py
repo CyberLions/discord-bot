@@ -1,6 +1,6 @@
 import discord
 import feedparser
-from discord import webhook as hook
+import dhooks
 
 
 '''--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'''
@@ -61,7 +61,8 @@ def postAttackBreachDarkReadingArticles():
     print("Total amount of articles found: " + str(len(articleList)))
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+    '''
+    
     j = 0
     while j < len(articleList):
 
@@ -99,8 +100,9 @@ def postAttackBreachDarkReadingArticles():
 
         j += 1
 
+    '''
+# postAttackBreachDarkReadingArticles()
 
-postAttackBreachDarkReadingArticles()
 
 '''--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'''
 
@@ -129,7 +131,7 @@ def postKrebsOnSecurityArticle(enNum):
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     postArticle(krebEmbedArticle)
 
-    print(krebArticle.entries[enNum])
+    # print(krebArticle.entries[enNum])
 
     print(len(krebArticle.entries))  # 10 Entries (Articles)
 

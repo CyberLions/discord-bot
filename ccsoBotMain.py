@@ -5,8 +5,6 @@ import botCreds
 import ccsoBotCool
 import ccsoBotPosts
 import contentAndTime
-import requests
-import random
 from discord.ext import tasks, commands
 
 
@@ -94,7 +92,8 @@ async def on_message(message):
     elif message.content == "!toggleScheduler":
         for role in message.author.roles:
             if role.name == "Server Manager":
-                await contentAndTime.scheduler()
+                # await contentAndTime.scheduler()
+                await contentAndTime.scheduler.start()
 
     # pop smoke command
     elif message.content == "!pop":

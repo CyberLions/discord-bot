@@ -16,7 +16,8 @@ from datetime import datetime
 import botCreds
 import discord
 from discord.ext import tasks, commands
-checking_for_content = False
+import articleParser
+checking_for_content = True
 
 """
     Method that handles the time-scheduling for checking new content.
@@ -24,16 +25,17 @@ checking_for_content = False
     https://discordpy.readthedocs.io/en/latest/ext/tasks/
 """
 # change the interval using this
-@tasks.loop(hours=2)
+# @tasks.loop(hours=2)
+@tasks.loop(seconds=5.0)
 async def scheduler():
-    # toggle
+    # toggle - think more about this later 
     global checking_for_content
-    if(checking_for_content == False):
-        print('Starting content check!')
-        checking_for_content = True
-    else:
-        print('Stopping content checks...')
-        checking_for_content = False
+    # if(checking_for_content == False):
+    #     print('Starting content check!')
+    #     checking_for_content = True
+    # else:
+    #     print('Stopping content checks...')
+    #     checking_for_content = False
 
     # Are we looking?
     if(checking_for_content == False):
@@ -43,15 +45,16 @@ async def scheduler():
         # Check if we are within the bounds of time (8am-10pm)
         current_hour = datetime.now().hour
         if(current_hour >= 8 and current_hour < 22):
-            # If we are in the current bounds of time...
-            print("we live!")
-            # CALL THE METHODS THAT CHECK FOR CONTENT 
+            # If we are in the current bounds of time...CALL THE METHODS THAT CHECK FOR CONTENT 
             # article
-            # video
+            articleParser.postKrebsOnSecurityArticle(0)
 
+            # video
         else:
             # It's too early or late. 
             print("outside of bot content checking hours")
 
-        
+    print("done with this cycle!")
+
+
 
