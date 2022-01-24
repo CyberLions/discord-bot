@@ -43,7 +43,8 @@ async def capybaraTime(message): #For Zach
                      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fc7%2Ff5%2Fc8%2Fc7f5c8873f54b7f3ea5830ffaaa4739c.jpg&f=1&nofb=1",
                      "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F6a%2Fa9%2Fd9%2F6aa9d94dc9115280a3ff7efaa98f40cc.jpg&f=1&nofb=1",
                      "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.vidible.tv%2Fprod%2F2015-07%2F21%2F552d1c3de4b0026284f3b130_cv1.jpg&f=1&nofb=1",
-                     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb8%2F45%2Ff9%2Fb845f90961a9cd1f65b0b61b7e306c6d--crowns.jpg&f=1&nofb=1"
+                     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb8%2F45%2Ff9%2Fb845f90961a9cd1f65b0b61b7e306c6d--crowns.jpg&f=1&nofb=1",
+                     "https://i.imgur.com/YwkIOAj.jpg"
                      ]
 
         capybaraCool = random.choice(capybaras)

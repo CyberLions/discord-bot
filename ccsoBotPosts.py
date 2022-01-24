@@ -1,4 +1,5 @@
 import discord
+import array as arr
 
 #Used this to create the code:
 #https://cog-creators.github.io/discord-embed-sandbox/
@@ -59,6 +60,7 @@ def getRulePost4():
 	return embed
 
 def getPlatformPost():
+
     embed=discord.Embed(title="Top 5 Resources")
 
     return embed

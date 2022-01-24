@@ -68,34 +68,35 @@ async def on_message(message):
 
 
     elif message.content.startswith("!platform"):
-            for role in message.author.roles:
-                if role.name == "Server Manager":
-                    resourceChannel = discord.utils.get(client.get_all_channels(), name="resource-test")
-                    await resourceChannel.purge()
+        for role in message.author.roles:
+            if role.name == "Server Manager":
+                resourceChannel = discord.utils.get(client.get_all_channels(), name="resource-list")
+                await resourceChannel.purge()
 
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost1())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost2())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost3())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost4())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost5())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost6())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost7())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost8())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost9())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost10())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost11())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost12())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost13())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost14())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost15())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost16())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost17())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost18())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost19())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost20())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost21())
-                    await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost22())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost())
+
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost1())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost2())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost3())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost4())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost5())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost6())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost7())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost8())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost9())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost10())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost11())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost12())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost13())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost14())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost15())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost16())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost17())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost18())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost19())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost20())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost21())
+                await resourceChannel.send(embed=ccsoBotPosts.getPlatformPost22())
 
     # This command purges the roles channel and sends the message to react to
     elif message.content == "!embedRoles":
