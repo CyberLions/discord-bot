@@ -175,3 +175,88 @@ def getPlatformPost22():
 
     return embed
 
+def getYouTubeList():
+
+    youtubeList = [ 'https://www.youtube.com/c/JohnHammond010',
+                    'https://www.youtube.com/c/LiveOverflow',
+                    'https://www.youtube.com/c/ippsec',
+                    'https://www.youtube.com/c/MalwareTechBlog',
+                    'https://www.youtube.com/c/InsiderPhD',
+                    'https://www.youtube.com/c/NetworkChuck',
+                    'https://www.youtube.com/c/MentalOutlaw',
+                    'https://www.youtube.com/c/TheCyberMentor',
+                    'https://www.youtube.com/c/SirSudo',
+                    'https://www.youtube.com/c/HackerSploit',
+                    'https://www.youtube.com/user/Computerphile',
+                    'https://www.youtube.com/c/RanaKhalil101',
+                    'https://www.youtube.com/c/thepcsecuritychannel',
+                    'https://www.youtube.com/c/hak5',
+                    'https://www.youtube.com/c/Cyberspatial',
+                    'https://www.youtube.com/c/c0nd4',
+                    'https://www.youtube.com/c/AwesomeOpenSource',
+                    'https://www.youtube.com/c/AndyLi',
+                    'https://www.youtube.com/c/InfiniteLogins',
+                    'https://www.youtube.com/user/irongeek',
+                    'https://www.youtube.com/c/xct_de',
+                    'https://www.youtube.com/channel/UCRnWD3BsY5Co2MMETB7lHQw',
+                    'https://www.youtube.com/c/HackTheBox',
+                    'https://www.youtube.com/c/Seytonic',
+                    'https://www.youtube.com/c/STOKfredrik',
+                    'https://www.youtube.com/c/WilsonSecurityGroup',
+                    'https://www.youtube.com/c/FindingUrPasswd',
+                    'https://www.youtube.com/c/TippingPointZeroDayInitiative',
+                    'https://www.youtube.com/c/DisruptReality',
+                    'https://www.youtube.com/c/NullByteWHT',
+                    'https://www.youtube.com/c/cybercdh',
+                    'https://www.youtube.com/c/EngineerMan',
+                    'https://www.youtube.com/channel/UCTLUi3oc1-a7dS-2-YgEKmA',
+                    'https://www.youtube.com/c/PwnFunction',
+                    'https://www.youtube.com/c/Nahamsec',
+                    'https://www.youtube.com/c/StefanRows',
+                    'https://www.youtube.com/c/JoeHellethemayor',
+                    'https://www.youtube.com/c/cwinfosec',
+                    'https://www.youtube.com/c/FarahHawa',
+                    'https://www.youtube.com/c/DCcybersec',
+                    'https://www.youtube.com/c/codingo',
+                    'https://www.youtube.com/channel/UCIXot2vRgeM5alhAlpTbhQA',
+                    'https://www.youtube.com/c/Hacksplained',
+                    'https://www.youtube.com/c/hakluke',
+                    'https://www.youtube.com/user/DEFCONConference',
+                    'https://www.youtube.com/c/PennStateWorldCampusTechClub',
+                    'https://www.youtube.com/user/HackersOnBoard',
+                    'https://www.youtube.com/user/ChRiStIaAn008',
+                    'https://www.youtube.com/user/ShakaconITConference',
+                    'https://www.youtube.com/user/RSAConference'
+                    ]
+
+    return youtubeList
+
+def getTwitterList():
+
+    twitterList = [ 'https://twitter.com/SwiftOnSecurity',
+                    'https://twitter.com/hackermaderas',
+                    'https://twitter.com/shehackspurple',
+                    'https://twitter.com/PHP_CEO',
+                    'https://twitter.com/mubix',
+                    'https://twitter.com/notshenetworks',
+                    'https://twitter.com/MITREattack',
+                    'https://twitter.com/NSA_CSDirector',
+                    'https://twitter.com/USCERT_gov',
+                    'https://twitter.com/cyber',
+                    'https://twitter.com/ONCDPress'
+                    ]
+
+    return twitterList
+
+def getNewsList():
+
+    newsList = ['https://www.darkreading.com/',
+                'https://krebsonsecurity.com/',
+                'https://cybernews.com/',
+                'https://www.bleepingcomputer.com/',
+                'https://www.securitymagazine.com/',
+                'https://www.databreachtoday.com/'
+                ]
+
+    return newsList
+
