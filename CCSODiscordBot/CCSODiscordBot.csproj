@@ -17,6 +17,7 @@
     <None Remove="Modules\CTFd\" />
     <None Remove="Microsoft.Extensions.DependencyInjection" />
     <None Remove="Services\" />
+    <None Remove="Modules\Rules\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.6.1" />
@@ -29,5 +30,6 @@
     <Folder Include="Modules\Roles\" />
     <Folder Include="Modules\CTFd\" />
     <Folder Include="Services\" />
+    <Folder Include="Modules\Rules\" />
   </ItemGroup>
 </Project>
