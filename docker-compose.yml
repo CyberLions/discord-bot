@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  ccsodiscordbot:
+    image: ${DOCKER_REGISTRY-}ccsodiscordbot
+    build:
+      context: .
+      dockerfile: CCSODiscordBot/Dockerfile
