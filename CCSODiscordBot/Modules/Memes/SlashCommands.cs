@@ -79,7 +79,32 @@ namespace CCSODiscordBot.Modules.Memes
             // Send the capy:
             await FollowupAsync(capybaraImageLinks[index]);
         }
+        [SlashCommand("vim", "Everyone's favorite text editor on a cube.", runMode: RunMode.Async)]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.SendMessages)]
+        public async Task VimCube()
+        {
+            // Create embed:
+            var embed = new EmbedBuilder();
+            embed.WithTitle("vim on a cube!");
+            embed.WithUrl("https://github.com/oakes/vim_cubed");
+            embed.WithDescription("It's on a cube!\n" +
+                "[GitHub Repo](https://github.com/oakes/vim_cubed)");
+            embed.WithImageUrl("https://github.com/oakes/vim_cubed/raw/master/vim3.gif");
+            embed.WithColor(Color.Blue);
 
+            // Reply:
+            await RespondAsync(embed: embed.Build());
+        }
+        [SlashCommand("simp", "Petr simp", runMode: RunMode.Async)]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.SendMessages)]
+        public async Task Simp()
+        {
+            await DeferAsync(false);
+            string imgPath = Path.Join(Directory.GetCurrentDirectory(), "Modules/Memes/Media/simpy.png");
+            await FollowupWithFileAsync(new FileAttachment(imgPath));
+        }
     }
 }
 

@@ -18,6 +18,7 @@
     <None Remove="Microsoft.Extensions.DependencyInjection" />
     <None Remove="Services\" />
     <None Remove="Modules\Rules\" />
+    <None Remove="Modules\Memes\Media\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.6.1" />
@@ -31,5 +32,11 @@
     <Folder Include="Modules\CTFd\" />
     <Folder Include="Services\" />
     <Folder Include="Modules\Rules\" />
+    <Folder Include="Modules\Memes\Media\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Modules\Memes\Media\simpy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
