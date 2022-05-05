@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Discord.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Discord.Net" Version="3.6.1" />
+  </ItemGroup>
 </Project>
