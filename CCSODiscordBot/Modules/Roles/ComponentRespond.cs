@@ -1,4 +1,5 @@
 ﻿using System;
+using Discord;
 using Discord.Interactions;
 using Discord.Net;
 using Discord.WebSocket;
@@ -10,7 +11,7 @@ namespace CCSODiscordBot.Modules.Roles
 		[ComponentInteraction("toggle-role-*", runMode: RunMode.Async)]
 		[RequireContext(ContextType.Guild)]
 		public async Task RoleButton(ulong roleId)
-        {
+		{
 			await DeferAsync(true);
 
 			// Get desired role:
@@ -20,14 +21,14 @@ namespace CCSODiscordBot.Modules.Roles
 
 			// Ensure role exists and isnt null:
 			if (role is null)
-            {
+			{
 				await FollowupAsync("Role cannot be found. Contact an admin.");
 				throw new NullReferenceException("Role button role cannot be found and is null.");
 			}
 			// Ensure user is a SocketGuildUser.
 			if (user is null)
-            {
-				await FollowupAsync("Role cannot be found. Contact an admin.");
+			{
+				await FollowupAsync("User cannot be found. Contact an admin.");
 				throw new NullReferenceException("User is not guild user.");
 			}
 
@@ -49,11 +50,43 @@ namespace CCSODiscordBot.Modules.Roles
 					await FollowupAsync("Role " + role.Name + " has been added to your account.", ephemeral: true);
 				}
 			}
-			catch(HttpException e) when (e.DiscordCode == Discord.DiscordErrorCode.InsufficientPermissions)
+			catch (HttpException e) when (e.DiscordCode == Discord.DiscordErrorCode.InsufficientPermissions)
 			{
 				await FollowupAsync("Bot does not have permission to perform this action. Contact an admin.", ephemeral: true);
-            }
-        }
-	}
-}
+			}
+		}
+        /// <summary>
+        /// Roles to be created into buttons
+        /// </summary>
+        /// <param name="roles"></param>
+        /// <returns></returns>
+        [ComponentInteraction("roleSelect")]
+        public async Task SelectRolesToButtons(string[] roles)
+        {
+            // Create a list of button compontents:
+            ComponentBuilder components = new ComponentBuilder();
+            foreach (string roleIdStr in roles)
+            {
+                ulong roleId = ulong.Parse(roleIdStr);
+                // Get the role:
+                var role = Context.Guild.GetRole(roleId);
 
+                // Create the button:
+                ButtonBuilder roleBtn = new ButtonBuilder();
+                roleBtn.WithLabel(role.Name);
+                roleBtn.WithCustomId($"toggle-role-{role.Id}");
+                roleBtn.WithStyle(ButtonStyle.Primary);
+
+                // Add the button:
+                components.WithButton(roleBtn);
+            }
+
+            // Log this event and report to user:
+            Console.WriteLine("User '" + Context.User.Username + "' created a react roles embed.");
+            await RespondAsync("Done.", ephemeral: true);
+
+            // Send the buttons
+            await Context.Channel.SendMessageAsync(" ", components: components.Build());
+        }
+    }
+}

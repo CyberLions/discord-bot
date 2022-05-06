@@ -8,42 +8,41 @@ namespace CCSODiscordBot.Modules.Roles
 	public class SlashCommands : InteractionModuleBase<ShardedInteractionContext>
 	{
         [SlashCommand("reactroles", "Creates a react role embed with buttons for each role.", runMode: RunMode.Async)]
-        [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
-        public async Task RoleSelector([Summary(description: "Role that the users can assign themselves to.")] SocketRole role, [Summary(description: "Title of the embed")] string? title = null, [Summary(description: "Embed description")] string? description = null)
+        public async Task RoleSelector()
         {
             // Tell Discord and user that we are processing their request:
             await DeferAsync(true);
 
-            EmbedBuilder? embed = null;
-            // See if either one is null:
-            if (title is not null || description is not null)
+            // Get roles in the guild:
+            var roles = Context.Guild.Roles;
+
+            // Create the basics of the dropdown:
+            var menuBuilder = new SelectMenuBuilder()
+                .WithPlaceholder("Select roles")
+                .WithMinValues(1)
+                .WithCustomId("roleSelect");
+
+            // Loop through roles and fill the dropdown:
+            foreach (SocketRole role in roles)
             {
-                embed = new EmbedBuilder();
-                if (title is not null)
+                if (!role.IsEveryone)
                 {
-                    embed.WithTitle(title);
-                }
-                if (description is not null)
-                {
-                    embed.WithDescription(description);
+                    SelectMenuOptionBuilder option = new SelectMenuOptionBuilder();
+                    option.WithLabel(role.Name);
+                    option.WithValue(role.Id.ToString());
+                    menuBuilder.AddOption(option);
                 }
             }
-            // Create a list of button compontents:
-            ComponentBuilder components = new ComponentBuilder();
+            // Set max to 5 or less:
+            menuBuilder.WithMaxValues((menuBuilder.Options.Count > 5) ? 5 : menuBuilder.Options.Count);
 
-            ButtonBuilder roleBtn = new ButtonBuilder();
-            roleBtn.WithLabel(role.Name);
-            roleBtn.WithCustomId($"toggle-role-{role.Id}");
-            roleBtn.WithStyle(ButtonStyle.Primary);
-            components.WithButton(roleBtn);
+            // Create a component builder:
+            var compBuilder = new ComponentBuilder()
+                .WithSelectMenu(menuBuilder);
 
-            // Log this event:
-            Console.WriteLine("User '" + Context.User.Username + "' created a react roles embed.");
-
-            // Send the buttons
-            await FollowupAsync("Role selector created.");
-            await Context.Channel.SendMessageAsync(embed: embed?.Build(), components: components.Build());
+            // Send the message:
+            await FollowupAsync("Select the roles that you would like to use.", components: compBuilder.Build());
         }
     }
 }
