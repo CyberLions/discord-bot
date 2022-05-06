@@ -26,7 +26,8 @@ namespace CCSODiscordBot.Modules.Roles
             // Loop through roles and fill the dropdown:
             foreach (SocketRole role in roles)
             {
-                if (!role.IsEveryone)
+                // Cant assign @everyone role and we dont want to have a react role for admin
+                if (!role.IsEveryone && !role.Permissions.Administrator)
                 {
                     SelectMenuOptionBuilder option = new SelectMenuOptionBuilder();
                     option.WithLabel(role.Name);
