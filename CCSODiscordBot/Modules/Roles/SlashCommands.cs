@@ -9,6 +9,7 @@ namespace CCSODiscordBot.Modules.Roles
 	{
         [SlashCommand("reactroles", "Creates a react role embed with buttons for each role.")]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
+        [EnabledInDm(false)]
         public async Task RoleSelector()
         {
             // Tell Discord and user that we are processing their request:
