@@ -28,7 +28,8 @@ using (var services = ConfigureServices())
     // Tokens should be considered secret data, and never hard-coded.
     await client.LoginAsync(TokenType.Bot, config.DiscordToken);
     await client.StartAsync();
-
+    
+    // Dont close the program. Background threads are running.
     await Task.Delay(Timeout.Infinite);
 }
 
@@ -36,9 +37,11 @@ using (var services = ConfigureServices())
 ServiceProvider ConfigureServices()
     => new ServiceCollection()
         .AddSingleton<ConfigHandlingService>()
-        .AddSingleton<DiscordShardedClient>()
+        // Add the Discord Client with intents
+        .AddSingleton(x=> new DiscordShardedClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.AllUnprivileged}))
         .AddSingleton<CommandService>()
-        .AddSingleton<InteractionService>()
+        // Add InteractionService service with config to run all commands async:
+        .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordShardedClient>(), new InteractionServiceConfig { DefaultRunMode = Discord.Interactions.RunMode.Async }))
         .AddSingleton<CommandHandlingService>()
         .AddSingleton<InteractionHandlingService>()
         .BuildServiceProvider();

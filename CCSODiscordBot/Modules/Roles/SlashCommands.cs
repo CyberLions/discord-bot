@@ -7,7 +7,7 @@ namespace CCSODiscordBot.Modules.Roles
 {
 	public class SlashCommands : InteractionModuleBase<ShardedInteractionContext>
 	{
-        [SlashCommand("reactroles", "Creates a react role embed with buttons for each role.", runMode: RunMode.Async)]
+        [SlashCommand("reactroles", "Creates a react role embed with buttons for each role.")]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
         public async Task RoleSelector()
         {

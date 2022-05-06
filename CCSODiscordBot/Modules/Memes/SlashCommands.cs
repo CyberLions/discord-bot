@@ -5,7 +5,7 @@ namespace CCSODiscordBot.Modules.Memes
 {
 	public class SlashCommands : InteractionModuleBase<ShardedInteractionContext>
 	{
-		[SlashCommand("pop", "Pop Smoke", runMode: RunMode.Async)]
+		[SlashCommand("pop", "Pop Smoke")]
 		[EnabledInDm(false)]
 		[DefaultMemberPermissions(GuildPermission.SendMessages)]
 		public async Task Pop()
@@ -39,7 +39,7 @@ namespace CCSODiscordBot.Modules.Memes
             // Reply to the command:
             await FollowupAsync("Woo back baby 💫💫" + "\n" + popSmokeSongs[index]);
         }
-        [SlashCommand("capy", "A random capybara.", runMode: RunMode.Async)]
+        [SlashCommand("capy", "A random capybara.")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.SendMessages)]
         public async Task Capy()
@@ -79,7 +79,7 @@ namespace CCSODiscordBot.Modules.Memes
             // Send the capy:
             await FollowupAsync(capybaraImageLinks[index]);
         }
-        [SlashCommand("vim", "Everyone's favorite text editor on a cube.", runMode: RunMode.Async)]
+        [SlashCommand("vim", "Everyone's favorite text editor on a cube.")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.SendMessages)]
         public async Task VimCube()
@@ -96,7 +96,7 @@ namespace CCSODiscordBot.Modules.Memes
             // Reply:
             await RespondAsync(embed: embed.Build());
         }
-        [SlashCommand("simp", "Petr simp", runMode: RunMode.Async)]
+        [SlashCommand("simp", "Petr simp")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.SendMessages)]
         public async Task Simp()

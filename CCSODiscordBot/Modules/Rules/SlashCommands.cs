@@ -6,7 +6,7 @@ namespace CCSODiscordBot.Modules.Rules
 {
 	public class SlashCommands : InteractionModuleBase<ShardedInteractionContext>
 	{
-		[SlashCommand("postrules", "Post the rules.", runMode: RunMode.Async)]
+		[SlashCommand("postrules", "Post the rules.")]
 		[EnabledInDm(false)]
 		[DefaultMemberPermissions(GuildPermission.Administrator)]
 		public async Task PostRules([Summary(description: "The channel to post the rules in.")] SocketTextChannel? channel = null)

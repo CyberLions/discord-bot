@@ -8,7 +8,7 @@ namespace CCSODiscordBot.Modules.Roles
 {
 	public class ComponentRespond : InteractionModuleBase<ShardedInteractionContext>
 	{
-		[ComponentInteraction("toggle-role-*", runMode: RunMode.Async)]
+		[ComponentInteraction("toggle-role-*")]
 		[RequireContext(ContextType.Guild)]
 		public async Task RoleButton(ulong roleId)
 		{
