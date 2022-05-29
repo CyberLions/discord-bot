@@ -226,7 +226,8 @@ def getYouTubeList():
                     'https://www.youtube.com/user/HackersOnBoard',
                     'https://www.youtube.com/user/ChRiStIaAn008',
                     'https://www.youtube.com/user/ShakaconITConference',
-                    'https://www.youtube.com/user/RSAConference'
+                    'https://www.youtube.com/user/RSAConference',
+                    'https://www.youtube.com/c/DavidBombal'
                     ]
 
     return youtubeList
