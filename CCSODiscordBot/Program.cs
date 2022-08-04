@@ -1,5 +1,7 @@
 ﻿// Program Entry Point.
 using CCSODiscordBot;
+using CCSODiscordBot.Modules.Greeter;
+using CCSODiscordBot.Modules.UserManagement;
 using CCSODiscordBot.Services;
 using Discord;
 using Discord.Commands;
@@ -18,6 +20,10 @@ using (var services = ConfigureServices())
     // control per shard.
     client.ShardReady += Logging.ReadyAsync;
     client.Log += Logging.Log;
+
+    // Add join and leave notifications
+    client.UserJoined += Greeting.UserJoin;
+    client.UserLeft += Leaving.UserLeft;
 
     await services.GetRequiredService<InteractionHandlingService>()
         .InitializeAsync();
