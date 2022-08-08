@@ -7,8 +7,13 @@ namespace CCSODiscordBot.Modules.Greeter
     {
         public static async Task UserJoin(SocketGuildUser user)
         {
+            // ignore bots:
+            if (user.IsBot)
+            {
+                return;
+            }
             // Start welcome.
-
+            
         }
     }
 }
