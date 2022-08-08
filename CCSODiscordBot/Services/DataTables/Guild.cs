@@ -19,6 +19,9 @@ namespace CCSODiscordBot.Services.DataTables
         [BsonElement("welcomeChannel")]
         public ulong WelcomeChannel { get; set; }
 
+        [BsonElement("welcomeRoles")]
+        public List<ulong> WelcomeRoles { get; set; }
+
         [BsonElement("leaveEnabled")]
         public bool LeaveEnabled { get; set; }
     }
