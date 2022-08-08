@@ -22,8 +22,10 @@ namespace CCSODiscordBot.Modules.Greeter
             {
                 return;
             }
-            // Start welcome.
-            
+            // Check if guild has enabled the greeting module:
+            bool enabled = await _iGuildRepository
+
+
         }
     }
 }

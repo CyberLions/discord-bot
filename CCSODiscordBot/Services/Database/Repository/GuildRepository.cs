@@ -26,9 +26,13 @@ namespace CCSODiscordBot.Services.Database.Repository
         {
             return await _guildCollection.Find(_ => true).ToListAsync();
         }
-        public async Task<guild> GetByIdAsync(string id)
+        public async Task<guild> GetByBsonIdAsync(string id)
         {
             return await _guildCollection.Find(_ => _.Id == id).FirstOrDefaultAsync();
+        }
+        public async Task<guild> GetByDiscordIdAsync(ulong id)
+        {
+            return await _guildCollection.Find(_ => _.DiscordID == id).FirstOrDefaultAsync();
         }
         public async Task<List<guild>> GetByLinqAsync(FilterDefinition<guild> filter, FindOptions? options = null)
         {

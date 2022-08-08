@@ -11,7 +11,7 @@ namespace CCSODiscordBot.Services.DataTables
         public string Id { get; set; }
 
         [BsonElement("discordId")]
-        public string DiscordID { get; set; }
+        public ulong DiscordID { get; set; }
 
         [BsonElement("name")]
         public string Name { get; set; }
