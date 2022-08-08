@@ -10,11 +10,11 @@ namespace CCSODiscordBot
         /// <summary>
         /// The discord token
         /// </summary>
-        private string? _DiscordToken;
+        private readonly string? _DiscordToken;
         /// <summary>
         /// The mongo DB connection string
         /// </summary>
-        private string? _MongoDBConnectionString;
+        private readonly string? _MongoDBConnectionString;
 
         /// <summary>
         /// Initialize the secrets:
