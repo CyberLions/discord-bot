@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace CCSODiscordBot.Services.DataTables
 {
-    public class Users
+    public class User
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
