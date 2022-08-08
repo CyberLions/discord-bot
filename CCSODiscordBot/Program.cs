@@ -8,6 +8,7 @@ using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 // Services:
 using (var services = ConfigureServices())
@@ -50,4 +51,9 @@ ServiceProvider ConfigureServices()
         .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordShardedClient>(), new InteractionServiceConfig { DefaultRunMode = Discord.Interactions.RunMode.Async }))
         .AddSingleton<CommandHandlingService>()
         .AddSingleton<InteractionHandlingService>()
+        .AddSingleton<IMongoDatabase>(options => {
+            var config = new ConfigHandlingService();
+            var client = new MongoClient(config.MongoDBConnectionString);
+            return client.GetDatabase("ccsobot");
+        })
         .BuildServiceProvider();
