@@ -38,6 +38,7 @@
     <Folder Include="Modules\Memes\Media\" />
     <Folder Include="Modules\Embeds\" />
     <Folder Include="Modules\Embeds\Modals\" />
+    <Folder Include="Services\Database\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">
