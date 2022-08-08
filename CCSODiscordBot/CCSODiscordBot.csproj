@@ -21,6 +21,7 @@
     <None Remove="Modules\Memes\Media\" />
     <None Remove="Modules\Embeds\Modals\" />
     <None Remove="MongoDB.Driver" />
+    <None Remove="Services\DataTables\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.7.2" />
@@ -38,7 +39,7 @@
     <Folder Include="Modules\Memes\Media\" />
     <Folder Include="Modules\Embeds\" />
     <Folder Include="Modules\Embeds\Modals\" />
-    <Folder Include="Services\Database\" />
+    <Folder Include="Services\DataTables\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">
