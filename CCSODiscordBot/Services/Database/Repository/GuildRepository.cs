@@ -40,7 +40,7 @@ namespace CCSODiscordBot.Services.Database.Repository
         }
         #endregion Read
         #region Update
-        public async Task UpdategGuildAsync(guild guildToUpdate)
+        public async Task UpdateGuildAsync(guild guildToUpdate)
         {
             await _guildCollection.ReplaceOneAsync(x => x.Id == guildToUpdate.Id, guildToUpdate);
         }
