@@ -24,7 +24,8 @@ using (var services = ConfigureServices())
     client.Log += Logging.Log;
 
     // Add join and leave notifications
-    client.UserJoined += Greeting.UserJoin;
+    var greeting = services.GetRequiredService<Greeting>();
+    client.UserJoined += greeting.UserJoin;
     client.UserLeft += Leaving.UserLeft;
 
     await services.GetRequiredService<InteractionHandlingService>()
@@ -59,4 +60,5 @@ ServiceProvider ConfigureServices()
         })
         .AddSingleton<IGuildRepository, GuildRepository>()
         .AddSingleton<IUserRepository, UserRepository>()
+        .AddSingleton<Greeting>()
         .BuildServiceProvider();
