@@ -3,6 +3,7 @@ using CCSODiscordBot;
 using CCSODiscordBot.Modules.Greeter;
 using CCSODiscordBot.Modules.UserManagement;
 using CCSODiscordBot.Services;
+using CCSODiscordBot.Services.Database.Repository;
 using Discord;
 using Discord.Commands;
 using Discord.Interactions;
@@ -56,4 +57,6 @@ ServiceProvider ConfigureServices()
             var client = new MongoClient(config.MongoDBConnectionString);
             return client.GetDatabase("ccsobot");
         })
+        .AddSingleton<IGuildRepository, GuildRepository>()
+        .AddSingleton<IUserRepository, UserRepository>()
         .BuildServiceProvider();
