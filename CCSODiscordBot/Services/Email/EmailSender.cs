@@ -6,7 +6,7 @@ namespace CCSODiscordBot.Services.Email
 {
     public class EmailSender
     {
-        private ConfigHandlingService _configHandlingService;
+        private readonly ConfigHandlingService _configHandlingService;
         public EmailSender(ConfigHandlingService config)
         {
             _configHandlingService = config;
@@ -25,4 +25,3 @@ namespace CCSODiscordBot.Services.Email
         }
     }
 }
-

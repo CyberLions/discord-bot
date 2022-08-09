@@ -26,11 +26,11 @@ namespace CCSODiscordBot
         /// <summary>
         /// Email address for SMTP server
         /// </summary>
-        private string? _SMTPEmail;
+        private readonly string? _SMTPEmail;
         /// <summary>
         /// The SMTP password
         /// </summary>
-        private string? _SMTPPassword;
+        private readonly string? _SMTPPassword;
 
         /// <summary>
         /// Initialize the secrets:
