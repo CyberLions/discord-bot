@@ -44,6 +44,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             {
                 // Duplicate email:
                 await Context.Interaction.RespondAsync("Your email is already registered in the DB under a seperate account. Please contact the mods for further support.");
+                return;
             }
             Services.DataTables.User user;
             // Check for unfinished setup:
