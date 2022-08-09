@@ -46,7 +46,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 await Context.Interaction.RespondAsync("Your email is already registered in the DB under a seperate account. Please contact the mods for further support.");
                 return;
             }
-            Services.DataTables.User user;
+            Services.Database.DataTables.User user;
             // Check for unfinished setup:
             if ((await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.DiscordID == Context.User.Id)).Count > 0)
             {
@@ -66,7 +66,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             else
             {
                 // Create the user account:
-                user = new Services.DataTables.User();
+                user = new Services.Database.DataTables.User();
 
                 // Set vars:
                 user.DiscordID = Context.User.Id;

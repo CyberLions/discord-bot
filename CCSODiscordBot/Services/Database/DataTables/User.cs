@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace CCSODiscordBot.Services.DataTables
+namespace CCSODiscordBot.Services.Database.DataTables
 {
     public class User
     {

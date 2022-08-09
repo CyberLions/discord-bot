@@ -1,5 +1,5 @@
 ﻿using System;
-using CCSODiscordBot.Services.DataTables;
+using CCSODiscordBot.Services.Database.DataTables;
 using MongoDB.Driver;
 
 namespace CCSODiscordBot.Services.Database.Repository

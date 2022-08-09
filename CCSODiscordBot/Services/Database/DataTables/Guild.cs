@@ -1,8 +1,9 @@
 ﻿using System;
+using CCSODiscordBot.Services.Database.DataTables.SubClasses;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace CCSODiscordBot.Services.DataTables
+namespace CCSODiscordBot.Services.Database.DataTables
 {
     public class guild
     {
@@ -19,8 +20,8 @@ namespace CCSODiscordBot.Services.DataTables
         [BsonElement("welcomeChannel")]
         public ulong WelcomeChannel { get; set; }
 
-        [BsonElement("welcomeRoles")]
-        public List<ulong>? WelcomeRoles { get; set; }
+        [BsonElement("standings")]
+        public List<ClassStanding>? ClassStandings { get; set; }
 
         [BsonElement("leaveEnabled")]
         public bool LeaveEnabled { get; set; }

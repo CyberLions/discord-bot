@@ -27,6 +27,8 @@
     <None Remove="Services\Database\Repository\Interface\" />
     <None Remove="Modules\UserManagement\NewUserInteractions\" />
     <None Remove="Modules\UserManagement\NewUserInteractions\Modals\" />
+    <None Remove="Modules\UserManagement\Standing\" />
+    <None Remove="Services\Database\DataTables\SubClasses\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.7.2" />
@@ -50,6 +52,8 @@
     <Folder Include="Services\Database\Repository\Interface\" />
     <Folder Include="Modules\UserManagement\NewUserInteractions\" />
     <Folder Include="Modules\UserManagement\NewUserInteractions\Modals\" />
+    <Folder Include="Modules\UserManagement\Standing\" />
+    <Folder Include="Services\Database\DataTables\SubClasses\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">

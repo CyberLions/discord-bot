@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CCSODiscordBot.Services.DataTables;
+using CCSODiscordBot.Services.Database.DataTables;
 using MongoDB.Driver;
 
 namespace CCSODiscordBot.Services.Database.Repository
