@@ -26,14 +26,7 @@ namespace CCSODiscordBot
             var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
 
             // Get and set the DiscordToken:
-            if (config["DiscordToken"] == null)
-            {
-                _DiscordToken = Environment.GetEnvironmentVariable("DiscordToken");
-            }
-            else
-            {
-                _DiscordToken = config["DiscordToken"];
-            }
+            _DiscordToken = (config["DiscordToken"] == null) ? (Environment.GetEnvironmentVariable("DiscordToken")) : (config["DiscordToken"]);
 
             // Get and set the MongoDBConnectionString:
             if (config["MongoDBConnectionString"] == null)
@@ -44,6 +37,7 @@ namespace CCSODiscordBot
             {
                 _MongoDBConnectionString = config["MongoDBConnectionString"];
             }
+            _MongoDBConnectionString = (config["MongoDBConnectionString"] == null) ? (Environment.GetEnvironmentVariable("MongoDBConnectionString")) : (config["MongoDBConnectionString"]);
         }
 
         /// <summary>
