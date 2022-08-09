@@ -4,7 +4,7 @@ using Discord;
 
 namespace CCSODiscordBot.Modules.UserManagement.Standing
 {
-    public class Components
+    public class StandingComponents
     {
         public static ComponentBuilder StandingComponent(bool psuEmail, List<ClassStanding> standings)
         {

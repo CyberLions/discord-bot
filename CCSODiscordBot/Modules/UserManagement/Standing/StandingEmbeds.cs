@@ -3,7 +3,7 @@ using Discord;
 
 namespace CCSODiscordBot.Modules.UserManagement.Standing
 {
-    public class Embeds
+    public class StandingEmbeds
     {
         public static EmbedBuilder StandingEmbed(bool psuEmail)
         {

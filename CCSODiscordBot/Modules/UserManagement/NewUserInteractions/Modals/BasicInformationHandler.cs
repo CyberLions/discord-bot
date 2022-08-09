@@ -103,10 +103,10 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             }
             else
             {
+                var dbGuild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
                 // Role assignment prompts:
-
+                await Context.Interaction.FollowupAsync(embed: Standing.StandingEmbeds.StandingEmbed(psuEmail).Build(), components: Standing.StandingComponents.StandingComponent(psuEmail, dbGuild.ClassStandings).Build());
             }
-
         }
     }
 }
