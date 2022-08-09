@@ -1,5 +1,6 @@
 ﻿using System;
 using CCSODiscordBot.Services.Database.Repository;
+using Discord;
 using Discord.WebSocket;
 
 namespace CCSODiscordBot.Modules.Greeter
@@ -22,10 +23,38 @@ namespace CCSODiscordBot.Modules.Greeter
             {
                 return;
             }
-            // Check if guild has enabled the greeting module:
-            
+            // Get the guild:
+            var dbGuild = await _iGuildRepository.GetByDiscordIdAsync(user.Guild.Id);
+            var dbUser = await _iUserRepository.GetByDiscordIdAsync(user.Id);
+            // Check if guild has enabled the greeting module
+            // Also check if the user was already added to the DB and verified:
+            if (!dbGuild.WelcomeEnabled || (dbUser != null && dbUser.verified))
+            {
+                // If not, return
+                return;
+            }
+            // Get channel to send welcome to:
+            var welcomeChan = user.Guild.GetTextChannel(dbGuild.WelcomeChannel);
 
+            // Build welcome embed:
+            EmbedBuilder welcomeEmbed = new EmbedBuilder();
+            welcomeEmbed.Title = "Welcome " + user.DisplayName;
+            welcomeEmbed.Description = "Welcome to the " + user.Guild.Name + " server! Click the button below to verify your membership.";
+            welcomeEmbed.Color = Color.Teal;
+            welcomeEmbed.Timestamp = DateTimeOffset.Now;
+            welcomeEmbed.ThumbnailUrl = user.GetAvatarUrl(ImageFormat.Auto);
 
+            // Welcome Embed Button:
+            ButtonBuilder getStartedButton = new ButtonBuilder();
+            getStartedButton.WithLabel("Get Started");
+            getStartedButton.Style = ButtonStyle.Success;
+            getStartedButton.WithCustomId("get-started-" + user.Id);
+            ComponentBuilder component = new ComponentBuilder();
+            component.WithButton(getStartedButton);
+
+            // Send the message and mention the user:
+            await welcomeChan.SendMessageAsync(text: MentionUtils.MentionUser(user.Id),embed: welcomeEmbed.Build(), components: component.Build(), allowedMentions: AllowedMentions.All);
+       
         }
     }
 }
