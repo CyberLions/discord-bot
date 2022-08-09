@@ -13,7 +13,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Standing
             embed.WithDescription("Select your class/year.");
             if (!psuEmail)
             {
-                embed.AddField("Student/Faculty", "You did not enter a PSU email and cannot select the student or faculty role.");
+                embed.AddField("Student/Faculty", "You did not enter and verify a PSU email, some roles may be disabled.");
             }
             return embed;
         }
