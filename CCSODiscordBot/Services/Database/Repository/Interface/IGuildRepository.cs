@@ -35,7 +35,7 @@ namespace CCSODiscordBot.Services.Database.Repository
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<guild>> GetByLinqAsync(FilterDefinition<guild> filter, FindOptions? options = null);
+        Task<List<guild>> GetByLinqAsync(System.Linq.Expressions.Expression<Func<DataTables.guild, bool>> filter, FindOptions? options = null);
         /// <summary>
         /// Update a guild
         /// </summary>

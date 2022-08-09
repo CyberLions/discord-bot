@@ -35,7 +35,7 @@ namespace CCSODiscordBot.Services.Database.Repository
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        Task<List<DataTables.User>> GetByLinqAsync(FilterDefinition<DataTables.User> filter, FindOptions? options = null);
+        Task<List<DataTables.User>> GetByLinqAsync(System.Linq.Expressions.Expression<Func<DataTables.User, bool>> filter, FindOptions? options = null);
         /// <summary>
         /// Update user in DB
         /// </summary>

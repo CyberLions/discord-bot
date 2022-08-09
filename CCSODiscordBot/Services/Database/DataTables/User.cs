@@ -16,8 +16,11 @@ namespace CCSODiscordBot.Services.DataTables
         [BsonElement("discordGuildId")]
         public ulong DiscordGuildID { get; set; }
 
-        [BsonElement("name")]
-        public string Name { get; set; }
+        [BsonElement("fname")]
+        public string FirstName { get; set; }
+
+        [BsonElement("lname")]
+        public string LastName { get; set; }
 
         [BsonElement("email")]
         public string Email { get; set; }
@@ -26,7 +29,7 @@ namespace CCSODiscordBot.Services.DataTables
         public bool verified { get; set; }
 
         [BsonElement("verificationNumber")]
-        public int VerificationNumber { get; set; }
+        public int? VerificationNumber { get; set; }
     }
 }
 
