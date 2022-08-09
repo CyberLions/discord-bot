@@ -14,6 +14,7 @@ namespace CCSODiscordBot.Services.Email
 
         public void SendVerifyCode(int code, string recipient)
         {
+            // Build the SMTP client:
             var smtpClient = new SmtpClient(_configHandlingService.SMTPAddr)
             {
                 Port = (int) _configHandlingService.SMTPPort,
@@ -21,7 +22,11 @@ namespace CCSODiscordBot.Services.Email
                 EnableSsl = true
             };
 
+            // Send email
             smtpClient.Send(_configHandlingService.SMTPEmail, recipient, "CCSO Bot Verification Code", "Hi!\nYour verification code is: " + code);
+
+            // Clear the SMTP client from RAM:
+            smtpClient.Dispose();
         }
     }
 }
