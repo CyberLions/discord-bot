@@ -45,10 +45,11 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 // Duplicate email:
                 await Context.Interaction.RespondAsync("Your email is already registered in the DB under a seperate account. Please contact the mods for further support.");
             }
+            Services.DataTables.User user;
             // Check for unfinished setup:
             if ((await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.DiscordID == Context.User.Id)).Count > 0)
             {
-                var user = (await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.Email == email.Address && _.DiscordID == Context.User.Id)).First();
+                user = (await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.Email == email.Address && _.DiscordID == Context.User.Id)).First();
 
                 user.FirstName = modal.FirstName.Trim();
                 user.LastName = modal.LastName.Trim();
@@ -64,19 +65,19 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             else
             {
                 // Create the user account:
-                Services.DataTables.User newUser = new Services.DataTables.User();
+                user = new Services.DataTables.User();
 
                 // Set vars:
-                newUser.DiscordID = Context.User.Id;
-                newUser.DiscordGuildID = Context.Guild.Id;
-                newUser.Email = email.Address;
-                newUser.FirstName = modal.FirstName.Trim();
-                newUser.LastName = modal.LastName.Trim();
-                newUser.verified = false;
-                newUser.VerificationNumber = null;
+                user.DiscordID = Context.User.Id;
+                user.DiscordGuildID = Context.Guild.Id;
+                user.Email = email.Address;
+                user.FirstName = modal.FirstName.Trim();
+                user.LastName = modal.LastName.Trim();
+                user.verified = false;
+                user.VerificationNumber = null;
 
                 // Add to DB:
-                await _iUserRepository.CreateNewUserAsync(newUser);
+                await _iUserRepository.CreateNewUserAsync(user);
             }
 
             // Set Discord nickname:
@@ -89,8 +90,12 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 Console.WriteLine("403: Not allowed to set nickname in " + Context.Guild.Name);
             }
 
-            // Validate email:
-
+            // See if email validation is needed:
+            if(!user.verified || psuEmail)
+            {
+                Random random = new Random();
+                user.VerificationNumber = random.Next(100000, 999999);
+            }
 
         }
     }
