@@ -39,13 +39,13 @@ namespace CCSODiscordBot.Services.Database.Repository
         }
         #endregion Read
         #region Update
-        public async Task UpdategGuildAsync(DataTables.User userToUpdate)
+        public async Task UpdateUserAsync(DataTables.User userToUpdate)
         {
             await _userCollection.ReplaceOneAsync(x => x.Id == userToUpdate.Id, userToUpdate);
         }
         #endregion Update
         #region Delete
-        public async Task DeleteGuildAsync(string id)
+        public async Task DeleteUserAsync(string id)
         {
             await _userCollection.DeleteOneAsync(x => x.Id == id);
         }
