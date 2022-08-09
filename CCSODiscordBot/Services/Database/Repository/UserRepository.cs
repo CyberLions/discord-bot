@@ -33,7 +33,7 @@ namespace CCSODiscordBot.Services.Database.Repository
         {
             return await _userCollection.Find(_ => _.DiscordID == userID && _.DiscordGuildID == guildID).FirstOrDefaultAsync();
         }
-        public async Task<List<DataTables.User>> GetByLinqAsync(FilterDefinition<DataTables.User> filter, FindOptions? options = null)
+        public async Task<List<DataTables.User>> GetByLinqAsync(System.Linq.Expressions.Expression<Func<DataTables.User, bool>> filter, FindOptions? options = null)
         {
             return await _userCollection.Find(filter, options).ToListAsync();
         }

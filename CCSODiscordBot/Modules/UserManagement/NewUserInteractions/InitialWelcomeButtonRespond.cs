@@ -1,4 +1,6 @@
 ﻿using System;
+using CCSODiscordBot.Modules.Embeds.Modals;
+using CCSODiscordBot.Modules.UserManagement.Modals;
 using CCSODiscordBot.Services.Database.Repository;
 using Discord.Interactions;
 
@@ -30,7 +32,7 @@ namespace CCSODiscordBot.Modules.UserManagement.NewUserInteractions
                 return;
             }
             // Begin new user registration process:
-
+            await Context.Interaction.RespondWithModalAsync<BasicInformationEmbed>("user-basic-info");
         }
     }
 }
