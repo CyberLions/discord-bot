@@ -15,7 +15,7 @@ namespace CCSODiscordBot.Services.Database.Repository
 
         // CRUD Operations:
         #region Create
-        public async Task CreateNewGuildAsync(DataTables.User newGuild)
+        public async Task CreateNewUserAsync(DataTables.User newGuild)
         {
             await _userCollection.InsertOneAsync(newGuild);
         }
