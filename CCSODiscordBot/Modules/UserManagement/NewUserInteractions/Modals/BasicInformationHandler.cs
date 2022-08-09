@@ -91,10 +91,19 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             }
 
             // See if email validation is needed:
+            // Only needed for PSU emails
             if(!user.verified || psuEmail)
             {
+                // Verification needed:
                 Random random = new Random();
                 user.VerificationNumber = random.Next(100000, 999999);
+                // Upload to DB:
+                await _iUserRepository.UpdateUserAsync(user);
+            }
+            else
+            {
+                // Role assignment prompts:
+
             }
 
         }
