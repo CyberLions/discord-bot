@@ -24,10 +24,11 @@ namespace CCSODiscordBot.Services.Database.Repository
         Task<DataTables.User> GetByBsonIdAsync(string id);
         /// <summary>
         /// Get user by Discord ID
+        /// Only shows users from specific guild.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<DataTables.User> GetByDiscordIdAsync(ulong id);
+        Task<DataTables.User> GetByDiscordIdAsync(ulong userID, ulong guildID);
         /// <summary>
         /// Get users with a linq filter
         /// </summary>
@@ -42,7 +43,7 @@ namespace CCSODiscordBot.Services.Database.Repository
         /// <returns></returns>
         Task UpdateUserAsync(DataTables.User userToUpdate);
         /// <summary>
-        /// Delete user from DB
+        /// Delete user from DB using BSON id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
