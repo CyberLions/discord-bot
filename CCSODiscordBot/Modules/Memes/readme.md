@@ -5,7 +5,7 @@ This module is for various meme functions.
 ## Commands:
 - /pop
     - A random pop smoke vid
-    - Josh
+    - Josh (swag)
 - /capy
     - A random picture of a capybara
     - Zach
