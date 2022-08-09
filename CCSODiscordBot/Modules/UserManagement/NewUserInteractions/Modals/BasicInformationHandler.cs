@@ -100,9 +100,13 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 user.VerificationNumber = random.Next(100000, 999999);
                 // Upload to DB:
                 await _iUserRepository.UpdateUserAsync(user);
+
+                // Send email:
+
             }
             else
             {
+                // Get guild from DB:
                 var dbGuild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
                 // Role assignment prompts:
                 await Context.Interaction.FollowupAsync(embed: Standing.StandingEmbeds.StandingEmbed(psuEmail).Build(), components: Standing.StandingComponents.StandingComponent(psuEmail, dbGuild.ClassStandings).Build());
