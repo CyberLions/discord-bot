@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
 using CCSODiscordBot.Modules.Embeds.Modals;
 using CCSODiscordBot.Services.Database.Repository;
+using CCSODiscordBot.Services.Email;
 using Discord;
 using Discord.Interactions;
 
@@ -12,16 +13,19 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
     {
         private readonly IUserRepository _iUserRepository;
         private readonly IGuildRepository _iGuildRepository;
+        private readonly EmailSender _emailSender;
 
-        public BasicInformationHandler(IUserRepository iUserRepository, IGuildRepository iGuildRepository)
+        public BasicInformationHandler(IUserRepository iUserRepository, IGuildRepository iGuildRepository, EmailSender emailSender)
         {
             _iUserRepository = iUserRepository;
             _iGuildRepository = iGuildRepository;
+            _emailSender = emailSender;
         }
 
         [ModalInteraction("user-basic-info")]
         public async Task ModalResponse(BasicInformationEmbed modal)
         {
+            // Show thinking animation to user:
             await Context.Interaction.DeferAsync(true);
 
             //Check email:
@@ -102,7 +106,10 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 await _iUserRepository.UpdateUserAsync(user);
 
                 // Send email:
+                _emailSender.SendVerifyCode((int) user.VerificationNumber, user.Email);
 
+                // Notify user of email:
+                await Context.Interaction.FollowupAsync("An email has been sent to " + user.Email + " with a code to verify you email. Use /verify with the code to verify your account.");
             }
             else
             {

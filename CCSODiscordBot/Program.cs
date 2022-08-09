@@ -4,6 +4,7 @@ using CCSODiscordBot.Modules.Greeter;
 using CCSODiscordBot.Modules.UserManagement;
 using CCSODiscordBot.Services;
 using CCSODiscordBot.Services.Database.Repository;
+using CCSODiscordBot.Services.Email;
 using Discord;
 using Discord.Commands;
 using Discord.Interactions;
@@ -47,7 +48,7 @@ ServiceProvider ConfigureServices()
     => new ServiceCollection()
         .AddSingleton<ConfigHandlingService>()
         // Add the Discord Client with intents
-        .AddSingleton(x=> new DiscordShardedClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.AllUnprivileged}))
+        .AddSingleton(x => new DiscordShardedClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.AllUnprivileged }))
         .AddSingleton<CommandService>()
         // Add InteractionService service with config to run all commands async:
         .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordShardedClient>(), new InteractionServiceConfig { DefaultRunMode = Discord.Interactions.RunMode.Async }))
@@ -60,5 +61,6 @@ ServiceProvider ConfigureServices()
         })
         .AddSingleton<IGuildRepository, GuildRepository>()
         .AddSingleton<IUserRepository, UserRepository>()
+        .AddSingleton<EmailSender>()
         .AddSingleton<Greeting>()
         .BuildServiceProvider();
