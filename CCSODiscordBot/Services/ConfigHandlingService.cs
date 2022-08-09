@@ -29,14 +29,6 @@ namespace CCSODiscordBot
             _DiscordToken = (config["DiscordToken"] == null) ? (Environment.GetEnvironmentVariable("DiscordToken")) : (config["DiscordToken"]);
 
             // Get and set the MongoDBConnectionString:
-            if (config["MongoDBConnectionString"] == null)
-            {
-                _MongoDBConnectionString = Environment.GetEnvironmentVariable("MongoDBConnectionString");
-            }
-            else
-            {
-                _MongoDBConnectionString = config["MongoDBConnectionString"];
-            }
             _MongoDBConnectionString = (config["MongoDBConnectionString"] == null) ? (Environment.GetEnvironmentVariable("MongoDBConnectionString")) : (config["MongoDBConnectionString"]);
         }
 
