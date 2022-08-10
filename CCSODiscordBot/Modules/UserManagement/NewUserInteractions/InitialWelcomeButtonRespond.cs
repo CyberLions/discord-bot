@@ -21,8 +21,6 @@ namespace CCSODiscordBot.Modules.UserManagement.NewUserInteractions
         [RequireContext(ContextType.Guild)]
         public async Task WelcomeButton(ulong userID)
         {
-            // Defer interaction:
-            await Context.Interaction.DeferAsync(true);
             // (try to) Get user from DB:
             var dbUser = await _iUserRepository.GetByDiscordIdAsync(Context.User.Id, Context.Guild.Id);
             // Ensure user has not been welcomed before:
@@ -31,9 +29,11 @@ namespace CCSODiscordBot.Modules.UserManagement.NewUserInteractions
                 await Context.Interaction.FollowupAsync("You have already verified your membership. Please contact a mod if you are having issues or would like to update your information.", ephemeral: true);
                 return;
             }
-
-            // Begin new user registration process:
-            await Context.Interaction.RespondWithModalAsync<BasicInformationEmbed>("user-basic-info");
+            else
+            {
+                // Begin new user registration process:
+                await Context.Interaction.RespondWithModalAsync<BasicInformationEmbed>("user-basic-info");
+            }
         }
     }
 }
