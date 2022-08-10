@@ -31,6 +31,7 @@
     <None Remove="Services\Database\DataTables\SubClasses\" />
     <None Remove="Services\Email\" />
     <None Remove="Modules\UserManagement\AccountVerification\" />
+    <None Remove="Modules\ServerConfig\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.7.2" />
@@ -58,6 +59,7 @@
     <Folder Include="Services\Database\DataTables\SubClasses\" />
     <Folder Include="Services\Email\" />
     <Folder Include="Modules\UserManagement\AccountVerification\" />
+    <Folder Include="Modules\ServerConfig\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">
