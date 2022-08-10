@@ -38,7 +38,7 @@ namespace CCSODiscordBot.Modules.Greeter
 
             // Build welcome embed:
             EmbedBuilder welcomeEmbed = new EmbedBuilder();
-            welcomeEmbed.Title = "Welcome " + user.DisplayName;
+            welcomeEmbed.Title = "Welcome " + user.DisplayName + "!";
             welcomeEmbed.Description = "Welcome to the " + user.Guild.Name + " server! Please take a moment to read the rules and then click the button below to verify your membership.";
             welcomeEmbed.Color = Color.Teal;
             welcomeEmbed.Timestamp = DateTimeOffset.Now;

@@ -48,7 +48,7 @@ ServiceProvider ConfigureServices()
     => new ServiceCollection()
         .AddSingleton<ConfigHandlingService>()
         // Add the Discord Client with intents
-        .AddSingleton(x => new DiscordShardedClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.AllUnprivileged }))
+        .AddSingleton(x => new DiscordShardedClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.All }))
         .AddSingleton<CommandService>()
         // Add InteractionService service with config to run all commands async:
         .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordShardedClient>(), new InteractionServiceConfig { DefaultRunMode = Discord.Interactions.RunMode.Async }))

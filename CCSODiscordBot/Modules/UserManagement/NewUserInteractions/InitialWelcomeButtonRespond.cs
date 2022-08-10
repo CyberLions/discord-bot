@@ -21,8 +21,6 @@ namespace CCSODiscordBot.Modules.UserManagement.NewUserInteractions
         [RequireContext(ContextType.Guild)]
         public async Task WelcomeButton(ulong userID)
         {
-            // Defer interaction:
-            await Context.Interaction.DeferAsync(true);
             // (try to) Get user from DB:
             var dbUser = await _iUserRepository.GetByDiscordIdAsync(Context.User.Id, Context.Guild.Id);
             // Ensure user has not been welcomed before:
