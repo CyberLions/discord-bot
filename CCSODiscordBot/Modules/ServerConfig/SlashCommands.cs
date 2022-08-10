@@ -4,6 +4,8 @@ using CCSODiscordBot.Services.Database.DataTables;
 using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
+using System.Threading.Channels;
+using CCSODiscordBot.Services.Database.DataTables.SubClasses;
 
 namespace CCSODiscordBot.Modules.ServerConfig
 {
@@ -39,6 +41,60 @@ namespace CCSODiscordBot.Modules.ServerConfig
             await Context.Interaction.FollowupAsync("Settings updated!");
         }
 
+        [SlashCommand("welcomechan", "Set the welcome channel for the welcome module.")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.Administrator)]
+        public async Task WelcomeChan(SocketChannel channel)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            Guild guild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+            // Check for new server:
+            if (guild == null)
+            {
+                // Create new
+                guild = await CreateNewGuild(Context.Guild);
+            }
+            //Set welcome chan:
+            guild.WelcomeChannel = channel.Id;
+
+            // Update DB:
+            await _iGuildRepository.UpdateGuildAsync(guild);
+
+            // Notify user:
+            await Context.Interaction.FollowupAsync("Settings updated!");
+        }
+
+        [SlashCommand("addstanding", "Add a class standing.")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.Administrator)]
+        public async Task AddStanding(SocketRole role, string name, bool requireVerified = false)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            Guild guild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+            // Check for new server:
+            if (guild == null)
+            {
+                // Create new
+                guild = await CreateNewGuild(Context.Guild);
+            }
+            //Set welcome chan:
+            ClassStanding newClass = new ClassStanding();
+            newClass.Name = name;
+            newClass.RequireVerification = requireVerified;
+            newClass.Role = role.Id;
+
+            // Add role to DB:
+            guild.ClassStandings.Add(newClass);
+
+            // Update DB:
+            await _iGuildRepository.UpdateGuildAsync(guild);
+
+            // Notify user:
+            await Context.Interaction.FollowupAsync("Settings updated!");
+        }
+
         /// <summary>
         /// Function to create a new guild in the DB
         /// </summary>
@@ -49,7 +105,7 @@ namespace CCSODiscordBot.Modules.ServerConfig
             // Create a new guild:
             Guild guild = new Guild();
             // Insert information:
-            guild.ClassStandings = new List<Services.Database.DataTables.SubClasses.ClassStanding>();
+            guild.ClassStandings = new List<ClassStanding>();
             guild.DiscordID = newGuild.Id;
             guild.LeaveEnabled = false;
             guild.WelcomeChannel = newGuild.DefaultChannel.Id;
