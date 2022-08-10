@@ -11,7 +11,7 @@ namespace CCSODiscordBot.Modules.ServerConfig
 {
     public class SlashCommands : InteractionModuleBase<ShardedInteractionContext>
     {
-        private IGuildRepository _iGuildRepository;
+        private readonly IGuildRepository _iGuildRepository;
         public SlashCommands(IGuildRepository iGuildRepository)
         {
             _iGuildRepository = iGuildRepository;
