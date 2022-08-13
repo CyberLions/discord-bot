@@ -27,7 +27,6 @@
     <None Remove="Services\Database\Repository\Interface\" />
     <None Remove="Modules\UserManagement\NewUserInteractions\" />
     <None Remove="Modules\UserManagement\NewUserInteractions\Modals\" />
-    <None Remove="Modules\UserManagement\Standing\" />
     <None Remove="Services\Database\DataTables\SubClasses\" />
     <None Remove="Services\Email\" />
     <None Remove="Modules\UserManagement\AccountVerification\" />
@@ -55,7 +54,6 @@
     <Folder Include="Services\Database\Repository\Interface\" />
     <Folder Include="Modules\UserManagement\NewUserInteractions\" />
     <Folder Include="Modules\UserManagement\NewUserInteractions\Modals\" />
-    <Folder Include="Modules\UserManagement\Standing\" />
     <Folder Include="Services\Database\DataTables\SubClasses\" />
     <Folder Include="Services\Email\" />
     <Folder Include="Modules\UserManagement\AccountVerification\" />

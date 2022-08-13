@@ -2,11 +2,11 @@
 using CCSODiscordBot.Services.Database.DataTables.SubClasses;
 using Discord;
 
-namespace CCSODiscordBot.Modules.UserManagement.Standing
+namespace CCSODiscordBot.Modules.UserManagement.RolePrompt
 {
-    public class StandingComponents
+    public class RolePromptComponents
     {
-        public static ComponentBuilder StandingComponent(bool psuEmail, List<ClassStanding> standings)
+        public static ComponentBuilder BtnComponent(bool psuEmail, List<ClassStanding> standings)
         {
             ComponentBuilder component = new ComponentBuilder();
             foreach(ClassStanding standing in standings)

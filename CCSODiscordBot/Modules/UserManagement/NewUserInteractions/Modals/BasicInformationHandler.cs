@@ -116,8 +116,9 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             {
                 // Get guild from DB:
                 var dbGuild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+
                 // Role assignment prompts:
-                await Context.Interaction.FollowupAsync(embed: Standing.StandingEmbeds.StandingEmbed(psuEmail).Build(), components: Standing.StandingComponents.StandingComponent(psuEmail, dbGuild.ClassStandings).Build(), ephemeral: true);
+                await Context.Interaction.FollowupAsync(embed: Standing.StandingEmbeds.StandingEmbed(psuEmail).Build(), components:RolePrompt.RolePromptComponents.BtnComponent(psuEmail, dbGuild.ClassStandings).Build(), ephemeral: true);
             }
         }
     }

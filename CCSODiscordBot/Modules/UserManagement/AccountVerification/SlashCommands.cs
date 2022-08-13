@@ -37,7 +37,7 @@ namespace CCSODiscordBot.Modules.UserManagement.AccountVerification
                 user.verified = true;
                 user.VerificationNumber = null;
                 await _IUserRepository.UpdateUserAsync(user);
-                await Context.Interaction.FollowupAsync("Thanks! Your account has been verified.");
+                await Context.Interaction.FollowupAsync("Thanks! Your account has been verified. Click the button below to get started with role selection!");
             }
             else
             {
