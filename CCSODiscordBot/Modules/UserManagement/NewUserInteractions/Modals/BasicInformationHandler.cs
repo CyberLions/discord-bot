@@ -54,7 +54,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             // Check for unfinished setup:
             if ((await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.DiscordID == Context.User.Id)).Count > 0)
             {
-                user = (await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.Email == email.Address && _.DiscordID == Context.User.Id)).First();
+                user = (await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.DiscordID == Context.User.Id)).First();
 
                 user.FirstName = modal.FirstName.Trim();
                 user.LastName = modal.LastName.Trim();
@@ -97,16 +97,17 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
 
             // See if email validation is needed:
             // Only needed for PSU emails
-            if(!user.verified || psuEmail)
+            if(!user.verified && psuEmail)
             {
                 // Verification needed:
                 Random random = new Random();
                 user.VerificationNumber = random.Next(100000, 999999);
+
                 // Upload to DB:
                 await _iUserRepository.UpdateUserAsync(user);
 
                 // Send email:
-                _emailSender.SendVerifyCode((int) user.VerificationNumber, user.Email);
+                _emailSender.SendVerifyCode((int) user.VerificationNumber, user.Email, Context.Guild.Name, Context.User.Username);
 
                 // Notify user of email:
                 await Context.Interaction.FollowupAsync("An email has been sent with a code to verify your address. Use /verify with the code to verify your account.", ephemeral: true);
@@ -116,7 +117,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 // Get guild from DB:
                 var dbGuild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
                 // Role assignment prompts:
-                await Context.Interaction.FollowupAsync(embed: Standing.StandingEmbeds.StandingEmbed(psuEmail).Build(), components: Standing.StandingComponents.StandingComponent(psuEmail, dbGuild.ClassStandings).Build());
+                await Context.Interaction.FollowupAsync(embed: Standing.StandingEmbeds.StandingEmbed(psuEmail).Build(), components: Standing.StandingComponents.StandingComponent(psuEmail, dbGuild.ClassStandings).Build(), ephemeral: true);
             }
         }
     }

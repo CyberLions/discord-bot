@@ -12,7 +12,7 @@ namespace CCSODiscordBot.Services.Email
             _configHandlingService = config;
         }
 
-        public void SendVerifyCode(int code, string recipient)
+        public void SendVerifyCode(int code, string recipient, string guild, string username)
         {
             // Build the SMTP client:
             var smtpClient = new SmtpClient(_configHandlingService.SMTPAddr)
@@ -23,7 +23,15 @@ namespace CCSODiscordBot.Services.Email
             };
 
             // Send email
-            smtpClient.Send(_configHandlingService.SMTPEmail, recipient, "CCSO Bot Verification Code", "Hi!\nYour verification code is: " + code);
+            smtpClient.Send(_configHandlingService.SMTPEmail, recipient, "CCSO Bot Verification Code",
+                "Hi!\n" +
+                "Your verification code is: " + code + " for the " + guild + " discord server. Use the /verify command in Discord with the code to validate you account.\n" +
+                "This code was requested by " + username
+            );
+
+
+            // Log this event:
+            Console.WriteLine("Email sent to " + recipient + " requested by " + username);
 
             // Clear the SMTP client from RAM:
             smtpClient.Dispose();

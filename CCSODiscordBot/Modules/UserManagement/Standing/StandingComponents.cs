@@ -14,7 +14,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Standing
                 ButtonBuilder btn = new ButtonBuilder();
                 btn.WithLabel(standing.Name);
                 btn.WithStyle(ButtonStyle.Primary);
-                btn.WithCustomId("standing-" + standing.Role);
+                btn.WithCustomId("toggle-role-" + standing.Role);
                 // Disable button if not verified
                 if(standing.RequireVerification && !psuEmail)
                 {

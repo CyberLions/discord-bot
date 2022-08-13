@@ -26,7 +26,7 @@ namespace CCSODiscordBot.Modules.UserManagement.NewUserInteractions
             // Ensure user has not been welcomed before:
             if (dbUser != null && dbUser.verified)
             {
-                await Context.Interaction.FollowupAsync("You have already verified your membership. Please contact a mod if you are having issues or would like to update your information.", ephemeral: true);
+                await Context.Interaction.RespondAsync("You have already verified your membership. Please contact a mod if you are having issues or would like to update your information.", ephemeral: true);
                 return;
             }
             else
