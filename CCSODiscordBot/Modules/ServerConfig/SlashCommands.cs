@@ -6,6 +6,7 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using System.Threading.Channels;
 using CCSODiscordBot.Services.Database.DataTables.SubClasses;
+using Discord.Commands;
 
 namespace CCSODiscordBot.Modules.ServerConfig
 {
@@ -68,7 +69,7 @@ namespace CCSODiscordBot.Modules.ServerConfig
         [SlashCommand("addstanding", "Add a class standing.")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
-        public async Task AddStanding(SocketRole role, string name, bool requireVerified = false)
+        public async Task AddStanding(SocketRole role, string name, bool requireVerified = false, string emote = "")
         {
             await Context.Interaction.DeferAsync(true);
 
@@ -84,6 +85,19 @@ namespace CCSODiscordBot.Modules.ServerConfig
             newClass.Name = name;
             newClass.RequireVerification = requireVerified;
             newClass.Role = role.Id;
+            newClass.Emote = null;
+            if(!string.IsNullOrEmpty(emote))
+            {
+                try
+                {
+                    newClass.Emote = new Emoji(emote.Substring(0,1));
+                }
+                catch (ArgumentException)
+                {
+                    await Context.Interaction.FollowupAsync("Failed to parse emote.");
+                    return;
+                }
+            }
 
             // Add role to DB:
             guild.ClassStandings.Add(newClass);

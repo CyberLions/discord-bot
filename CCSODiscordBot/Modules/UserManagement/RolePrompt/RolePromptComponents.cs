@@ -14,7 +14,22 @@ namespace CCSODiscordBot.Modules.UserManagement.RolePrompt
                 ButtonBuilder btn = new ButtonBuilder();
                 btn.WithLabel(standing.Name);
                 btn.WithStyle(ButtonStyle.Primary);
-                btn.WithCustomId("toggle-role-" + standing.Role);
+                // Check if role requires verified email
+                if (standing.RequireVerification)
+                {
+                    // Use protected react role
+                    btn.WithCustomId("protected-toggle-role-" + standing.Role);
+                }
+                else
+                {
+                    // Use unprotected react role
+                    btn.WithCustomId("toggle-role-" + standing.Role);
+                }
+                // Get emote:
+                if(standing.Emote != null)
+                {
+                    btn.WithEmote(standing.Emote);
+                }
                 // Disable button if not verified
                 if(standing.RequireVerification && !psuEmail)
                 {
