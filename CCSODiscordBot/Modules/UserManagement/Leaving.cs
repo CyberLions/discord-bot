@@ -7,7 +7,7 @@ namespace CCSODiscordBot.Modules.UserManagement
     {
         public static async Task UserLeft(SocketGuild guild, SocketUser user)
         {
-            // Notify on leave
+            // TODO: Notify on leave
         }
     }
 }
