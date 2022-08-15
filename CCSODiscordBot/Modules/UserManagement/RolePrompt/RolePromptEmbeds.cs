@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using CCSODiscordBot.Services.Database.DataTables;
 using CCSODiscordBot.Services.Database.DataTables.SubClasses;
 using Discord;
@@ -23,28 +24,30 @@ namespace CCSODiscordBot.Modules.UserManagement.RolePrompt
             // Club relations:
             if (standings?.Count > 0)
             {
-                string clubRelation = "__Blurple buttons__: select your class rank or association with the club.\n";
+                StringBuilder clubStandingBuilder = new StringBuilder();
+                clubStandingBuilder.Append("__Blurple buttons__: select your class rank or association with the club.\n");
                 if (!psuEmail)
                 {
-                    clubRelation += "__NOTE__: You did not enter and verify a PSU email, some roles may be disabled.\n";
+                    clubStandingBuilder.Append("__NOTE__: You did not enter and verify a PSU email, some roles may be disabled.\n");
                 }
-                clubRelation += "__**Roles**__:\n";
+                clubStandingBuilder.Append("__**Roles**__:\n");
                 foreach (BtnRole standing in standings)
                 {
-                    clubRelation += "**" + standing.Name + "**: " + standing.Description + "\n";
+                    clubStandingBuilder.Append("**" + standing.Name + "**: " + standing.Description + "\n");
                 }
-                embed.AddField("Club Relation", clubRelation);
+                embed.AddField("Club Relation", clubStandingBuilder);
             }
+            // Interests
             if (interestRoles?.Count > 0)
             {
-                // Interests
-                string clubInterests = "__Green buttons__: Select roles that interest you.\n";
-                clubInterests += "__**Roles**__:\n";
+                StringBuilder clubStandingBuilder = new StringBuilder();
+                clubStandingBuilder.Append("__Green buttons__: Select roles that interest you.\n");
+                clubStandingBuilder.Append("__**Roles**__:\n");
                 foreach (BtnRole interest in interestRoles)
                 {
-                    clubInterests += "**" + interest.Name + "**: " + interest.Description + "\n";
+                    clubStandingBuilder.Append("**" + interest.Name + "**: " + interest.Description + "\n");
                 }
-                embed.AddField("Club Interests", clubInterests);
+                embed.AddField("Club Interests", clubStandingBuilder);
             }
 
             // Send embed:
