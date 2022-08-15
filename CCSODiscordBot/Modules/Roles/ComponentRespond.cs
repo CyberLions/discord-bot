@@ -9,8 +9,8 @@ namespace CCSODiscordBot.Modules.Roles
 {
 	public class ComponentRespond : InteractionModuleBase<ShardedInteractionContext>
 	{
-		private IGuildRepository _IGuildRepository;
-        private IUserRepository _IUserRepository;
+		private readonly IGuildRepository _IGuildRepository;
+        private readonly IUserRepository _IUserRepository;
         public ComponentRespond (IGuildRepository iGuildRepository, IUserRepository iUserRepository)
         {
 			_IGuildRepository = iGuildRepository;

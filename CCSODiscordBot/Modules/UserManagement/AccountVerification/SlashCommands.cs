@@ -8,8 +8,8 @@ namespace CCSODiscordBot.Modules.UserManagement.AccountVerification
 {
     public class SlashCommands : InteractionModuleBase<ShardedInteractionContext>
     {
-        private IUserRepository _IUserRepository;
-        private IGuildRepository _IGuildRepository;
+        private readonly IUserRepository _IUserRepository;
+        private readonly IGuildRepository _IGuildRepository;
         public SlashCommands(IUserRepository iUserRepository, IGuildRepository iGuildRepository)
         {
             _IUserRepository = iUserRepository;
