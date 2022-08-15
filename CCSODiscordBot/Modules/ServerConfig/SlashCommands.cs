@@ -69,7 +69,7 @@ namespace CCSODiscordBot.Modules.ServerConfig
         [SlashCommand("addstanding", "Add a class standing.")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
-        public async Task AddStanding(SocketRole role, string name, bool requireVerified = false)
+        public async Task AddStanding(SocketRole role, string name, string description, bool requireVerified = false)
         {
             await Context.Interaction.DeferAsync(true);
 
@@ -83,6 +83,7 @@ namespace CCSODiscordBot.Modules.ServerConfig
             //Set welcome chan:
             BtnRole newClass = new BtnRole();
             newClass.Name = name;
+            newClass.Description = description;
             newClass.RequireVerification = requireVerified;
             newClass.Role = role.Id;
             newClass.Emote = null;
@@ -108,6 +109,58 @@ namespace CCSODiscordBot.Modules.ServerConfig
 
             // Add role to DB:
             guild.ClassStandings.Add(newClass);
+
+            // Update DB:
+            await _iGuildRepository.UpdateGuildAsync(guild);
+
+            // Notify user:
+            await Context.Interaction.FollowupAsync("Settings updated!");
+        }
+
+        [SlashCommand("addinterest", "Add a interest role")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.Administrator)]
+        public async Task AddInterest(SocketRole role, string name, string description)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            Guild guild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+            // Check for new server:
+            if (guild == null)
+            {
+                // Create new
+                guild = await CreateNewGuild(Context.Guild);
+            }
+            //Set welcome chan:
+            BtnRole newClass = new BtnRole();
+            newClass.Name = name;
+            newClass.RequireVerification = false; // Not implemented.
+            newClass.Role = role.Id;
+            newClass.Emote = null;
+            newClass.Description = description;
+
+            // TODO: Add emote to btn
+            //if(!string.IsNullOrEmpty(emote))
+            //{
+            //    try
+            //    {
+            //        newClass.Emote = new Emoji(emote.Substring(0,1));
+            //    }
+            //    catch (ArgumentException)
+            //    {
+            //        await Context.Interaction.FollowupAsync("Failed to parse emote.");
+            //        return;
+            //    }
+            //}
+
+            // Check null:
+            if (guild.InterestRoles == null)
+            {
+                guild.InterestRoles = new List<BtnRole>();
+            }
+
+            // Add role to DB:
+            guild.InterestRoles.Add(newClass);
 
             // Update DB:
             await _iGuildRepository.UpdateGuildAsync(guild);

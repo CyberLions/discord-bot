@@ -1,4 +1,5 @@
 ﻿using System;
+using CCSODiscordBot.Services.Database.DataTables;
 using CCSODiscordBot.Services.Database.Repository;
 using Discord;
 using Discord.Interactions;
@@ -40,7 +41,15 @@ namespace CCSODiscordBot.Modules.UserManagement.AccountVerification
                 user.VerificationNumber = null;
                 await _IUserRepository.UpdateUserAsync(user);
                 var guild = await _IGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
-                await Context.Interaction.FollowupAsync(embed: RolePrompt.RolePromptEmbeds.Embeds(true, "Account Verified. Select Roles", "Your email address has been verified.").Build(), components: RolePrompt.RolePromptComponents.BtnComponent(true, guild.ClassStandings).Build());
+                // Ensure guild has set up standings and/or interest roles
+                if (guild.ClassStandings?.Count > 0 || guild.InterestRoles?.Count > 0)
+                {
+                    await Context.Interaction.FollowupAsync(embed: RolePrompt.RolePromptEmbeds.Embeds(true, guild.ClassStandings, guild.InterestRoles, "Account Verified. Select Roles", "Your email address has been verified.").Build(), components: RolePrompt.RolePromptComponents.BtnComponent(true, guild.ClassStandings, guild.InterestRoles).Build());
+                }
+                else
+                {
+                    await Context.Interaction.FollowupAsync("Your account has been set up!", ephemeral: true);
+                }
             }
             else
             {

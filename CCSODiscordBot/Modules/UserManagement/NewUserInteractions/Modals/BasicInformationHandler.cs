@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
 using CCSODiscordBot.Modules.Embeds.Modals;
+using CCSODiscordBot.Services.Database.DataTables;
 using CCSODiscordBot.Services.Database.Repository;
 using CCSODiscordBot.Services.Email;
 using Discord;
@@ -117,8 +118,15 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 // Get guild from DB:
                 var dbGuild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
 
-                // Role assignment prompts:
-                await Context.Interaction.FollowupAsync(embed: RolePrompt.RolePromptEmbeds.Embeds(psuEmail).Build(), components:RolePrompt.RolePromptComponents.BtnComponent(psuEmail, dbGuild.ClassStandings).Build(), ephemeral: true);
+                if (dbGuild.ClassStandings?.Count > 0 || dbGuild.InterestRoles?.Count > 0)
+                {
+                    // Role assignment prompts:
+                    await Context.Interaction.FollowupAsync(embed: RolePrompt.RolePromptEmbeds.Embeds(psuEmail, dbGuild.ClassStandings, dbGuild.InterestRoles).Build(), components: RolePrompt.RolePromptComponents.BtnComponent(psuEmail, dbGuild.ClassStandings, dbGuild.InterestRoles).Build(), ephemeral: true);
+                }
+                else
+                {
+                    await Context.Interaction.FollowupAsync("Your account has been set up!", ephemeral: true);
+                }
             }
         }
     }
