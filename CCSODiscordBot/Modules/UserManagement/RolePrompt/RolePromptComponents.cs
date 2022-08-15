@@ -6,10 +6,10 @@ namespace CCSODiscordBot.Modules.UserManagement.RolePrompt
 {
     public class RolePromptComponents
     {
-        public static ComponentBuilder BtnComponent(bool psuEmail, List<ClassStanding> standings)
+        public static ComponentBuilder BtnComponent(bool psuEmail, List<BtnRole> standings)
         {
             ComponentBuilder component = new ComponentBuilder();
-            foreach(ClassStanding standing in standings)
+            foreach(BtnRole standing in standings)
             {
                 ButtonBuilder btn = new ButtonBuilder();
                 btn.WithLabel(standing.Name);

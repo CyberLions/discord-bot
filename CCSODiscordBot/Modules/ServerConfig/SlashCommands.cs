@@ -69,7 +69,7 @@ namespace CCSODiscordBot.Modules.ServerConfig
         [SlashCommand("addstanding", "Add a class standing.")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
-        public async Task AddStanding(SocketRole role, string name, bool requireVerified = false, string emote = "")
+        public async Task AddStanding(SocketRole role, string name, bool requireVerified = false)
         {
             await Context.Interaction.DeferAsync(true);
 
@@ -81,22 +81,29 @@ namespace CCSODiscordBot.Modules.ServerConfig
                 guild = await CreateNewGuild(Context.Guild);
             }
             //Set welcome chan:
-            ClassStanding newClass = new ClassStanding();
+            BtnRole newClass = new BtnRole();
             newClass.Name = name;
             newClass.RequireVerification = requireVerified;
             newClass.Role = role.Id;
             newClass.Emote = null;
-            if(!string.IsNullOrEmpty(emote))
+            // TODO: Add emote to btn
+            //if(!string.IsNullOrEmpty(emote))
+            //{
+            //    try
+            //    {
+            //        newClass.Emote = new Emoji(emote.Substring(0,1));
+            //    }
+            //    catch (ArgumentException)
+            //    {
+            //        await Context.Interaction.FollowupAsync("Failed to parse emote.");
+            //        return;
+            //    }
+            //}
+
+            // Check null:
+            if(guild.ClassStandings == null)
             {
-                try
-                {
-                    newClass.Emote = new Emoji(emote.Substring(0,1));
-                }
-                catch (ArgumentException)
-                {
-                    await Context.Interaction.FollowupAsync("Failed to parse emote.");
-                    return;
-                }
+                guild.ClassStandings = new List<BtnRole>();
             }
 
             // Add role to DB:
@@ -119,7 +126,7 @@ namespace CCSODiscordBot.Modules.ServerConfig
             // Create a new guild:
             Guild guild = new Guild();
             // Insert information:
-            guild.ClassStandings = new List<ClassStanding>();
+            guild.ClassStandings = new List<BtnRole>();
             guild.DiscordID = newGuild.Id;
             guild.LeaveEnabled = false;
             guild.WelcomeChannel = newGuild.DefaultChannel.Id;

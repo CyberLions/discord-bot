@@ -3,7 +3,7 @@ using Discord;
 
 namespace CCSODiscordBot.Services.Database.DataTables.SubClasses
 {
-    public class ClassStanding
+    public class BtnRole
     {
         public string Name { get; set; }
         public ulong Role { get; set; }
