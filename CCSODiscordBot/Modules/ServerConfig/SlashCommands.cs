@@ -80,6 +80,17 @@ namespace CCSODiscordBot.Modules.ServerConfig
                 // Create new
                 guild = await CreateNewGuild(Context.Guild);
             }
+            // null check
+            if(guild.ClassStandings == null)
+            {
+                guild.ClassStandings = new List<BtnRole>();
+            }
+            // Check for dupes:
+            if (guild.ClassStandings.FindAll(_ => _.Role == role.Id).Count > 0)
+            {
+                await Context.Interaction.FollowupAsync("Error: This role has already been added.");
+                return;
+            }
             //Set welcome chan:
             BtnRole newClass = new BtnRole();
             newClass.Name = name;
@@ -100,12 +111,6 @@ namespace CCSODiscordBot.Modules.ServerConfig
             //        return;
             //    }
             //}
-
-            // Check null:
-            if(guild.ClassStandings == null)
-            {
-                guild.ClassStandings = new List<BtnRole>();
-            }
 
             // Add role to DB:
             guild.ClassStandings.Add(newClass);
@@ -131,6 +136,17 @@ namespace CCSODiscordBot.Modules.ServerConfig
                 // Create new
                 guild = await CreateNewGuild(Context.Guild);
             }
+            // Check null:
+            if (guild.InterestRoles == null)
+            {
+                guild.InterestRoles = new List<BtnRole>();
+            }
+            // Check for dupes:
+            if (guild.InterestRoles.FindAll(_ => _.Role == role.Id).Count > 0)
+            {
+                await Context.Interaction.FollowupAsync("Error: This role has already been added.");
+                return;
+            }
             //Set welcome chan:
             BtnRole newClass = new BtnRole();
             newClass.Name = name;
@@ -152,12 +168,6 @@ namespace CCSODiscordBot.Modules.ServerConfig
             //        return;
             //    }
             //}
-
-            // Check null:
-            if (guild.InterestRoles == null)
-            {
-                guild.InterestRoles = new List<BtnRole>();
-            }
 
             // Add role to DB:
             guild.InterestRoles.Add(newClass);
