@@ -46,7 +46,7 @@ namespace CCSODiscordBot.Modules.UserManagement.RolePrompt
                 }
             }
             // Interests:
-            if(interestRoles != null)
+            if (interestRoles != null)
             {
                 for(int i = 0; i<interestRoles.Count(); i++)
                 {
