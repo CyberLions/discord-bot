@@ -64,11 +64,11 @@ namespace CCSODiscordBot.Modules.UserManagement.RolePrompt
                     // Five buttons to a row.
                     // Add previous rows:
                     int offset = 0;
-                    if(standings != null)
+                    if(standings != null && standings.Count() > 0)
                     {
-                        offset = standings.Count() / 5;
+                        offset = (standings.Count() / 5)+((standings.Count() % 5 > 0)?(1):(0));
                     }
-                    component.WithButton(btn, (i+1)/5 + offset);
+                    component.WithButton(btn, i/5 + offset);
                 }
             }
             return component;
