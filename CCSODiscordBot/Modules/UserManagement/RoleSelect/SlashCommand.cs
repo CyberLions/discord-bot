@@ -23,6 +23,8 @@ namespace CCSODiscordBot.Modules.UserManagement.RoleSelect
 
             var dbGuild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
             await channel.SendMessageAsync(embed: RolePrompt.RolePromptEmbeds.Embeds(true, dbGuild.ClassStandings, dbGuild.InterestRoles).Build(), components: RolePrompt.RolePromptComponents.BtnComponent(true, dbGuild.ClassStandings, dbGuild.InterestRoles).Build());
+
+            await Context.Interaction.FollowupAsync("Embed created!", ephemeral: true);
         }
     }
 }
