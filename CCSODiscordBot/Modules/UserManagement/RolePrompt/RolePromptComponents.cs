@@ -68,7 +68,7 @@ namespace CCSODiscordBot.Modules.UserManagement.RolePrompt
                     {
                         offset = standings.Count() / 5 + 1;
                     }
-                    component.WithButton(btn, i/5 + offset);
+                    component.WithButton(btn, (i+1)/5 + offset);
                 }
             }
             return component;
