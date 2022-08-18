@@ -27,7 +27,7 @@ namespace CCSODiscordBot.Services.Email
                 // Send email
                 smtpClient.Send(_configHandlingService.SMTPEmail, recipient, "CCSO Bot Verification Code",
                     "Hi!\n" +
-                    "Your verification code is: " + code + " for the " + guild + " discord server. Use the /verify command in Discord with the code to validate you account.\n" +
+                    "Your verification code is: " + code + " for the " + guild + " discord server. Use the /verify command in Discord with the code to validate you account. You can use this command in any channel that you can send messages in.\n" +
                     "This code was requested by " + username
                 );
             }

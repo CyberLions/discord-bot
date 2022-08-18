@@ -111,7 +111,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 _emailSender.SendVerifyCode((int) user.VerificationNumber, user.Email, Context.Guild.Name, Context.User.Username);
 
                 // Notify user of email:
-                await Context.Interaction.FollowupAsync("An email has been sent with a code to verify your address. Use /verify with the code to verify your account.", ephemeral: true);
+                await Context.Interaction.FollowupAsync("An email has been sent with a code to verify your address. Use /verify in any channel that you can send messages with the code to verify your account.", ephemeral: true);
             }
             else
             {
