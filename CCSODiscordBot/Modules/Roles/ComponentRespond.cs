@@ -1,4 +1,5 @@
 ﻿using System;
+using CCSODiscordBot.Services.Database.DataTables.SubClasses;
 using CCSODiscordBot.Services.Database.Repository;
 using Discord;
 using Discord.Interactions;
@@ -78,20 +79,44 @@ namespace CCSODiscordBot.Modules.Roles
             // Ensure role exists and isnt null:
             if (role is null)
             {
-                await FollowupAsync("Role cannot be found. Contact an admin.", ephemeral: true);
+                await FollowupAsync("Role cannot be found. Please contact an admin.", ephemeral: true);
                 throw new NullReferenceException("Role button role cannot be found and is null.");
             }
             // Ensure user is a SocketGuildUser.
             if (user is null)
             {
-                await FollowupAsync("User cannot be found. Contact an admin.", ephemeral: true);
+                await FollowupAsync("User cannot be found. Please contact an admin.", ephemeral: true);
                 throw new NullReferenceException("User is not guild user.");
             }
             // Check for verification:
             var dbUser = await _IUserRepository.GetByDiscordIdAsync(Context.User.Id, Context.Guild.Id);
-            if (!dbUser.verified)
+            if (dbUser == null || !dbUser.verified)
             {
-                await FollowupAsync("Error: You need to have a verified PSU email to add this role.", ephemeral: true);
+                // btn
+                ButtonBuilder getStartedButton = new ButtonBuilder();
+                getStartedButton.WithLabel("Get Started");
+                getStartedButton.Style = ButtonStyle.Success;
+                getStartedButton.WithCustomId("get-started-" + user.Id);
+                ComponentBuilder component = new ComponentBuilder();
+                component.WithButton(getStartedButton);
+
+                // Check to see if they already have a protected role:
+                var dbGuild = await _IGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+                var protectedRoles = dbGuild.ClassStandings?.Where(_ => _.RequireVerification == true);
+                if (protectedRoles != null)
+                {
+                    foreach (BtnRole dbRole in protectedRoles)
+                    {
+                        var socketRole = Context.Guild.GetRole(dbRole.Role);
+                        if (Context.Guild.GetUser(Context.User.Id).Roles.Contains(socketRole))
+                        {
+                            await FollowupAsync("Welcome returning member! Please verify your membership with our new bot by clicking the button below.", components: component.Build(), ephemeral: true);
+                            return;
+                        }
+                    }
+                }
+
+                await FollowupAsync("Error: You need to have a verified PSU email to add this role. Click the button below if you would like to update your information.", components: component.Build(), ephemeral: true);
                 return;
             }
             // Get user's roles:
