@@ -1,11 +1,16 @@
 ﻿// Program Entry Point.
 using CCSODiscordBot;
+using CCSODiscordBot.Modules.Greeter;
+using CCSODiscordBot.Modules.UserManagement;
 using CCSODiscordBot.Services;
+using CCSODiscordBot.Services.Database.Repository;
+using CCSODiscordBot.Services.Email;
 using Discord;
 using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 // Services:
 using (var services = ConfigureServices())
@@ -18,6 +23,11 @@ using (var services = ConfigureServices())
     // control per shard.
     client.ShardReady += Logging.ReadyAsync;
     client.Log += Logging.Log;
+
+    // Add join and leave notifications
+    var greeting = services.GetRequiredService<Greeting>();
+    client.UserJoined += greeting.UserJoin;
+    client.UserLeft += Leaving.UserLeft;
 
     await services.GetRequiredService<InteractionHandlingService>()
         .InitializeAsync();
@@ -38,10 +48,19 @@ ServiceProvider ConfigureServices()
     => new ServiceCollection()
         .AddSingleton<ConfigHandlingService>()
         // Add the Discord Client with intents
-        .AddSingleton(x=> new DiscordShardedClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.AllUnprivileged}))
+        .AddSingleton(x => new DiscordShardedClient(new DiscordSocketConfig() { GatewayIntents = GatewayIntents.All }))
         .AddSingleton<CommandService>()
         // Add InteractionService service with config to run all commands async:
         .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordShardedClient>(), new InteractionServiceConfig { DefaultRunMode = Discord.Interactions.RunMode.Async }))
         .AddSingleton<CommandHandlingService>()
         .AddSingleton<InteractionHandlingService>()
+        .AddSingleton<IMongoDatabase>(options => {
+            var config = new ConfigHandlingService();
+            var client = new MongoClient(config.MongoDBConnectionString);
+            return client.GetDatabase("ccsobot");
+        })
+        .AddSingleton<IGuildRepository, GuildRepository>()
+        .AddSingleton<IUserRepository, UserRepository>()
+        .AddSingleton<EmailSender>()
+        .AddSingleton<Greeting>()
         .BuildServiceProvider();

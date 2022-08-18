@@ -20,11 +20,23 @@
     <None Remove="Modules\Rules\" />
     <None Remove="Modules\Memes\Media\" />
     <None Remove="Modules\Embeds\Modals\" />
+    <None Remove="MongoDB.Driver" />
+    <None Remove="Services\Database\" />
+    <None Remove="Services\Database\DataTables\" />
+    <None Remove="Services\Database\Repository\" />
+    <None Remove="Services\Database\Repository\Interface\" />
+    <None Remove="Modules\UserManagement\NewUserInteractions\" />
+    <None Remove="Modules\UserManagement\NewUserInteractions\Modals\" />
+    <None Remove="Services\Database\DataTables\SubClasses\" />
+    <None Remove="Services\Email\" />
+    <None Remove="Modules\UserManagement\AccountVerification\" />
+    <None Remove="Modules\ServerConfig\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.7.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.17.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\" />
@@ -36,6 +48,16 @@
     <Folder Include="Modules\Memes\Media\" />
     <Folder Include="Modules\Embeds\" />
     <Folder Include="Modules\Embeds\Modals\" />
+    <Folder Include="Services\Database\" />
+    <Folder Include="Services\Database\DataTables\" />
+    <Folder Include="Services\Database\Repository\" />
+    <Folder Include="Services\Database\Repository\Interface\" />
+    <Folder Include="Modules\UserManagement\NewUserInteractions\" />
+    <Folder Include="Modules\UserManagement\NewUserInteractions\Modals\" />
+    <Folder Include="Services\Database\DataTables\SubClasses\" />
+    <Folder Include="Services\Email\" />
+    <Folder Include="Modules\UserManagement\AccountVerification\" />
+    <Folder Include="Modules\ServerConfig\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">
