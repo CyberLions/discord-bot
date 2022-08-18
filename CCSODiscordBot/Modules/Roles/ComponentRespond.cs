@@ -102,7 +102,7 @@ namespace CCSODiscordBot.Modules.Roles
 
                 // Check to see if they already have a protected role:
                 var dbGuild = await _IGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
-                var protectedRoles = dbGuild.ClassStandings?.Where(_ => _.RequireVerification == true);
+                var protectedRoles = dbGuild.ClassStandings?.Where(_ => _.RequireVerification);
                 if (protectedRoles != null)
                 {
                     foreach (BtnRole dbRole in protectedRoles)
