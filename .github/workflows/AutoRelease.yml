@@ -61,6 +61,6 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: "CCSODiscordBot*"
+          files: "CCSODiscordBot-*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
