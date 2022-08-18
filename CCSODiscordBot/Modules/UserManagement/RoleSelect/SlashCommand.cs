@@ -8,7 +8,7 @@ namespace CCSODiscordBot.Modules.UserManagement.RoleSelect
 {
     public class SlashCommand : InteractionModuleBase<ShardedInteractionContext>
     {
-        private IGuildRepository _iGuildRepository;
+        private readonly IGuildRepository _iGuildRepository;
         public SlashCommand(IGuildRepository guildRepository)
         {
             _iGuildRepository = guildRepository;
