@@ -41,6 +41,12 @@ namespace CCSODiscordBot.Modules.UserManagement.AccountVerification
                 user.VerificationNumber = null;
                 await _IUserRepository.UpdateUserAsync(user);
                 var guild = await _IGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+                // Set member role:
+                if(guild.VerifiedMemberRole != null)
+                {
+                    await Context.Guild.GetUser(Context.User.Id).AddRoleAsync((ulong) guild.VerifiedMemberRole);
+                }
+
                 // Ensure guild has set up standings and/or interest roles
                 if (guild.ClassStandings?.Count > 0 || guild.InterestRoles?.Count > 0)
                 {

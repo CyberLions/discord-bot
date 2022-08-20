@@ -20,6 +20,9 @@ namespace CCSODiscordBot.Services.Database.DataTables
         [BsonElement("welcomeChannel")]
         public ulong WelcomeChannel { get; set; }
 
+        [BsonElement("memberRole")]
+        public ulong? VerifiedMemberRole { get; set; }
+
         [BsonElement("standings")]
         public List<BtnRole>? ClassStandings { get; set; }
 

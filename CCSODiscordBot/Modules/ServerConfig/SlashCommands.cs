@@ -178,6 +178,29 @@ namespace CCSODiscordBot.Modules.ServerConfig
             // Notify user:
             await Context.Interaction.FollowupAsync("Settings updated!");
         }
+        [SlashCommand("setmemberrole", "Sets the role granted to verified members.")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.Administrator)]
+        public async Task SetMemberRole(SocketRole role)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            Guild guild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+            // Check for new server:
+            if (guild == null)
+            {
+                // Create new
+                guild = await CreateNewGuild(Context.Guild);
+            }
+            // Set role:
+            guild.VerifiedMemberRole = role.Id;
+
+            // Update DB:
+            await _iGuildRepository.UpdateGuildAsync(guild);
+
+            // Notify user:
+            await Context.Interaction.FollowupAsync("Settings updated!");
+        }
 
         /// <summary>
         /// Function to create a new guild in the DB
@@ -200,6 +223,7 @@ namespace CCSODiscordBot.Modules.ServerConfig
 
             return guild;
         }
+
     }
 }
 
