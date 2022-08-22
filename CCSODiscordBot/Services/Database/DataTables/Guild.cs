@@ -31,6 +31,9 @@ namespace CCSODiscordBot.Services.Database.DataTables
 
         [BsonElement("leaveEnabled")]
         public bool LeaveEnabled { get; set; }
+
+        [BsonElement("leaveChannel")]
+        public ulong? LeaveChannel { get; set; }
     }
 }
 

@@ -66,6 +66,54 @@ namespace CCSODiscordBot.Modules.ServerConfig
             await Context.Interaction.FollowupAsync("Settings updated!");
         }
 
+        [SlashCommand("leave", "Enable and disable the user left notifications.")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.Administrator)]
+        public async Task LeaveWelcome(bool enabled)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            Guild guild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+            // Check for new server:
+            if (guild == null)
+            {
+                // Create new
+                guild = await CreateNewGuild(Context.Guild);
+            }
+            //Enable leave:
+            guild.LeaveEnabled = enabled;
+
+            // Update DB:
+            await _iGuildRepository.UpdateGuildAsync(guild);
+
+            // Notify user:
+            await Context.Interaction.FollowupAsync("Settings updated!");
+        }
+
+        [SlashCommand("leavechan", "Set the channel to send user left messages in.")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.Administrator)]
+        public async Task LeaveChan(SocketChannel channel)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            Guild guild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+            // Check for new server:
+            if (guild == null)
+            {
+                // Create new
+                guild = await CreateNewGuild(Context.Guild);
+            }
+            //Set leave chan:
+            guild.LeaveChannel = channel.Id;
+
+            // Update DB:
+            await _iGuildRepository.UpdateGuildAsync(guild);
+
+            // Notify user:
+            await Context.Interaction.FollowupAsync("Settings updated!");
+        }
+
         [SlashCommand("addstanding", "Add a class standing.")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
