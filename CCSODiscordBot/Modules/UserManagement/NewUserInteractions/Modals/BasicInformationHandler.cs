@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Net.Mail;
 using CCSODiscordBot.Modules.Embeds.Modals;
 using CCSODiscordBot.Services.Database.DataTables;
@@ -52,13 +53,18 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 return;
             }
             Services.Database.DataTables.User user;
+
+            // Handle formatting name strings:
+            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo textInfo = cultureInfo.TextInfo;
+
             // Check for unfinished setup:
             if ((await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.DiscordID == Context.User.Id)).Count > 0)
             {
                 user = (await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.DiscordID == Context.User.Id)).First();
 
-                user.FirstName = modal.FirstName.Trim();
-                user.LastName = modal.LastName.Trim();
+                user.FirstName = textInfo.ToTitleCase(modal.FirstName.Trim());
+                user.LastName = textInfo.ToTitleCase(modal.LastName.Trim());
                 if(user.Email != email.Address)
                 {
                     user.Email = email.Address;
@@ -77,8 +83,8 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 user.DiscordID = Context.User.Id;
                 user.DiscordGuildID = Context.Guild.Id;
                 user.Email = email.Address;
-                user.FirstName = modal.FirstName.Trim();
-                user.LastName = modal.LastName.Trim();
+                user.FirstName = textInfo.ToTitleCase(modal.FirstName.Trim());
+                user.LastName = textInfo.ToTitleCase(modal.LastName.Trim());
                 user.verified = false;
                 user.VerificationNumber = null;
 
