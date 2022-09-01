@@ -30,6 +30,17 @@ namespace CCSODiscordBot.Modules.UserManagement.AccountVerification
             {
                 await Context.Interaction.FollowupAsync("You have not registered with the bot yet.");
             }
+            // Check to see if the user has already been verified:
+            else if (user.verified)
+            {
+                await Context.Interaction.FollowupAsync("Your account has already been verified.");
+                var guild = await _IGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+                // Set member role:
+                if (guild.VerifiedMemberRole != null)
+                {
+                    await Context.Guild.GetUser(Context.User.Id).AddRoleAsync((ulong)guild.VerifiedMemberRole);
+                }
+            }
             // Ensure the user was sent a code:
             else if(user.VerificationNumber == null)
             {
