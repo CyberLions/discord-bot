@@ -26,8 +26,9 @@ using (var services = ConfigureServices())
 
     // Add join and leave notifications
     var greeting = services.GetRequiredService<Greeting>();
+    var leaving = services.GetRequiredService<Leaving>();
     client.UserJoined += greeting.UserJoin;
-    client.UserLeft += Leaving.UserLeft;
+    client.UserLeft += leaving.UserLeft;
 
     await services.GetRequiredService<InteractionHandlingService>()
         .InitializeAsync();
@@ -63,4 +64,5 @@ ServiceProvider ConfigureServices()
         .AddSingleton<IUserRepository, UserRepository>()
         .AddSingleton<EmailSender>()
         .AddSingleton<Greeting>()
+        .AddSingleton<Leaving>()
         .BuildServiceProvider();
