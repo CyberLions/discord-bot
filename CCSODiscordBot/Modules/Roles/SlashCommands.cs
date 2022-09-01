@@ -34,6 +34,11 @@ namespace CCSODiscordBot.Modules.Roles
             ComponentBuilder components = new ComponentBuilder();
             foreach (SocketRole role in roles)
             {
+                if (role.Permissions.Administrator)
+                {
+                    await FollowupAsync("Cannot use role with Admin permissions.", ephemeral: true);
+                    return;
+                }
                 // Create the button:
                 ButtonBuilder roleBtn = new ButtonBuilder();
                 roleBtn.WithLabel(role.Name);
