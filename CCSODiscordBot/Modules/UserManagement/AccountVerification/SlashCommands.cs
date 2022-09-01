@@ -46,6 +46,7 @@ namespace CCSODiscordBot.Modules.UserManagement.AccountVerification
             {
                 await Context.Interaction.FollowupAsync("You have not been sent a verification code.");
             }
+            // Check to see if the code matched the one sent to their email:
             else if(user.VerificationNumber == code)
             {
                 user.verified = true;
