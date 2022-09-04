@@ -31,6 +31,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Setup QEMU for multi-arch build
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -71,6 +75,7 @@ jobs:
           context: .
           file: "./CCSODiscordBot/Dockerfile"
           push: ${{ github.event_name != 'pull_request' }}
+          platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
