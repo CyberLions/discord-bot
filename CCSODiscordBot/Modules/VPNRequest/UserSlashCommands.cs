@@ -35,7 +35,7 @@ namespace CCSODiscordBot.Modules.VPNRequest
 
             // Get user:
             var user = await _iUserRepository.GetByDiscordIdAsync(Context.User.Id, Context.Guild.Id);
-            if(user is null || user.Verified == false)
+            if(user is null || !user.Verified)
             {
                 ButtonBuilder getStartedButton = new ButtonBuilder();
                 getStartedButton.WithLabel("Get Started");

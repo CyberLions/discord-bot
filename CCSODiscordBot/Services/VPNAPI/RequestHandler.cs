@@ -10,7 +10,7 @@ namespace CCSODiscordBot.Services.VPNAPI
 		public static async Task<bool> MakeVPNRequest(Guild guild, User user)
 		{
 			// Check for null values:
-			if (guild.VPNAPIKey == null || guild.VPNAPIURL == null || user.FirstName == null || user.LastName == null || user.Email == null || user.Verified != true)
+			if (guild.VPNAPIKey == null || guild.VPNAPIURL == null || user.FirstName == null || user.LastName == null || user.Email == null || !user.Verified)
 			{
 				return false;
 			}
