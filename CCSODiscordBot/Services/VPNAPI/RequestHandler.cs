@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http.Headers;
 using System.Net.Sockets;
+using System.Text.Json;
 using CCSODiscordBot.Services.Database.DataTables;
 
 namespace CCSODiscordBot.Services.VPNAPI
@@ -21,7 +22,7 @@ namespace CCSODiscordBot.Services.VPNAPI
 
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				client.DefaultRequestHeaders.Add("St2-Api-Key", guild.VPNAPIKey);
-				HttpContent content = new StringContent(data.ToString(), System.Text.Encoding.UTF8, "application/json");
+				HttpContent content = new StringContent(JsonSerializer.Serialize(data), System.Text.Encoding.UTF8, "application/json");
 				HttpResponseMessage result = await client.PostAsync(new Uri(guild.VPNAPIURL), content);
 
 				if (result.IsSuccessStatusCode)
