@@ -26,8 +26,10 @@ namespace CCSODiscordBot.Services.VPNAPI
 
 				if (result.IsSuccessStatusCode)
 				{
-					return true;
+					Console.WriteLine("VPN Request success: " + user.DiscordID);
+                    return true;
 				}
+				Console.WriteLine("VPN Request failed: " + user.DiscordID + " " + result.StatusCode + " " + result.ReasonPhrase);
 				return false;
 			}
         }

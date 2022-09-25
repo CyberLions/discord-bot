@@ -54,7 +54,8 @@ namespace CCSODiscordBot.Modules.VPNRequest
                 await Context.Interaction.FollowupAsync("You have already requested VPN access. Please contact an admin if you are having issues.", ephemeral: true);
                 return;
             }
-
+            // Log event:
+            Console.WriteLine("Making VPN request for " + Context.User.Id + ", guild: " + Context.Guild.Name);
             // Make the request and ensure it was successful:
             bool requestStatus = await RequestHandler.MakeVPNRequest(guild, user);
             if (requestStatus)
