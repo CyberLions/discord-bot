@@ -18,7 +18,7 @@ namespace CCSODiscordBot.Modules.VPNRequest
         [SlashCommand("requestvpn", "Requests a VPN account.")]
         [DefaultMemberPermissions(GuildPermission.SendMessages)]
         [EnabledInDm(false)]
-        public async Task RequestVPNAccount()
+        public async Task RequestVPNAccount([MaxLength(100)][Summary(description: "Please enter a breif reason for why you are requesting the VPN.")]string reason)
         {
             await Context.Interaction.DeferAsync(true);
             // get and check guild for configuration:
@@ -57,7 +57,7 @@ namespace CCSODiscordBot.Modules.VPNRequest
             // Log event:
             Console.WriteLine("Making VPN request for " + Context.User.Id + ", guild: " + Context.Guild.Name);
             // Make the request and ensure it was successful:
-            bool requestStatus = await RequestHandler.MakeVPNRequest(guild, user);
+            bool requestStatus = await RequestHandler.MakeVPNRequest(guild, user, Context.User.Username, reason);
             if (requestStatus)
             {
                 user.VpnRequestSent = true;

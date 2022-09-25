@@ -8,7 +8,7 @@ namespace CCSODiscordBot.Services.VPNAPI
 {
 	public class RequestHandler
 	{
-		public static async Task<bool> MakeVPNRequest(Guild guild, User user)
+		public static async Task<bool> MakeVPNRequest(Guild guild, User user, string username, string reason)
 		{
 			// Check for null values:
 			if (guild.VPNAPIKey == null || guild.VPNAPIURL == null || user.FirstName == null || user.LastName == null || user.Email == null || !user.Verified)
@@ -16,7 +16,7 @@ namespace CCSODiscordBot.Services.VPNAPI
 				return false;
 			}
 
-			RequestData data = new RequestData(user.DiscordID.ToString(), user.FirstName, user.LastName, user.Email);
+			RequestData data = new RequestData(user.DiscordID.ToString(), user.FirstName, user.LastName, user.Email, reason, username);
 			using (HttpClient client = new HttpClient())
 			{
 
