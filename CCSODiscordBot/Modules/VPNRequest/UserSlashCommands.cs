@@ -8,8 +8,8 @@ namespace CCSODiscordBot.Modules.VPNRequest
 {
 	public class UserSlashCommands : InteractionModuleBase<ShardedInteractionContext>
     {
-        private IGuildRepository _iGuildRepository;
-        private IUserRepository _iUserRepository;
+        private readonly IGuildRepository _iGuildRepository;
+        private readonly IUserRepository _iUserRepository;
         public UserSlashCommands(IGuildRepository guildRepository, IUserRepository userRepository)
         {
             _iGuildRepository = guildRepository;
