@@ -90,7 +90,7 @@ namespace CCSODiscordBot.Modules.Roles
             }
             // Check for verification:
             var dbUser = await _IUserRepository.GetByDiscordIdAsync(Context.User.Id, Context.Guild.Id);
-            if (dbUser == null || !dbUser.verified)
+            if (dbUser == null || !dbUser.Verified)
             {
                 // btn
                 ButtonBuilder getStartedButton = new ButtonBuilder();

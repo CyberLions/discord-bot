@@ -7,9 +7,22 @@ namespace CCSODiscordBot.Services.Database.DataTables
 {
     public class Guild
     {
+        public Guild()
+        {
+            this.Id = null;
+            DiscordID = default;
+            WelcomeEnabled = false;
+            VerifiedMemberRole = null;
+            ClassStandings = null;
+            LeaveEnabled = false;
+            LeaveChannel = null;
+            VPNAPIKey = null;
+            VPNAPIURL = null;
+        }
+
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [BsonElement("discordId")]
         public ulong DiscordID { get; set; }
@@ -34,6 +47,12 @@ namespace CCSODiscordBot.Services.Database.DataTables
 
         [BsonElement("leaveChannel")]
         public ulong? LeaveChannel { get; set; }
+
+        [BsonElement("vpnApiKey")]
+        public string? VPNAPIKey { get; set; }
+
+        [BsonElement("vpnApiURL")]
+        public string? VPNAPIURL { get; set; }
     }
 }
 

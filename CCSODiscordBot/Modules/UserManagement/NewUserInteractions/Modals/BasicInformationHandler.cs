@@ -62,7 +62,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 if(user.Email != email.Address)
                 {
                     user.Email = email.Address;
-                    user.verified = false;
+                    user.Verified = false;
                     user.VerificationNumber = null;
                 }
 
@@ -79,7 +79,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
                 user.Email = email.Address;
                 user.FirstName = modal.FirstName.Trim();
                 user.LastName = modal.LastName.Trim();
-                user.verified = false;
+                user.Verified = false;
                 user.VerificationNumber = null;
 
                 // Add to DB:
@@ -98,7 +98,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
 
             // See if email validation is needed:
             // Only needed for PSU emails
-            if(!user.verified && psuEmail)
+            if(!user.Verified && psuEmail)
             {
                 // Verification needed:
                 Random random = new Random();
