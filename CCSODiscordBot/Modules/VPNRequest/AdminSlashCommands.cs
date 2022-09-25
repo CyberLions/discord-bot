@@ -41,6 +41,9 @@ namespace CCSODiscordBot.Modules.VPNRequest
 
             // Update the DB:
             await _iGuildRepository.UpdateGuildAsync(guild);
+            // Inform user:
+            await Context.Interaction.FollowupAsync("Enabled VPN requests.", ephemeral: true);
+            Console.WriteLine("VPN Request enabled. User, Guild: " + Context.User.Id + ", " + Context.Guild.Name);
         }
     }
 }

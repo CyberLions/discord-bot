@@ -16,6 +16,7 @@ namespace CCSODiscordBot.Modules.VPNRequest
             _iUserRepository = userRepository;
         }
         [SlashCommand("requestvpn", "Requests a VPN account.")]
+        [DefaultMemberPermissions(GuildPermission.SendMessages)]
         [EnabledInDm(false)]
         public async Task RequestVPNAccount()
         {
@@ -58,10 +59,10 @@ namespace CCSODiscordBot.Modules.VPNRequest
             bool requestStatus = await RequestHandler.MakeVPNRequest(guild, user);
             if (requestStatus)
             {
-                await Context.Interaction.FollowupAsync("Your request was sent. Please check your PSU email for further instructions.", ephemeral: true);
                 user.VpnRequestSent = true;
                 // Update the DB:
                 await _iUserRepository.UpdateUserAsync(user);
+                await Context.Interaction.FollowupAsync("Your request was sent. Please check your PSU email for further instructions.", ephemeral: true);
             }
             else
             {
