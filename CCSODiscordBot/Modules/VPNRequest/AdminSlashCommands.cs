@@ -23,7 +23,7 @@ namespace CCSODiscordBot.Modules.VPNRequest
             Uri urlvalid;
             // validate URL:
             bool result = Uri.TryCreate(url, UriKind.Absolute, out urlvalid) && (urlvalid.Scheme == Uri.UriSchemeHttp || urlvalid.Scheme == Uri.UriSchemeHttps);
-            if (!result)
+            if (!result || urlvalid == null)
             {
                 await Context.Interaction.FollowupAsync("The URL is invalid.", ephemeral: true);
                 return;
