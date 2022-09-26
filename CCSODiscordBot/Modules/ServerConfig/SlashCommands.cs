@@ -226,6 +226,40 @@ namespace CCSODiscordBot.Modules.ServerConfig
             // Notify user:
             await Context.Interaction.FollowupAsync("Settings updated!");
         }
+
+        [SlashCommand("removestanding", "Remove a class standing.")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.Administrator)]
+        public async Task RemoveStanding(SocketRole role)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            Guild guild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+            // Check for new server:
+            if (guild == null)
+            {
+                // Create new
+                guild = await CreateNewGuild(Context.Guild);
+            }
+            // null check
+            if (guild.ClassStandings == null)
+            {
+                guild.ClassStandings = new List<BtnRole>();
+            }
+            List<BtnRole> targets = guild.ClassStandings.FindAll(_ => _.Role == role.Id);
+            if (targets.Count() < 1)
+            {
+                await Context.Interaction.FollowupAsync("No standings found for that role.");
+                return;
+            }
+            foreach (BtnRole target in targets)
+            {
+                guild.ClassStandings.Remove(target);
+            }
+            await _iGuildRepository.UpdateGuildAsync(guild);
+            await Context.Interaction.FollowupAsync("Deleted " + targets.Count() + " roles.");
+        }
+
         [SlashCommand("setmemberrole", "Sets the role granted to verified members.")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
