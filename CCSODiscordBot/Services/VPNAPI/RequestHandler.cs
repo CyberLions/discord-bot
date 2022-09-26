@@ -8,6 +8,14 @@ namespace CCSODiscordBot.Services.VPNAPI
 {
 	public class RequestHandler
 	{
+		/// <summary>
+		/// Make a request to the vpn api
+		/// </summary>
+		/// <param name="guild">The guild to use for configuration details</param>
+		/// <param name="user">The user to request the VPN for</param>
+		/// <param name="username">The discord username for the user to send the data for</param>
+		/// <param name="reason">The reason the user needs access to the VPN</param>
+		/// <returns></returns>
 		public static async Task<bool> MakeVPNRequest(Guild guild, User user, string username, string reason)
 		{
 			// Check for null values:
