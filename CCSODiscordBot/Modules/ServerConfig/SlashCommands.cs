@@ -170,6 +170,39 @@ namespace CCSODiscordBot.Modules.ServerConfig
             await Context.Interaction.FollowupAsync("Settings updated!");
         }
 
+        [SlashCommand("removestanding", "Remove a class standing.")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.Administrator)]
+        public async Task RemoveStanding(SocketRole role)
+        {
+            await Context.Interaction.DeferAsync(true);
+
+            Guild guild = await _iGuildRepository.GetByDiscordIdAsync(Context.Guild.Id);
+            // Check for new server:
+            if (guild == null)
+            {
+                // Create new
+                guild = await CreateNewGuild(Context.Guild);
+            }
+            // null check
+            if (guild.ClassStandings == null)
+            {
+                guild.ClassStandings = new List<BtnRole>();
+            }
+            List<BtnRole> targets = guild.ClassStandings.FindAll(_ => _.Role == role.Id);
+            if (targets.Count() < 1)
+            {
+                await Context.Interaction.FollowupAsync("No standings found for that role.");
+                return;
+            }
+            foreach (BtnRole target in targets)
+            {
+                guild.ClassStandings.Remove(target);
+            }
+            await _iGuildRepository.UpdateGuildAsync(guild);
+            await Context.Interaction.FollowupAsync("Deleted " + targets.Count() + " roles.");
+        }
+
         [SlashCommand("addinterest", "Add a interest role")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
@@ -227,10 +260,10 @@ namespace CCSODiscordBot.Modules.ServerConfig
             await Context.Interaction.FollowupAsync("Settings updated!");
         }
 
-        [SlashCommand("removestanding", "Remove a class standing.")]
+        [SlashCommand("removeinterest", "Remove a interest role")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
-        public async Task RemoveStanding(SocketRole role)
+        public async Task RemoveInterest(SocketRole role)
         {
             await Context.Interaction.DeferAsync(true);
 
@@ -241,20 +274,20 @@ namespace CCSODiscordBot.Modules.ServerConfig
                 // Create new
                 guild = await CreateNewGuild(Context.Guild);
             }
-            // null check
-            if (guild.ClassStandings == null)
+            // Check null:
+            if (guild.InterestRoles == null)
             {
-                guild.ClassStandings = new List<BtnRole>();
+                guild.InterestRoles = new List<BtnRole>();
             }
-            List<BtnRole> targets = guild.ClassStandings.FindAll(_ => _.Role == role.Id);
+            List<BtnRole> targets = guild.InterestRoles.FindAll(_ => _.Role == role.Id);
             if (targets.Count() < 1)
             {
-                await Context.Interaction.FollowupAsync("No standings found for that role.");
+                await Context.Interaction.FollowupAsync("No interest found for that role.");
                 return;
             }
             foreach (BtnRole target in targets)
             {
-                guild.ClassStandings.Remove(target);
+                guild.InterestRoles.Remove(target);
             }
             await _iGuildRepository.UpdateGuildAsync(guild);
             await Context.Interaction.FollowupAsync("Deleted " + targets.Count() + " roles.");
