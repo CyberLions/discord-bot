@@ -63,7 +63,7 @@ namespace CCSODiscordBot.Modules.VPNRequest
                 user.VpnRequestSent = true;
                 // Update the DB:
                 await _iUserRepository.UpdateUserAsync(user);
-                await Context.Interaction.FollowupAsync("Your request was sent. Please check your PSU email for further instructions.", ephemeral: true);
+                await Context.Interaction.FollowupAsync("Your request was sent. Once your request has been accepted, you will receive an email with your login credentials. The email will be sent to "+user.Email+".", ephemeral: true);
             }
             else
             {
