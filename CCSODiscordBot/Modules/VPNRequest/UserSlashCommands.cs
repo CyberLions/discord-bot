@@ -57,7 +57,7 @@ namespace CCSODiscordBot.Modules.VPNRequest
             // Log event:
             Console.WriteLine("Making VPN request for " + Context.User.Id + ", guild: " + Context.Guild.Name);
             // Make the request and ensure it was successful:
-            bool requestStatus = await RequestHandler.MakeVPNRequest(guild, user, Context.User.Username, reason);
+            bool requestStatus = await RequestHandler.MakeVPNRequest(guild, user, Context.User.ToString(), reason);
             if (requestStatus)
             {
                 user.VpnRequestSent = true;
