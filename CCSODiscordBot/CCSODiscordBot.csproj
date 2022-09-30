@@ -32,6 +32,8 @@
     <None Remove="Modules\UserManagement\AccountVerification\" />
     <None Remove="Modules\ServerConfig\" />
     <None Remove="Modules\UserManagement\RoleSelect\" />
+    <None Remove="Services\VPNAPI\" />
+    <None Remove="Modules\VPNRequest\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.8.1" />
@@ -60,6 +62,8 @@
     <Folder Include="Modules\UserManagement\AccountVerification\" />
     <Folder Include="Modules\ServerConfig\" />
     <Folder Include="Modules\UserManagement\RoleSelect\" />
+    <Folder Include="Services\VPNAPI\" />
+    <Folder Include="Modules\VPNRequest\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">

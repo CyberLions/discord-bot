@@ -28,7 +28,7 @@ namespace CCSODiscordBot.Modules.Greeter
             var dbUser = await _iUserRepository.GetByDiscordIdAsync(user.Id, user.Guild.Id);
             // Check if guild has enabled the greeting module
             // Also check if the user was already added to the DB and verified:
-            if (!dbGuild.WelcomeEnabled || (dbUser != null && dbUser.verified))
+            if (!dbGuild.WelcomeEnabled || (dbUser != null && dbUser.Verified))
             {
                 // If not, return
                 return;

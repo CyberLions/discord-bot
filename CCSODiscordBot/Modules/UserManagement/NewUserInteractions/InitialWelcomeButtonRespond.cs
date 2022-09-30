@@ -24,7 +24,7 @@ namespace CCSODiscordBot.Modules.UserManagement.NewUserInteractions
             // (try to) Get user from DB:
             var dbUser = await _iUserRepository.GetByDiscordIdAsync(Context.User.Id, Context.Guild.Id);
             // Ensure user has not been welcomed before:
-            if (dbUser != null && dbUser.verified)
+            if (dbUser != null && dbUser.Verified)
             {
                 await Context.Interaction.RespondAsync("You have already verified your membership. Please contact a mod if you are having issues or would like to update your information.", ephemeral: true);
                 return;
