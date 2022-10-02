@@ -10,7 +10,7 @@ namespace CCSODiscordBot.Modules.VPNRequest
 	public class AdminSlashCommands : InteractionModuleBase<ShardedInteractionContext>
     {
         private readonly IGuildRepository _iGuildRepository;
-		public AdminSlashCommands(IGuildRepository iGuildRepository)
+	public AdminSlashCommands(IGuildRepository iGuildRepository)
         {
             _iGuildRepository = iGuildRepository;
         }
