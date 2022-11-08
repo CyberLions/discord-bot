@@ -105,6 +105,18 @@ namespace CCSODiscordBot.Modules.Memes
             string imgPath = Path.Join(Directory.GetCurrentDirectory(), "Modules/Memes/Media/simpy.png");
             await FollowupWithFileAsync(new FileAttachment(imgPath));
         }
+
+        [SlashCommand("cbat", "CBAT is all you need")]
+        [EnabledInDm(false)]
+        [DefaultMemberPermissions(GuildPermission.SendMessages)]
+        public async Task Cbat()
+        {
+            // Ack the command:
+            await DeferAsync(false);
+
+            // Reply to the command:
+            await FollowupAsync("https://www.youtube.com/watch?v=KAwyWkksXuo");
+        }
     }
 }
 
