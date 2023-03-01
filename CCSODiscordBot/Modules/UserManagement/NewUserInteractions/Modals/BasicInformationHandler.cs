@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using CCSODiscordBot.Modules.Embeds.Modals;
 using CCSODiscordBot.Services.Database.DataTables;
 using CCSODiscordBot.Services.Database.Repository;
@@ -33,7 +34,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             if(!new EmailAddressAttribute().IsValid(modal.Email))
             {
                 // Handle invalid email
-                await Context.Interaction.RespondAsync("Invalid email format. Try again.");
+                await Context.Interaction.FollowupAsync("Invalid email format. Please try again.", ephemeral: true);
                 return;
             }
             // Parse email:
@@ -43,12 +44,21 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
             if (email.Host.EndsWith("psu.edu"))
             {
                 psuEmail = true;
+                // Check for PSU email format:
+                Match psuUsername = Regex.Match(email.User, @"^[a-zA-Z]{3}\d+$");
+                if (!psuUsername.Success)
+                {
+                    // This blocks custom email adresses which may cause issues with adding to PSU groups.
+                    // Handle invalid PSU email format
+                    await Context.Interaction.FollowupAsync("You must use the xyz123 PSU email format. Please try again.", ephemeral: true);
+                    return;
+                }
             }
             // Check DB for alt account:
             if((await _iUserRepository.GetByLinqAsync(_ => _.DiscordGuildID == Context.Guild.Id && _.Email == email.Address && _.DiscordID != Context.User.Id)).Count > 0)
             {
                 // Duplicate email:
-                await Context.Interaction.RespondAsync("Your email is already registered in the DB under a seperate account. Please contact the mods for further support.");
+                await Context.Interaction.FollowupAsync("Your email is already registered in the DB under a seperate account. Please contact the mods for further support.", ephemeral: true);
                 return;
             }
             Services.Database.DataTables.User user;
