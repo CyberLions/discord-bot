@@ -19,7 +19,7 @@ namespace CCSODiscordBot.Modules.UserManagement.Modals
 
         // Email prompt:
         [InputLabel("Email (PSU required for student/faculty)")]
-        [ModalTextInput("email", placeholder: "ccso@psu.edu", maxLength: 100)]
+        [ModalTextInput("email", placeholder: "xyz123@psu.edu", maxLength: 100)]
         public string Email { get; set; }
     }
 }
