@@ -110,7 +110,7 @@ namespace CCSODiscordBot.Modules.Roles
                         var socketRole = Context.Guild.GetRole(dbRole.Role);
                         if (Context.Guild.GetUser(Context.User.Id).Roles.Contains(socketRole))
                         {
-                            await FollowupAsync("Welcome returning member! Please verify your membership with our new bot by clicking the button below.", components: component.Build(), ephemeral: true);
+                            await FollowupAsync("Welcome returning member! Please verify your membership with our bot by clicking the button below.", components: component.Build(), ephemeral: true);
                             return;
                         }
                     }
