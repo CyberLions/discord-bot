@@ -34,14 +34,17 @@
     <None Remove="Modules\UserManagement\RoleSelect\" />
     <None Remove="Services\VPNAPI\" />
     <None Remove="Modules\VPNRequest\" />
-    <None Remove="Services\Zitadel\" />
+    <None Remove="Services\SSO\" />
+    <None Remove="Services\SSO\Interfaces\" />
+    <None Remove="Services\SSO\Implementations\" />
+    <None Remove="Services\SSO\Implementations\Zitadel\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.10.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.19.1" />
-    <PackageReference Include="Zitadel" Version="5.2.6" />
+    <PackageReference Include="Zitadel" Version="5.2.7" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\" />
@@ -66,7 +69,10 @@
     <Folder Include="Modules\UserManagement\RoleSelect\" />
     <Folder Include="Services\VPNAPI\" />
     <Folder Include="Modules\VPNRequest\" />
-    <Folder Include="Services\Zitadel\" />
+    <Folder Include="Services\SSO\" />
+    <Folder Include="Services\SSO\Interfaces\" />
+    <Folder Include="Services\SSO\Implementations\" />
+    <Folder Include="Services\SSO\Implementations\Zitadel\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">
