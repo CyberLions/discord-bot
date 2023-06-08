@@ -44,7 +44,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.19.2" />
-    <PackageReference Include="Zitadel" Version="5.2.7" />
+    <PackageReference Include="Zitadel" Version="5.2.8" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\" />
