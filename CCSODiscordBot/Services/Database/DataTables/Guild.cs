@@ -53,6 +53,9 @@ namespace CCSODiscordBot.Services.Database.DataTables
 
         [BsonElement("vpnApiURL")]
         public string? VPNAPIURL { get; set; }
+
+        [BsonElement("zitadelDiscordIDPId")]
+        public string? ZitadelDiscordIDPId { get; set; }
     }
 }
 
