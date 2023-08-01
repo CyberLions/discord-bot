@@ -18,7 +18,7 @@ namespace CCSODiscordBot.Services.Email
             using (var smtpClient = new SmtpClient(_configHandlingService.SMTPAddr)
             {
                 Port = (int)_configHandlingService.SMTPPort,
-                Credentials = new NetworkCredential(_configHandlingService.SMTPEmail, _configHandlingService.SMTPPassword),
+                Credentials = new NetworkCredential(_configHandlingService.SMTPUser, _configHandlingService.SMTPPassword),
                 EnableSsl = true
             })
             // Using the SMTP client, execute the following. Then dispose of the object from RAM.
