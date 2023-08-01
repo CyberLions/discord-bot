@@ -28,6 +28,10 @@ namespace CCSODiscordBot
         /// </summary>
         private readonly string? _SMTPEmail;
         /// <summary>
+        /// The username for the SMTP server
+        /// </summary>
+        private readonly string? _SMTPUser;
+        /// <summary>
         /// The SMTP password
         /// </summary>
         private readonly string? _SMTPPassword;
@@ -55,6 +59,9 @@ namespace CCSODiscordBot
 
             // Get and set the SMTP email address:
             _SMTPEmail = (config["SMTPEmail"] == null) ? (Environment.GetEnvironmentVariable("SMTPEmail")) : (config["SMTPEmail"]);
+
+            // Get and set the SMTP username:
+            _SMTPUser = (config["SMTPUser"] == null) ? (Environment.GetEnvironmentVariable("SMTPUser")) : (config["SMTPUser"]);
 
             // Get and set the SMTP password:
             _SMTPPassword = (config["SMTPPassword"] == null) ? (Environment.GetEnvironmentVariable("SMTPPassword")) : (config["SMTPPassword"]);
@@ -125,6 +132,20 @@ namespace CCSODiscordBot
                     throw new NullReferenceException("The SMTP email address string is not set.");
                 }
                 return _SMTPEmail;
+            }
+        }
+        /// <summary>
+        /// The SMTP email server
+        /// </summary>
+        public string SMTPUser
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_SMTPUser))
+                {
+                    throw new NullReferenceException("The SMTP username string is not set.");
+                }
+                return _SMTPUser;
             }
         }
         /// <summary>
