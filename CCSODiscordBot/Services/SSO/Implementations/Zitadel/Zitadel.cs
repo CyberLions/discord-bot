@@ -1,4 +1,5 @@
-﻿using CCSODiscordBot.Services.Database.DataTables;
+﻿using System.Net.Mail;
+using CCSODiscordBot.Services.Database.DataTables;
 using CCSODiscordBot.Services.SSO.Interfaces;
 using Zitadel.Api;
 using Zitadel.Management.V1;
@@ -13,22 +14,34 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         /// </summary>
         private ManagementServiceClient _Client;
         private GRPCClient GRPCClient;
-        private string _idpID;
         /// <summary>
         /// Initialize Zitadel API with PAT
         /// </summary>
         /// <param name="apiUrl"></param>
         /// <param name="pat"></param>
-		public Zitadel(string apiUrl, string pat, string idpId, string zitadelDiscordIDPId)
+		public Zitadel(string apiUrl, string pat, string zitadelDiscordIDPId)
 		{
             _Client = Clients.ManagementService(new(apiUrl, ITokenProvider.Static(pat)));
-            _idpID = idpId;
 
             GRPCClient = new GRPCClient(apiUrl, pat, zitadelDiscordIDPId);
         }
 
         public void AddUser(User user)
         {
+            if(user.Email == null)
+            {
+                throw new NullReferenceException("User does not have an email");
+            }
+
+            MailAddress addr = new MailAddress(user.Email);
+
+            // check for existing username:
+            if (UserExists(user))
+            {
+                throw new ExistingUserException("User already exists in Zitadel. Aborting.");
+            }
+
+            // Add user:
             var result = _Client.AddHumanUser(new AddHumanUserRequest
             {
                 Profile = new AddHumanUserRequest.Types.Profile
@@ -41,9 +54,11 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
                 {
                     Email_ = user.Email,
                     IsEmailVerified = user.Verified
-                }
+                },
+                UserName = addr.User
             });
 
+            // Link the Discord user for SSO:
             GRPCClient.LinkUserIDP(result.UserId, user);
         }
 
@@ -54,7 +69,10 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 
         public void RemoveUser(User user)
         {
-            throw new NotImplementedException();
+            _Client.RemoveUser(new RemoveUserRequest
+            {
+                Id = GetUserID(user)
+            });
         }
 
         public void UpdateUserRecord(User user)
@@ -64,7 +82,43 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 
         public bool UserExists(User user)
         {
-            throw new NotImplementedException();
+            if (user.Email == null)
+            {
+                throw new NullReferenceException("User does not have an email");
+            }
+
+            MailAddress addr = new MailAddress(user.Email);
+
+            // check for existing username:
+            var checkUsername = _Client.IsUserUnique(new IsUserUniqueRequest
+            {
+                UserName = addr.User,
+                Email = user.Email
+            });
+
+            return !checkUsername.IsUnique;
+        }
+
+        private string GetUserID(User user)
+        {
+            if (user.Email == null)
+            {
+                throw new NullReferenceException("User does not have an email");
+            }
+
+            MailAddress addr = new MailAddress(user.Email);
+
+            var zitadelUser = _Client.GetUserByLoginNameGlobal(new GetUserByLoginNameGlobalRequest
+            {
+                LoginName = addr.User
+            });
+
+            if(zitadelUser == null)
+            {
+                throw new NullReferenceException("User does not exist.");
+            }
+
+            return zitadelUser.User.Id;
         }
     }
 }

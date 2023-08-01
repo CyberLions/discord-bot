@@ -8,6 +8,7 @@ namespace CCSODiscordBot.Services.SSO.Interfaces
 		/// <summary>
 		/// Adds a user to the SSO platform
 		/// </summary>
+		/// <exception cref="ExistingUserException">Thrown when a user already exists</exception>
 		public void AddUser(User user);
 		/// <summary>
 		/// Removes a user from the SSO platform

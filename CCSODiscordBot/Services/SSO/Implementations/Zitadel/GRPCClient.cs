@@ -28,9 +28,9 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 				IdpLink = new IDPLink()
 				{
 					IdpId = ZitadelDiscordIDPId,
-					IdpExternalId = user.DiscordID.ToString(),
-					DisplayName = user.FirstName + " " + user.LastName
-				},
+					UserId = user.DiscordID.ToString(),
+					UserName = user.FirstName + " " + user.LastName
+                },
 				UserId = zitadelUserId
             },
             new Metadata {{ "Authorization", $"Bearer {Token}" }}
