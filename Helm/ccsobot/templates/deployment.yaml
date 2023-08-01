@@ -30,6 +30,37 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: SMTPUser
+            valueFrom:
+              secretKeyRef:
+                name: botcreds
+                key: SMTPUser
+          - name: SMTPPassword
+            valueFrom:
+              secretKeyRef:
+                name: botcreds
+                key: SMTPPassword
+          - name: SMTPEmail
+            valueFrom:
+              secretKeyRef:
+                name: botcreds
+                key: SMTPEmail
+          - name: SMTPAddr
+            valueFrom:
+              secretKeyRef:
+                name: botcreds
+                key: SMTPAddr
+          - name: MongoDBConnectionString
+            valueFrom:
+              secretKeyRef:
+                name: botcreds
+                key: MongoDBConnectionString
+          - name: DiscordToken
+            valueFrom:
+              secretKeyRef:
+                name: botcreds
+                key: DiscordToken
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
