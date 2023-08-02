@@ -19,13 +19,35 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         /// </summary>
         /// <param name="apiUrl"></param>
         /// <param name="pat"></param>
-		public Zitadel(string apiUrl, string pat, string zitadelDiscordIDPId)
+		public Zitadel(ZitadelConfig conf)
 		{
-            _Client = Clients.ManagementService(new(apiUrl, ITokenProvider.Static(pat)));
+            _Client = Clients.ManagementService(new(conf.GetSetting("ApiUrl"), ITokenProvider.Static(conf.GetSetting("Pat"))));
 
-            GRPCClient = new GRPCClient(apiUrl, pat, zitadelDiscordIDPId);
+            GRPCClient = new GRPCClient(conf.GetSetting("ApiUrl"), conf.GetSetting("Pat"), conf.GetSetting("ZitadelDiscordIDPId"));
         }
 
+        /// <summary>
+        /// Name of the application
+        /// </summary>
+        public string Name
+        {
+            get;
+        } = "Zitadel";
+
+        /// <summary>
+        /// The configuration type
+        /// </summary>
+        public SSOConfig Configuration
+        {
+            get;
+        } = new ZitadelConfig();
+
+        /// <summary>
+        /// Add a user to Zitadel
+        /// </summary>
+        /// <param name="user"></param>
+        /// <exception cref="NullReferenceException"></exception>
+        /// <exception cref="ExistingUserException"></exception>
         public void AddUser(User user)
         {
             if(user.Email == null)
