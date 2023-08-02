@@ -3,6 +3,7 @@ using CCSODiscordBot;
 using CCSODiscordBot.Modules.Greeter;
 using CCSODiscordBot.Modules.UserManagement;
 using CCSODiscordBot.Services;
+using CCSODiscordBot.Services.Attributes.DynamicSlashCommands;
 using CCSODiscordBot.Services.Database.Repository;
 using CCSODiscordBot.Services.Email;
 using Discord;
@@ -35,6 +36,21 @@ using (var services = ConfigureServices())
 
     await services.GetRequiredService<CommandHandlingService>()
         .InitializeAsync();
+
+    // Register dynamic slash commands:
+    var methods = AppDomain.CurrentDomain.GetAssemblies() // Returns all currenlty loaded assemblies
+        .SelectMany(x => x.GetTypes()) // returns all types defined in this assemblies
+        .Where(x => x.IsClass) // only yields classes
+        .SelectMany(x => x.GetMethods()) // returns all methods defined in those classes
+        .Where(x => x.ReturnType.Equals(typeof(SlashCommandProperties)))
+        .Where(x => x.GetCustomAttributes(typeof(RegisterDynamicSlashCommandAttribute), false).FirstOrDefault() != null);
+
+    foreach (var method in methods) // iterate through all found dynamic slash command registrations
+    {
+        var obj = Activator.CreateInstance(method.DeclaringType); // Instantiate the class
+        SlashCommandProperties cmd = (SlashCommandProperties) method.Invoke(obj, null); // invoke the method
+        await client.Rest.CreateGlobalCommand(cmd);
+    }
 
     // Tokens should be considered secret data, and never hard-coded.
     await client.LoginAsync(TokenType.Bot, config.DiscordToken);

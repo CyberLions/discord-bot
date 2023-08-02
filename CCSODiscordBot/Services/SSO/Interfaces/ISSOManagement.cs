@@ -3,19 +3,12 @@ using CCSODiscordBot.Services.Database.DataTables;
 
 namespace CCSODiscordBot.Services.SSO.Interfaces
 {
-	public interface SSOManagement
+	public interface ISSOManagement
 	{
-		/// <summary>
-		/// The name of the SSO application
-		/// </summary>
-        string Name
-        {
-            get;
-        }
 		/// <summary>
 		/// The configuration class
 		/// </summary>
-		SSOConfig Configuration
+		ISSOConfig Configuration
 		{
 			get;
 		}

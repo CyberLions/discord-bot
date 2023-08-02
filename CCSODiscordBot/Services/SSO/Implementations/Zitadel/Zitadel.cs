@@ -7,7 +7,7 @@ using static Zitadel.Management.V1.ManagementService;
 
 namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 {
-	public class Zitadel : SSOManagement
+	public class Zitadel : ISSOManagement
 	{
         /// <summary>
         /// Auth service client
@@ -27,17 +27,9 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         }
 
         /// <summary>
-        /// Name of the application
-        /// </summary>
-        public string Name
-        {
-            get;
-        } = "Zitadel";
-
-        /// <summary>
         /// The configuration type
         /// </summary>
-        public SSOConfig Configuration
+        public ISSOConfig Configuration
         {
             get;
         } = new ZitadelConfig();

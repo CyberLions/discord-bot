@@ -39,6 +39,9 @@
     <None Remove="Services\SSO\Implementations\" />
     <None Remove="Services\SSO\Implementations\Zitadel\" />
     <None Remove="Services\SSO\Interfaces\Exceptions\" />
+    <None Remove="Modules\SSOCommands\" />
+    <None Remove="Services\DynamicSlashCommands\" />
+    <None Remove="Services\DynamicSlashCommands\Attributes\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.11.0" />
@@ -75,6 +78,9 @@
     <Folder Include="Services\SSO\Implementations\" />
     <Folder Include="Services\SSO\Implementations\Zitadel\" />
     <Folder Include="Services\SSO\Interfaces\Exceptions\" />
+    <Folder Include="Modules\SSOCommands\" />
+    <Folder Include="Services\DynamicSlashCommands\" />
+    <Folder Include="Services\DynamicSlashCommands\Attributes\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">

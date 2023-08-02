@@ -3,7 +3,7 @@ using CCSODiscordBot.Services.SSO.Interfaces;
 
 namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 {
-    public class ZitadelConfig : SSOConfig
+    public class ZitadelConfig : ISSOConfig
     {
         private List<KeyValuePair<string, string>> _configs = new List<KeyValuePair<string, string>>();
 

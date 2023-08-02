@@ -1,7 +1,7 @@
 ﻿using System;
 namespace CCSODiscordBot.Services.SSO.Interfaces
 {
-    public interface SSOConfig
+    public interface ISSOConfig
     {
         /// <summary>
         /// The name of the SSO application
