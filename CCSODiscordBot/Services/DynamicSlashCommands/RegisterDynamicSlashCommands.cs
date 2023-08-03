@@ -8,11 +8,16 @@ namespace CCSODiscordBot.Services.DynamicSlashCommands
 {
 	public class RegisterDynamicSlashCommands
 	{
+        /// <summary>
+        /// Registers a dynamic slash command with Discord
+        /// </summary>
+        /// <param name="client">Discord client</param>
+        /// <returns></returns>
         public static async Task RegisterCommandsToGuild(DiscordSocketClient client)
         {
             Console.WriteLine("Registering dynamic commands");
 
-            // Register dynamic slash commands:
+            // Find all dynamic slash commands by attribute:
             var methods = AppDomain.CurrentDomain.GetAssemblies() // Returns all currenlty loaded assemblies
                 .SelectMany(x => x.GetTypes()) // returns all types defined in this assemblies
                 .Where(x => x.IsClass) // only yields classes
