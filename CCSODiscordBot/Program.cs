@@ -25,7 +25,7 @@ using (var services = ConfigureServices())
     // The ShardReady event is used instead, allowing for individual
     // control per shard.
     client.ShardReady += Logging.ReadyAsync;
-    client.ShardReady += RegisterCommands.RegisterCommandsToGuild;
+    client.ShardReady += RegisterDynamicSlashCommands.RegisterCommandsToGuild;
     client.Log += Logging.Log;
 
     // Add join and leave notifications

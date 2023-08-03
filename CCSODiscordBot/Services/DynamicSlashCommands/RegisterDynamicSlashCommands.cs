@@ -6,7 +6,7 @@ using Zitadel.Api;
 
 namespace CCSODiscordBot.Services.DynamicSlashCommands
 {
-	public class RegisterCommands
+	public class RegisterDynamicSlashCommands
 	{
         public static async Task RegisterCommandsToGuild(DiscordSocketClient client)
         {
