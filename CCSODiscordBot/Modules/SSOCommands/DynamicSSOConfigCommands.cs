@@ -32,7 +32,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
             // Add each implementation
             foreach(var ssoImplementation in ssoImplementations)
             {
-                // Gets the name of the class and adds an option (different from the ISSOManagement's Name field):
+                // Gets the name of the class and adds an option:
                 ssoOption.AddChoice(ssoImplementation.Name, ssoImplementation.Name);
             }
             ssoOption.AddChoice("None", "None");

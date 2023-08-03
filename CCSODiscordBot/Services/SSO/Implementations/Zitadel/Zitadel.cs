@@ -27,6 +27,14 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         }
 
         /// <summary>
+        /// Used for discovery of configuration settings
+        /// </summary>
+        public Zitadel()
+        {
+
+        }
+
+        /// <summary>
         /// The configuration type
         /// </summary>
         public ISSOConfig Configuration
