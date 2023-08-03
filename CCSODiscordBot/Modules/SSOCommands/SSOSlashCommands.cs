@@ -8,7 +8,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
 	public class SSOSlashCommands
 	{
 		[RegisterDynamicSlashCommand]
-        public SlashCommandProperties RegisterSSOSlashCommands()
+        public SlashCommandBuilder RegisterSSOSlashCommands()
 		{
             // Get all types of the SSO plugins:
             var type = typeof(ISSOManagement);
@@ -40,7 +40,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
             cmd.AddOption(ssoOption);
 
             // Return the slash command to be registered.
-            return cmd.Build();
+            return cmd;
         }
 
     }
