@@ -1,13 +1,12 @@
-﻿using System;
-using CCSODiscordBot.Services.Attributes.DynamicSlashCommands;
+﻿using CCSODiscordBot.Services.Attributes.DynamicSlashCommands;
 using CCSODiscordBot.Services.SSO.Interfaces;
 using Discord;
 
 namespace CCSODiscordBot.Modules.SSOCommands
 {
-	public class ConfigureSSOSlashCommands
-	{
-		[RegisterDynamicSlashCommand]
+    public class DynamicSSOConfigCommands
+    {
+        [RegisterDynamicSlashCommand]
         public SlashCommandBuilder RegisterSSOSlashCommands()
 		{
             // Get all types of the SSO plugins:
