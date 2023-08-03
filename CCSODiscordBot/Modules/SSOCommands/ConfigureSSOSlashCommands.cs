@@ -5,7 +5,7 @@ using Discord;
 
 namespace CCSODiscordBot.Modules.SSOCommands
 {
-	public class SSOSlashCommands
+	public class ConfigureSSOSlashCommands
 	{
 		[RegisterDynamicSlashCommand]
         public SlashCommandBuilder RegisterSSOSlashCommands()
