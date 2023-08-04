@@ -16,6 +16,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
         }
 
         [SlashCommand("set-sso", "Configure an SSO server.")]
+        [EnabledInDm(false)]
         public async Task ConfigureSSO([Summary("sso-provider")]string integration)
         {
             // Handle "none" disable SSO option

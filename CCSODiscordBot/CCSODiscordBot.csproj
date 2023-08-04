@@ -42,6 +42,9 @@
     <None Remove="Modules\SSOCommands\" />
     <None Remove="Services\DynamicSlashCommands\Attributes\" />
     <None Remove="Services\DynamicInteractions\" />
+    <None Remove="Services\SSO\Handlers\" />
+    <None Remove="Modules\SSOCommands\Configuration\" />
+    <None Remove="Modules\SSOCommands\UserCommands\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.11.0" />
@@ -81,6 +84,9 @@
     <Folder Include="Modules\SSOCommands\" />
     <Folder Include="Services\DynamicInteractions\Attributes\" />
     <Folder Include="Services\DynamicInteractions\" />
+    <Folder Include="Services\SSO\Handlers\" />
+    <Folder Include="Modules\SSOCommands\Configuration\" />
+    <Folder Include="Modules\SSOCommands\UserCommands\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">
