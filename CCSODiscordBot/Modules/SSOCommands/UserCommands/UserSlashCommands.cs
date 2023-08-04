@@ -28,7 +28,7 @@ namespace CCSODiscordBot.Modules.SSOCommands.UserCommands
                 ButtonBuilder getStartedButton = new ButtonBuilder();
                 getStartedButton.WithLabel("Get Started");
                 getStartedButton.Style = ButtonStyle.Success;
-                getStartedButton.WithCustomId("get-started-" + user.Id);
+                getStartedButton.WithCustomId("get-started-" + Context.User.Id);
                 ComponentBuilder component = new ComponentBuilder();
                 component.WithButton(getStartedButton);
 
