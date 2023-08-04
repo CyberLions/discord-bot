@@ -37,7 +37,7 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         /// <summary>
         /// The configuration type
         /// </summary>
-        public ISSOConfig Configuration
+        public SSOConfig Configuration
         {
             get;
         } = new ZitadelConfig();

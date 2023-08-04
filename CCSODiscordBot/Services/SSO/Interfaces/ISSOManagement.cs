@@ -8,7 +8,7 @@ namespace CCSODiscordBot.Services.SSO.Interfaces
 		/// <summary>
 		/// The configuration class
 		/// </summary>
-		ISSOConfig Configuration
+		public SSOConfig Configuration
 		{
 			get;
 		}

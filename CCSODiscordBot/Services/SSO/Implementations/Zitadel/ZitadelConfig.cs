@@ -3,47 +3,17 @@ using CCSODiscordBot.Services.SSO.Interfaces;
 
 namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 {
-    public class ZitadelConfig : ISSOConfig
+    public class ZitadelConfig : SSOConfig
     {
-        private List<KeyValuePair<string, string>> _configs = new List<KeyValuePair<string, string>>();
-
-        public string Name
+        public ZitadelConfig()
         {
-            get;
-        } = "Zitadel";
-
-        public List<string> Settings
-        {
-            get
-            {
-                List<string> settings = new List<string>
+            Settings = new List<string>
                 {
                     "ApiUrl",
                     "Pat",
                     "ZitadelDiscordIDPId"
                 };
-
-                return settings;
-            }
-        }
-
-        public string GetSetting(string setting)
-        {
-            var matches = _configs.Where(kvp => kvp.Key.Equals(setting));
-            if (matches.Count() < 1)
-            {
-                throw new NullReferenceException("Setting not found");
-            }
-            return matches.First().Value;
-        }
-
-        public void SetSetting(KeyValuePair<string, string> setting)
-        {
-            if (!Settings.Contains(setting.Key))
-            {
-                throw new NullReferenceException("Setting does not exist.");
-            }
-            _configs.Add(setting);
+            Name = "Zitadel";
         }
     }
 }

@@ -56,7 +56,7 @@ namespace CCSODiscordBot.Services.Database.DataTables
         public string? VPNAPIURL { get; set; }
 
         [BsonElement("ssoConfig")]
-        public ISSOConfig? SSOConfigSettings { get; set; }
+        public SSOConfig? SSOConfigSettings { get; set; }
     }
 }
 

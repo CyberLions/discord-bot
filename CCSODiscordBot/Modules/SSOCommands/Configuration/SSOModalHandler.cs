@@ -31,11 +31,21 @@ namespace CCSODiscordBot.Modules.SSOCommands
             var guild = await _iGuildRepository.GetByDiscordIdAsync((ulong)modal.GuildId);
 
             var type = typeof(ISSOManagement);
-            var ssoImplementation = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract)
-                .Where(p => p.Name.Equals(implementationName))
-                .First();
+
+            Type? ssoImplementation;
+            try
+            {
+                ssoImplementation = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(s => s.GetTypes())
+                    .Where(p => p.Name.Equals(implementationName) && type.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract)
+                    .First();
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return;
+            }
+
+            Console.WriteLine("Debug");
 
             try
             {
