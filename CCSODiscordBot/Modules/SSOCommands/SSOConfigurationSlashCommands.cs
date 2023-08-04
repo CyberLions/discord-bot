@@ -27,7 +27,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
                 await _iGuildRepository.UpdateGuildAsync(guildDb);
 
                 // Inform the user
-                await Context.Interaction.RespondAsync("SSO disabled.");
+                await Context.Interaction.RespondAsync("SSO disabled.", ephemeral: true);
                 return;
             }
 
@@ -52,12 +52,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
 
             await Context.Interaction.RespondWithModalAsync(mb.Build());
         }
-        [DynamicModalInteraction("sso_config_*")]
-        public async Task ConfigureSSOModal(SocketModalData modal)
-        {
-            Console.WriteLine("Implementation: ");
-            modal.Components.
-        }
+
     }
 }
 

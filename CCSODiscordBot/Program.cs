@@ -1,10 +1,8 @@
 ﻿// Program Entry Point.
 using CCSODiscordBot;
 using CCSODiscordBot.Modules.Greeter;
-using CCSODiscordBot.Modules.SSOCommands;
 using CCSODiscordBot.Modules.UserManagement;
 using CCSODiscordBot.Services;
-using CCSODiscordBot.Services.Attributes.DynamicSlashCommands;
 using CCSODiscordBot.Services.Database.Repository;
 using CCSODiscordBot.Services.DynamicSlashCommands;
 using CCSODiscordBot.Services.Email;
@@ -27,6 +25,10 @@ using (var services = ConfigureServices())
     client.ShardReady += Logging.ReadyAsync;
     client.ShardReady += RegisterDynamicSlashCommands.RegisterCommandsToGuild;
     client.Log += Logging.Log;
+
+    // Register Modals
+    var dynamicModalHandler = services.GetRequiredService<HandleDynamicModals>();
+    client.ModalSubmitted += dynamicModalHandler.ModalExecuted;
 
     // Add join and leave notifications
     var greeting = services.GetRequiredService<Greeting>();
@@ -69,4 +71,5 @@ ServiceProvider ConfigureServices()
         .AddSingleton<EmailSender>()
         .AddSingleton<Greeting>()
         .AddSingleton<Leaving>()
+        .AddSingleton<HandleDynamicModals>()
         .BuildServiceProvider();
