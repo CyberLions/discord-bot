@@ -40,7 +40,12 @@ namespace CCSODiscordBot.Modules.SSOCommands
                 .Where(p => p.Name == integration)
                 .First();
 
-            ISSOManagement classInstance = (ISSOManagement) Activator.CreateInstance(ssoImplementations);
+            ISSOManagement? classInstance = (ISSOManagement?) Activator.CreateInstance(ssoImplementations);
+
+            if(classInstance == null)
+            {
+                throw new NullReferenceException("ISSOManagement is null");
+            }
 
             var mb = new ModalBuilder();
             mb.WithTitle(integration + " Configuration");

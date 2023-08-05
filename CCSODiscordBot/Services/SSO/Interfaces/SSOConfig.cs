@@ -7,6 +7,7 @@ namespace CCSODiscordBot.Services.SSO.Interfaces
     {
         public SSOConfig()
         {
+            Name = "None"; // Add default name
             Settings = new List<string>();
             Configuration = new List<KeyValuePair<string, string>>();
         }
