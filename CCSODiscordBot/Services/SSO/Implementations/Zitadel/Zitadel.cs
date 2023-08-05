@@ -12,8 +12,8 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         /// <summary>
         /// Auth service client
         /// </summary>
-        private ManagementServiceClient _Client;
-        private GRPCClient GRPCClient;
+        private readonly ManagementServiceClient _Client;
+        private readonly GRPCClient GRPCClient;
         /// <summary>
         /// Initialize Zitadel API with PAT
         /// </summary>
