@@ -7,7 +7,7 @@ using static Zitadel.Management.V1.ManagementService;
 
 namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 {
-	public class Zitadel : ISSOManagement
+    public class Zitadel : ISSOManagement
 	{
         /// <summary>
         /// Auth service client
@@ -19,7 +19,7 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         /// </summary>
         /// <param name="apiUrl"></param>
         /// <param name="pat"></param>
-		public Zitadel(ZitadelConfig conf)
+		public Zitadel(SSOConfig conf)
 		{
             _Client = Clients.ManagementService(new(conf.GetSetting("ApiUrl"), ITokenProvider.Static(conf.GetSetting("Pat"))));
 
@@ -99,7 +99,10 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 
         public void UpdateUserRecord(User user)
         {
-            throw new NotImplementedException();
+            // Resync IDP:
+            string uid = GetUserID(user);
+
+            GRPCClient.LinkUserIDP(uid, user);
         }
 
         public bool UserExists(User user)
@@ -141,6 +144,11 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             }
 
             return zitadelUser.User.Id;
+        }
+
+        public void RemoveUserGroup(User user, string group, string project)
+        {
+            throw new NotImplementedException();
         }
     }
 }

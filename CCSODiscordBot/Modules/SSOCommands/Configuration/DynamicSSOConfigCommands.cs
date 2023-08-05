@@ -17,7 +17,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
 
             // Register each SSO implementation as a slash command
             var cmd = new SlashCommandBuilder();
-            cmd.WithName("set-sso");
+            cmd.WithName("sso-config");
             cmd.WithDescription("Configure an SSO server.");
             cmd.WithDMPermission(false);
             cmd.WithDefaultPermission(true);
@@ -30,12 +30,12 @@ namespace CCSODiscordBot.Modules.SSOCommands
                 .WithType(ApplicationCommandOptionType.String);
 
             // Add each implementation
-            foreach(var ssoImplementation in ssoImplementations)
+            ssoOption.AddChoice("Disable", "None");
+            foreach (var ssoImplementation in ssoImplementations)
             {
                 // Gets the name of the class and adds an option:
                 ssoOption.AddChoice(ssoImplementation.Name, ssoImplementation.Name);
             }
-            ssoOption.AddChoice("None", "None");
             cmd.AddOption(ssoOption);
 
             // Return the slash command to be registered.

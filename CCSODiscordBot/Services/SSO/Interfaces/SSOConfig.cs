@@ -5,6 +5,12 @@ namespace CCSODiscordBot.Services.SSO.Interfaces
 {
     public class SSOConfig
     {
+        public SSOConfig()
+        {
+            Settings = new List<string>();
+            Configuration = new List<KeyValuePair<string, string>>();
+        }
+
         /// <summary>
         /// The name of the SSO application
         /// </summary>

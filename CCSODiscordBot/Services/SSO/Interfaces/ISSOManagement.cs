@@ -37,6 +37,13 @@ namespace CCSODiscordBot.Services.SSO.Interfaces
 		/// <param name="user">User info</param>
 		/// <param name="group">Targeted Group</param>
 		public void AddUserGroup(User user, string group, string project);
-	}
+		/// <summary>
+		/// Removes a group from a user
+		/// </summary>
+		/// <param name="user"></param>
+		/// <param name="group"></param>
+		/// <param name="project"></param>
+        public void RemoveUserGroup(User user, string group, string project);
+    }
 }
 

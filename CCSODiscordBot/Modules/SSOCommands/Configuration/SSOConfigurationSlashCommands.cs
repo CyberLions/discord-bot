@@ -15,7 +15,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
             _iGuildRepository = iGuildRepository;
         }
 
-        [SlashCommand("set-sso", "Configure an SSO server.")]
+        [SlashCommand("sso-config", "Configure an SSO server.")]
         [EnabledInDm(false)]
         public async Task ConfigureSSO([Summary("sso-provider")]string integration)
         {

@@ -1,4 +1,5 @@
 ﻿using CCSODiscordBot.Services.Database.Repository;
+using CCSODiscordBot.Services.SSO.Implementations.Zitadel;
 using CCSODiscordBot.Services.SSO.Interfaces;
 using Discord;
 using Discord.Interactions;
@@ -54,7 +55,7 @@ namespace CCSODiscordBot.Modules.SSOCommands.UserCommands
             ISSOManagement? ssoHandler = null;
             try
             {
-                ssoHandler = (ISSOManagement?)Activator.CreateInstance(ssoImplementation, new object[] { guild.SSOConfigSettings });
+                ssoHandler = (ISSOManagement?)Activator.CreateInstance(ssoImplementation, new SSOConfig[] { guild.SSOConfigSettings });
             }
             catch(Exception e)
             {

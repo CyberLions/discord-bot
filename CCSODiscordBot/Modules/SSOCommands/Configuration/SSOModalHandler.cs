@@ -22,7 +22,7 @@ namespace CCSODiscordBot.Modules.SSOCommands
             await modal.DeferAsync(true);
 
             List<SocketMessageComponentData> components = modal.Data.Components.ToList();
-            string implementationName = Regex.Match(modal.Data.CustomId, "sso_config_*").Value;
+            string implementationName = Regex.Match(modal.Data.CustomId, "(?<=sso_config_)[\\s\\S]*").Value;
 
             if (modal.GuildId == null)
             {
@@ -45,8 +45,6 @@ namespace CCSODiscordBot.Modules.SSOCommands
                 return;
             }
 
-            Console.WriteLine("Debug");
-
             try
             {
                 ISSOManagement? classInstance = (ISSOManagement?)Activator.CreateInstance(ssoImplementation);
@@ -66,13 +64,13 @@ namespace CCSODiscordBot.Modules.SSOCommands
             catch(Exception e)
             {
                 Console.WriteLine("Failed to create instance of class. " + e.Message);
-                await modal.FollowupAsync("Failed to save settings.");
+                await modal.FollowupAsync("Failed to save settings.", ephemeral: true);
                 return;
             }
 
             // Update DB
             await _iGuildRepository.UpdateGuildAsync(guild);
-            await modal.FollowupAsync("Settings saved!");
+            await modal.FollowupAsync("Settings saved!", ephemeral: true);
         }
     }
 }
