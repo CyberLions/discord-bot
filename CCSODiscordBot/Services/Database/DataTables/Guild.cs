@@ -1,5 +1,6 @@
 ﻿using System;
 using CCSODiscordBot.Services.Database.DataTables.SubClasses;
+using CCSODiscordBot.Services.SSO.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -53,6 +54,9 @@ namespace CCSODiscordBot.Services.Database.DataTables
 
         [BsonElement("vpnApiURL")]
         public string? VPNAPIURL { get; set; }
+
+        [BsonElement("ssoConfig")]
+        public SSOConfig? SSOConfigSettings { get; set; }
     }
 }
 

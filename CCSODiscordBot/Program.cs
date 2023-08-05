@@ -4,6 +4,7 @@ using CCSODiscordBot.Modules.Greeter;
 using CCSODiscordBot.Modules.UserManagement;
 using CCSODiscordBot.Services;
 using CCSODiscordBot.Services.Database.Repository;
+using CCSODiscordBot.Services.DynamicSlashCommands;
 using CCSODiscordBot.Services.Email;
 using Discord;
 using Discord.Commands;
@@ -22,7 +23,12 @@ using (var services = ConfigureServices())
     // The ShardReady event is used instead, allowing for individual
     // control per shard.
     client.ShardReady += Logging.ReadyAsync;
+    client.ShardReady += RegisterDynamicSlashCommands.RegisterCommandsToGuild;
     client.Log += Logging.Log;
+
+    // Register Modals
+    var dynamicModalHandler = services.GetRequiredService<HandleDynamicModals>();
+    client.ModalSubmitted += dynamicModalHandler.ModalExecuted;
 
     // Add join and leave notifications
     var greeting = services.GetRequiredService<Greeting>();
@@ -39,7 +45,7 @@ using (var services = ConfigureServices())
     // Tokens should be considered secret data, and never hard-coded.
     await client.LoginAsync(TokenType.Bot, config.DiscordToken);
     await client.StartAsync();
-    
+
     // Dont close the program. Background threads are running.
     await Task.Delay(Timeout.Infinite);
 }
@@ -65,4 +71,5 @@ ServiceProvider ConfigureServices()
         .AddSingleton<EmailSender>()
         .AddSingleton<Greeting>()
         .AddSingleton<Leaving>()
+        .AddSingleton<HandleDynamicModals>()
         .BuildServiceProvider();
