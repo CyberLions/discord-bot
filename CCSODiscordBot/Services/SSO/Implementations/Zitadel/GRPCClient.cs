@@ -9,9 +9,9 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 {
 	public class GRPCClient
 	{
-		private string Token;
-		private UserService.UserServiceClient _Client;
-		private string ZitadelDiscordIDPId;
+		private readonly string Token;
+		private readonly UserService.UserServiceClient _Client;
+		private readonly string ZitadelDiscordIDPId;
 
         public GRPCClient(string apiUrl, string token, string zitadelDiscordIDPId)
 		{
