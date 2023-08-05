@@ -10,43 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Discord.Net" />
-    <None Remove="Modules\" />
-    <None Remove="Modules\Memes\" />
-    <None Remove="Modules\Roles\" />
-    <None Remove="Modules\CTFd\" />
-    <None Remove="Microsoft.Extensions.DependencyInjection" />
-    <None Remove="Services\" />
-    <None Remove="Modules\Rules\" />
-    <None Remove="Modules\Memes\Media\" />
-    <None Remove="Modules\Embeds\Modals\" />
-    <None Remove="MongoDB.Driver" />
-    <None Remove="Services\Database\" />
-    <None Remove="Services\Database\DataTables\" />
-    <None Remove="Services\Database\Repository\" />
-    <None Remove="Services\Database\Repository\Interface\" />
-    <None Remove="Modules\UserManagement\NewUserInteractions\" />
-    <None Remove="Modules\UserManagement\NewUserInteractions\Modals\" />
-    <None Remove="Services\Database\DataTables\SubClasses\" />
-    <None Remove="Services\Email\" />
-    <None Remove="Modules\UserManagement\AccountVerification\" />
-    <None Remove="Modules\ServerConfig\" />
-    <None Remove="Modules\UserManagement\RoleSelect\" />
-    <None Remove="Services\VPNAPI\" />
-    <None Remove="Modules\VPNRequest\" />
-    <None Remove="Services\SSO\" />
-    <None Remove="Services\SSO\Interfaces\" />
-    <None Remove="Services\SSO\Implementations\" />
-    <None Remove="Services\SSO\Implementations\Zitadel\" />
-    <None Remove="Services\SSO\Interfaces\Exceptions\" />
-    <None Remove="Modules\SSOCommands\" />
-    <None Remove="Services\DynamicSlashCommands\Attributes\" />
-    <None Remove="Services\DynamicInteractions\" />
-    <None Remove="Services\SSO\Handlers\" />
-    <None Remove="Modules\SSOCommands\Configuration\" />
-    <None Remove="Modules\SSOCommands\UserCommands\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.11.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
