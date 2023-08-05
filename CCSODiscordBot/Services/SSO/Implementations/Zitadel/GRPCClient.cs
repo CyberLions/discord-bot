@@ -36,7 +36,7 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             new Metadata {{ "Authorization", $"Bearer {Token}" }}
 			);
 
-			Console.WriteLine("Zitadel IDP link created:\n" + response.ToString());
+			Console.WriteLine("Zitadel IDP link created:\n" + response);
         }
 		
 	}
