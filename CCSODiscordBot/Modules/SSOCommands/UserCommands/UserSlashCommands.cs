@@ -15,7 +15,7 @@ namespace CCSODiscordBot.Modules.SSOCommands.UserCommands
             _iGuildRepository = iGuildRepository;
             _iUserRepository = iUserRepository;
         }
-        [SlashCommand("sso-sync", "Configure an SSO server.")]
+        [SlashCommand("sso-sync", "Sync your account to the SSO server.")]
         [EnabledInDm(false)]
         [DefaultMemberPermissions(GuildPermission.SendMessages)]
         public async Task SyncSSO()
