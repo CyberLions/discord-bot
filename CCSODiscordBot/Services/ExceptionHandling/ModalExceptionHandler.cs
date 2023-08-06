@@ -1,13 +1,11 @@
 ﻿using System;
-using Discord;
 using Discord.Interactions;
-using Zitadel.Api;
 
 namespace CCSODiscordBot.Services.ExceptionHandling
 {
-	public class SlashCommandExceptionHandler
+	public class ModalExceptionHandler
 	{
-        public static Task SlashCommandExecuted(SlashCommandInfo arg1, Discord.IInteractionContext arg2, Discord.Interactions.IResult arg3)
+        public static Task ModalExecuted(ModalCommandInfo arg1, Discord.IInteractionContext arg2, Discord.Interactions.IResult arg3)
         {
             // Return if successful:
             if (arg3.IsSuccess)
@@ -20,8 +18,8 @@ namespace CCSODiscordBot.Services.ExceptionHandling
             {
                 arg2.Interaction.DeferAsync(true).GetAwaiter().GetResult();
             }
-            catch(System.InvalidOperationException e)
-            when(e.Source!=null && e.Source.Equals("Discord.Net.WebSocket"))
+            catch (System.InvalidOperationException e)
+            when (e.Source != null && e.Source.Equals("Discord.Net.WebSocket"))
             {
                 // Ignore. Already defered.
             }
