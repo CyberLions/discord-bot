@@ -79,10 +79,10 @@ namespace CCSODiscordBot.Modules.SSOCommands.UserCommands
                 {
                     ssoHandler.UpdateUserRecord(user);
                 }
-                catch(Exception e)
+                catch (Grpc.Core.RpcException e)
+                when (e.StatusCode.Equals(Grpc.Core.StatusCode.AlreadyExists))
                 {
-                    Console.WriteLine("Failed to update SSO user. " + e.Message);
-                    await Context.Interaction.FollowupAsync("Failed to update existing SSO user.");
+                    await Context.Interaction.FollowupAsync("User is up to date. Contact a mod if this appears to be incorrect.");
                     return;
                 }
 
