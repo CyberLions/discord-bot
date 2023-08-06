@@ -1,12 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
-using CCSODiscordBot.Modules.Embeds.Modals;
-using CCSODiscordBot.Services.Database.DataTables;
 using CCSODiscordBot.Services.Database.Repository;
 using CCSODiscordBot.Services.Email;
-using Discord;
 using Discord.Interactions;
 
 namespace CCSODiscordBot.Modules.UserManagement.Modals

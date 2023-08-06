@@ -19,7 +19,7 @@ namespace CCSODiscordBot.Modules.UserManagement.AccountVerification
         [SlashCommand("verify-remove-user", "Remove the verification status from a user.")]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
         [EnabledInDm(false)]
-        public async Task VerifyRemoveUser([Summary("User", "The user to remove verification status from.")] SocketGuildUser user, [Summary("Confirm", "True to confirm you would like to proceed with this action.")] bool confirm)
+        public async Task VerifyRemoveUser([Summary("User", "The user to remove verification status from.")] SocketGuildUser user, [Summary("Confirm", "True to confirm you would like to proceed with this action.")] bool confirm = false)
         {
             await Context.Interaction.DeferAsync(true);
 
@@ -43,7 +43,7 @@ namespace CCSODiscordBot.Modules.UserManagement.AccountVerification
         [SlashCommand("verify-remove-group", "Remove the verification status from all users in a group.")]
         [DefaultMemberPermissions(GuildPermission.Administrator)]
         [EnabledInDm(false)]
-        public async Task VerifyRemoveGroup([Summary("Group", "The group to remove verification status' from.")] SocketRole group, [Summary("Confirm", "True to confirm you would like to proceed with this action.")] bool confirm)
+        public async Task VerifyRemoveGroup([Summary("Group", "The group to remove verification status' from.")] SocketRole group, [Summary("Confirm", "True to confirm you would like to proceed with this action.")] bool confirm = false)
         {
             await Context.Interaction.DeferAsync(true);
 
