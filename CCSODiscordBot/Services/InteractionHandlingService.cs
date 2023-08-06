@@ -47,7 +47,7 @@ namespace CCSODiscordBot.Services
 #else
             // Register globally. This is cached by Discord and changes may take a bit.
             Console.WriteLine("Commands set globally.");
-            await _service.RegisterCommandsGloballyAsync();
+            await _service.RegisterCommandsGloballyAsync(false);
 #endif
         }
 
