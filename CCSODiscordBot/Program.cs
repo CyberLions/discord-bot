@@ -6,6 +6,7 @@ using CCSODiscordBot.Services;
 using CCSODiscordBot.Services.Database.Repository;
 using CCSODiscordBot.Services.DynamicSlashCommands;
 using CCSODiscordBot.Services.Email;
+using CCSODiscordBot.Services.ExceptionHandling;
 using Discord;
 using Discord.Commands;
 using Discord.Interactions;
@@ -35,6 +36,10 @@ using (var services = ConfigureServices())
     var leaving = services.GetRequiredService<Leaving>();
     client.UserJoined += greeting.UserJoin;
     client.UserLeft += leaving.UserLeft;
+
+    // Command exception handling
+    var interactionService = services.GetRequiredService<InteractionService>();
+    interactionService.SlashCommandExecuted += InteractionExceptionHandler.SlashCommandExecuted;
 
     await services.GetRequiredService<InteractionHandlingService>()
         .InitializeAsync();
@@ -72,4 +77,5 @@ ServiceProvider ConfigureServices()
         .AddSingleton<Greeting>()
         .AddSingleton<Leaving>()
         .AddSingleton<HandleDynamicModals>()
+        .AddSingleton<InteractionExceptionHandler>()
         .BuildServiceProvider();

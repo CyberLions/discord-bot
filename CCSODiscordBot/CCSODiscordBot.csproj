@@ -50,6 +50,10 @@
     <Folder Include="Services\SSO\Handlers\" />
     <Folder Include="Modules\SSOCommands\Configuration\" />
     <Folder Include="Modules\SSOCommands\UserCommands\" />
+    <Folder Include="Services\ExceptionHandling\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Services\ExceptionHandling\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Modules\Memes\Media\simpy.png">
