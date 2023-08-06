@@ -5,7 +5,7 @@ using Zitadel.Api;
 
 namespace CCSODiscordBot.Services.ExceptionHandling
 {
-	public class InteractionExceptionHandler
+	public class SlashCommandExceptionHandler
 	{
         public static Task SlashCommandExecuted(SlashCommandInfo arg1, Discord.IInteractionContext arg2, Discord.Interactions.IResult arg3)
         {

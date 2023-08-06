@@ -39,7 +39,7 @@ using (var services = ConfigureServices())
 
     // Command exception handling
     var interactionService = services.GetRequiredService<InteractionService>();
-    interactionService.SlashCommandExecuted += InteractionExceptionHandler.SlashCommandExecuted;
+    interactionService.SlashCommandExecuted += SlashCommandExceptionHandler.SlashCommandExecuted;
 
     await services.GetRequiredService<InteractionHandlingService>()
         .InitializeAsync();
@@ -77,5 +77,5 @@ ServiceProvider ConfigureServices()
         .AddSingleton<Greeting>()
         .AddSingleton<Leaving>()
         .AddSingleton<HandleDynamicModals>()
-        .AddSingleton<InteractionExceptionHandler>()
+        .AddSingleton<SlashCommandExceptionHandler>()
         .BuildServiceProvider();
