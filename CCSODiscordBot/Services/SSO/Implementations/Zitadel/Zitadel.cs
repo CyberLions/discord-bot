@@ -1,6 +1,7 @@
 ﻿using System.Net.Mail;
 using CCSODiscordBot.Services.Database.DataTables;
 using CCSODiscordBot.Services.SSO.Interfaces;
+using Google.Api;
 using Zitadel.Api;
 using Zitadel.Management.V1;
 using static Zitadel.Management.V1.ManagementService;
@@ -100,16 +101,30 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             });
         }
 
-        public void UpdateUserRecord(User user)
+        public string UpdateUserRecord(User user)
         {
             // Resync IDP:
             string uid = GetUserID(user);
+            try
+            {
+                GRPCClient.LinkUserIDP(uid, user);
+            }
+            catch (Grpc.Core.RpcException e)
+            when (e.StatusCode.Equals(Grpc.Core.StatusCode.AlreadyExists))
+            {
+                // Ignore. User already up to date.
+            }
 
-            GRPCClient.LinkUserIDP(uid, user);
+            return uid;
         }
 
         public bool UserExists(User user)
         {
+            if (UUIDExists(user))
+            {
+                return true;
+            }
+
             if (user.Email == null)
             {
                 throw new NullReferenceException("User does not have an email");
@@ -129,11 +144,21 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
                 UserName = addr.User
             });
 
-            return !checkUsername.IsUnique && !checkEmail.IsUnique;
+            return !checkUsername.IsUnique || !checkEmail.IsUnique;
+        }
+
+        public void RemoveUserGroup(User user, string group, string project)
+        {
+            throw new NotImplementedException();
         }
 
         private string GetUserID(User user)
         {
+            if (UUIDExists(user))
+            {
+                return user.SSOID;
+            }
+
             if (user.Email == null)
             {
                 throw new NullReferenceException("User does not have an email");
@@ -154,9 +179,24 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             return zitadelUser.User.Id;
         }
 
-        public void RemoveUserGroup(User user, string group, string project)
+        private bool UUIDExists(User user)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrWhiteSpace(user.SSOID))
+            {
+                try
+                {
+                    _Client.GetUserByID(new GetUserByIDRequest
+                    {
+                        Id = user.SSOID
+                    });
+                    return true;
+                }
+                catch (Grpc.Core.RpcException e) when (e.StatusCode.Equals(Grpc.Core.StatusCode.NotFound))
+                {
+                    Console.WriteLine("Failed to get user with stored UID");
+                }
+            }
+            return false;
         }
     }
 }

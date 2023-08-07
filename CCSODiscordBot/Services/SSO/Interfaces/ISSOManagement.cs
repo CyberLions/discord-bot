@@ -31,7 +31,8 @@ namespace CCSODiscordBot.Services.SSO.Interfaces
 		/// <summary>
 		/// Update a users record on the SSO platform
 		/// </summary>
-		public void UpdateUserRecord(User user);
+		/// <returns>The users UID</returns>
+		public string UpdateUserRecord(User user);
 		/// <summary>
 		/// Add user to a group
 		/// </summary>

@@ -75,15 +75,12 @@ namespace CCSODiscordBot.Modules.SSOCommands.UserCommands
             // See if SSO user exists:
             if (ssoHandler.UserExists(user))
             {
-                try
+                string updatedUID = ssoHandler.UpdateUserRecord(user);
+                // Update the DB if the UID doesnt exist:
+                if (!updatedUID.Equals(user.SSOID))
                 {
-                    ssoHandler.UpdateUserRecord(user);
-                }
-                catch (Grpc.Core.RpcException e)
-                when (e.StatusCode.Equals(Grpc.Core.StatusCode.AlreadyExists))
-                {
-                    await Context.Interaction.FollowupAsync("User is up to date. Contact a mod if this appears to be incorrect.");
-                    return;
+                    user.SSOID = updatedUID;
+                    await _iUserRepository.UpdateUserAsync(user);
                 }
 
                 await Context.Interaction.FollowupAsync("Found existing user. User synced.");
@@ -93,7 +90,9 @@ namespace CCSODiscordBot.Modules.SSOCommands.UserCommands
             // Create SSO user:
             try
             {
-                ssoHandler.AddUser(user);
+                user.SSOID = ssoHandler.AddUser(user);
+                // Update DB with SSO UID:
+                await _iUserRepository.UpdateUserAsync(user);
             }
             catch(Exception e)
             {
