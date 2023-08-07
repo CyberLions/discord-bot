@@ -15,8 +15,9 @@ namespace CCSODiscordBot.Services.SSO.Interfaces
         /// <summary>
         /// Adds a user to the SSO platform
         /// </summary>
+		/// <returns>The users ID</returns>
         /// <exception cref="ExistingUserException">Thrown when a user already exists</exception>
-        public void AddUser(User user);
+        public string AddUser(User user);
 		/// <summary>
 		/// Removes a user from the SSO platform
 		/// </summary>
@@ -30,7 +31,8 @@ namespace CCSODiscordBot.Services.SSO.Interfaces
 		/// <summary>
 		/// Update a users record on the SSO platform
 		/// </summary>
-		public void UpdateUserRecord(User user);
+		/// <returns>The users UID</returns>
+		public string UpdateUserRecord(User user);
 		/// <summary>
 		/// Add user to a group
 		/// </summary>
