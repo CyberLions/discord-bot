@@ -114,14 +114,19 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 
             MailAddress addr = new MailAddress(user.Email);
 
-            // check for existing username:
-            var checkUsername = _Client.IsUserUnique(new IsUserUniqueRequest
+            // check for existing email:
+            var checkEmail = _Client.IsUserUnique(new IsUserUniqueRequest
             {
-                UserName = addr.User,
                 Email = user.Email
             });
 
-            return !checkUsername.IsUnique;
+            // check for existing username:
+            var checkUsername = _Client.IsUserUnique(new IsUserUniqueRequest
+            {
+                UserName = addr.User
+            });
+
+            return !checkUsername.IsUnique && !checkEmail.IsUnique;
         }
 
         private string GetUserID(User user)
@@ -138,7 +143,7 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
                 LoginName = addr.User
             });
 
-            if(zitadelUser == null)
+            if (zitadelUser == null)
             {
                 throw new NullReferenceException("User does not exist.");
             }
