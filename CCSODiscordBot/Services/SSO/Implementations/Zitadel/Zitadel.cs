@@ -154,7 +154,7 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 
         private string GetUserID(User user)
         {
-            if (UUIDExists(user))
+            if (UUIDExists(user) && user.SSOID!=null)
             {
                 return user.SSOID;
             }
