@@ -46,9 +46,10 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         /// Add a user to Zitadel
         /// </summary>
         /// <param name="user"></param>
+        /// <returns>The users UUID</returns>
         /// <exception cref="NullReferenceException"></exception>
         /// <exception cref="ExistingUserException"></exception>
-        public void AddUser(User user)
+        public string AddUser(User user)
         {
             if(user.Email == null)
             {
@@ -82,6 +83,8 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 
             // Link the Discord user for SSO:
             GRPCClient.LinkUserIDP(result.UserId, user);
+
+            return result.UserId;
         }
 
         public void AddUserGroup(User user, string group, string project)
