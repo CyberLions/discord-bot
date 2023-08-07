@@ -120,11 +120,13 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 
         public bool UserExists(User user)
         {
+            // Check ID from SSO in DB:
             if (UUIDExists(user))
             {
                 return true;
             }
 
+            // Check by username and email:
             if (user.Email == null)
             {
                 throw new NullReferenceException("User does not have an email");
