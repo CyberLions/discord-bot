@@ -72,6 +72,14 @@ namespace CCSODiscordBot.Modules.SSOCommands.UserCommands
                 return;
             }
 
+            // Clear existing SSO ID if user was on an old SSO implementation
+            if (!guild.SSOConfigSettings.Name.Equals(user.SSOImplementation))
+            {
+                // Change SSO over to new platform:
+                user.SSOImplementation = guild.SSOConfigSettings.Name;
+                user.SSOID = null;
+            }
+
             // See if SSO user exists:
             if (ssoHandler.UserExists(user))
             {

@@ -18,6 +18,7 @@ namespace CCSODiscordBot.Services.Database.DataTables
             VerificationNumber = null;
             VpnRequestSent = false;
             SSOID = null;
+            SSOImplementation = "None";
         }
 
         [BsonId]
@@ -50,6 +51,9 @@ namespace CCSODiscordBot.Services.Database.DataTables
 
         [BsonElement("ssoid")]
         public string? SSOID { get; set; }
+
+        [BsonElement("ssoimplementation")]
+        public string? SSOImplementation { get; set; }
     }
 }
 
