@@ -40,7 +40,7 @@ using (var services = ConfigureServices())
     // Command exception handling
     var interactionService = services.GetRequiredService<InteractionService>();
     interactionService.SlashCommandExecuted += SlashCommandExceptionHandler.SlashCommandExecuted;
-    interactionService.ComponentCommandExecuted += ComponentCommandExceptionHandler.ComponentCommandExecuted;
+    //interactionService.ComponentCommandExecuted += ComponentCommandExceptionHandler.ComponentCommandExecuted;
     interactionService.ModalCommandExecuted += ModalExceptionHandler.ModalExecuted;
 
     await services.GetRequiredService<InteractionHandlingService>()
