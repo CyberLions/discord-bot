@@ -25,11 +25,11 @@ namespace CCSODiscordBot.Services.Database.Repository
         {
             return await _userCollection.Find(_ => true).ToListAsync();
         }
-        public async Task<DataTables.User> GetByBsonIdAsync(string id)
+        public async Task<DataTables.User?> GetByBsonIdAsync(string id)
         {
             return await _userCollection.Find(_ => _.Id == id).FirstOrDefaultAsync();
         }
-        public async Task<DataTables.User> GetByDiscordIdAsync(ulong userID, ulong guildID)
+        public async Task<DataTables.User?> GetByDiscordIdAsync(ulong userID, ulong guildID)
         {
             return await _userCollection.Find(_ => _.DiscordID == userID && _.DiscordGuildID == guildID).FirstOrDefaultAsync();
         }

@@ -24,7 +24,7 @@ namespace CCSODiscordBot.Modules.SSOCommands.UserCommands
 
             // Get and check user verification:
             var user = await _iUserRepository.GetByDiscordIdAsync(Context.User.Id, Context.Guild.Id);
-            if (!user.Verified)
+            if (user == null || !user.Verified)
             {
                 ButtonBuilder getStartedButton = new ButtonBuilder();
                 getStartedButton.WithLabel("Get Started");
