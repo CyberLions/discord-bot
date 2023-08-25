@@ -21,14 +21,14 @@ namespace CCSODiscordBot.Services.Database.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<DataTables.User> GetByBsonIdAsync(string id);
+        Task<DataTables.User?> GetByBsonIdAsync(string id);
         /// <summary>
         /// Get user by Discord ID
         /// Only shows users from specific guild.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<DataTables.User> GetByDiscordIdAsync(ulong userID, ulong guildID);
+        Task<DataTables.User?> GetByDiscordIdAsync(ulong userID, ulong guildID);
         /// <summary>
         /// Get users with a linq filter
         /// </summary>
