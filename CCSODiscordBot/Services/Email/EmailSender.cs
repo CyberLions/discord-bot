@@ -1,6 +1,8 @@
-﻿using System;
-using System.Net;
-using System.Net.Mail;
+﻿using System.Net;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
+using MimeKit.Text;
 
 namespace CCSODiscordBot.Services.Email
 {
@@ -11,27 +13,44 @@ namespace CCSODiscordBot.Services.Email
         {
             _configHandlingService = config;
         }
-
+        /// <summary>
+        /// Send a verification code via email
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="recipient"></param>
+        /// <param name="guild"></param>
+        /// <param name="username"></param>
         public void SendVerifyCode(int code, string recipient, string guild, string username)
         {
-            // Build the SMTP client:
-            using (var smtpClient = new SmtpClient(_configHandlingService.SMTPAddr)
-            {
-                Port = (int)_configHandlingService.SMTPPort,
-                Credentials = new NetworkCredential(_configHandlingService.SMTPUser, _configHandlingService.SMTPPassword),
-                EnableSsl = true
-            })
-            // Using the SMTP client, execute the following. Then dispose of the object from RAM.
-            { 
-
-                // Send email
-                smtpClient.Send(_configHandlingService.SMTPEmail, recipient, "CCSO Bot Verification Code",
-                    "Hi,\n" +
+            string emailBody = "Hi,\n" +
                     "Your verification code is " + code + " for the " + guild + " Discord server.\n" +
                     "Use the /verify slash command in Discord with the code to validate you account. You can use this command in any channel that you can send messages in.\n" +
                     "NOTE: if you are on a mobile device, be sure to tap on the /verify popup while typing the /verify command. Your message should be responded to immediately by the bot.\n" +
-                    "This code was requested by " + username
-                );
+                    "This code was requested by " + username;
+
+            var message = new MimeMessage();
+            message.From.Add(MailboxAddress.Parse(_configHandlingService.SMTPEmail));
+            message.To.Add(MailboxAddress.Parse(recipient));
+            message.Subject = "CCSO Bot Verification Code";
+            message.Body = new TextPart(TextFormat.Plain) { Text = emailBody };
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Connect(_configHandlingService.SMTPAddr);
+            smtp.Authenticate(_configHandlingService.SMTPUser, _configHandlingService.SMTPPassword);
+
+            try
+            {
+                smtp.Send(message);
+            }
+            catch
+            {
+                // Preserve stack
+                throw;
+            }
+            finally
+            {
+                // Always disconnect
+                smtp.Disconnect(true);
             }
 
             // Log this event:
