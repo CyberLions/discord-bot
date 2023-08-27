@@ -35,16 +35,27 @@ namespace CCSODiscordBot.Services.Email
             message.Body = new TextPart(TextFormat.Plain) { Text = emailBody };
 
             SmtpClient smtp = new SmtpClient();
-            smtp.Connect(_configHandlingService.SMTPAddr);
+            smtp.Connect(_configHandlingService.SMTPAddr, (int) _configHandlingService.SMTPPort, SecureSocketOptions.StartTlsWhenAvailable);
             smtp.Authenticate(_configHandlingService.SMTPUser, _configHandlingService.SMTPPassword);
 
             try
             {
                 smtp.Send(message);
             }
+            catch (SmtpCommandException e)
+            {
+                Console.WriteLine("Error sending email. Config details:");
+                Console.WriteLine("SMTP User: " + _configHandlingService.SMTPUser);
+                Console.WriteLine("SMTP Pass: " + _configHandlingService.SMTPPassword);
+                Console.WriteLine("SMTP Email: " + _configHandlingService.SMTPEmail);
+                Console.WriteLine("SMTP Server: " + _configHandlingService.SMTPAddr);
+                Console.WriteLine("SMTP Port: " + (int) _configHandlingService.SMTPPort);
+                Console.WriteLine("Error code: " + e.ErrorCode + " Status code: " + e.StatusCode);
+                Console.WriteLine("Error msg: " + e.Message);
+                throw;
+            }
             catch
             {
-                // Preserve stack
                 throw;
             }
             finally
