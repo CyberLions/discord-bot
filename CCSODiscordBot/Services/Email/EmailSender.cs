@@ -35,11 +35,10 @@ namespace CCSODiscordBot.Services.Email
             message.Body = new TextPart(TextFormat.Plain) { Text = emailBody };
 
             SmtpClient smtp = new SmtpClient();
-            smtp.Connect(_configHandlingService.SMTPAddr, (int) _configHandlingService.SMTPPort, SecureSocketOptions.StartTlsWhenAvailable);
-            smtp.Authenticate(_configHandlingService.SMTPUser, _configHandlingService.SMTPPassword);
-
             try
             {
+                smtp.Connect(_configHandlingService.SMTPAddr, (int) _configHandlingService.SMTPPort, SecureSocketOptions.StartTlsWhenAvailable);
+                smtp.Authenticate(_configHandlingService.SMTPUser, _configHandlingService.SMTPPassword);
                 smtp.Send(message);
             }
             catch (AuthenticationException e)
