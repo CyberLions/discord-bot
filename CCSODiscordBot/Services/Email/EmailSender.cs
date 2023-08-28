@@ -41,7 +41,7 @@ namespace CCSODiscordBot.Services.Email
                 smtp.Authenticate(_configHandlingService.SMTPUser, _configHandlingService.SMTPPassword);
                 smtp.Send(message);
             }
-            catch (AuthenticationException e)
+            catch (SmtpCommandException e)
             {
                 Console.WriteLine("Auth error when sending email. Config details:");
                 Console.WriteLine("SMTP User: " + _configHandlingService.SMTPUser);
