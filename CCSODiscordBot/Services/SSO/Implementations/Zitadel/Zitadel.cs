@@ -85,6 +85,16 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             // Link the Discord user for SSO:
             GRPCClient.LinkUserIDP(result.UserId, user);
 
+            // Set user metadata:
+            try
+            {
+                AddUserMetadata(user);
+            }
+            catch(Grpc.Core.RpcException e)
+            {
+                Console.WriteLine("Failed metadata link: "+e);
+            }
+
             return result.UserId;
         }
 
@@ -113,6 +123,16 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             when (e.StatusCode.Equals(Grpc.Core.StatusCode.AlreadyExists))
             {
                 // Ignore. User already up to date.
+            }
+
+            // Set user metadata:
+            try
+            {
+                AddUserMetadata(user);
+            }
+            catch (Grpc.Core.RpcException e)
+            {
+                Console.WriteLine("Failed metadata link: " + e);
             }
 
             return uid;
@@ -199,6 +219,26 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Add metadata to a users account
+        /// </summary>
+        /// <param name="user"></param>
+        private void AddUserMetadata(User user)
+        {
+            _Client.SetUserMetadata(new SetUserMetadataRequest
+            {
+                Id = user.SSOID,
+                Key = "DiscordUID",
+                Value = Google.Protobuf.ByteString.CopyFromUtf8(user.DiscordID.ToString())
+            });
+            _Client.SetUserMetadata(new SetUserMetadataRequest
+            {
+                Id = user.SSOID,
+                Key = "BotRegisteredEmail",
+                Value = Google.Protobuf.ByteString.CopyFromUtf8(user.Email)
+            });
         }
     }
 }
