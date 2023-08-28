@@ -45,7 +45,6 @@ namespace CCSODiscordBot.Services.Email
             {
                 Console.WriteLine("Auth error when sending email. Config details:");
                 Console.WriteLine("SMTP User: " + _configHandlingService.SMTPUser);
-                Console.WriteLine("SMTP Pass: " + _configHandlingService.SMTPPassword);
                 Console.WriteLine("SMTP Email: " + _configHandlingService.SMTPEmail);
                 Console.WriteLine("SMTP Server: " + _configHandlingService.SMTPAddr);
                 Console.WriteLine("SMTP Port: " + (int)_configHandlingService.SMTPPort);
