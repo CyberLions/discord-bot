@@ -43,12 +43,6 @@ namespace CCSODiscordBot.Services.Email
             }
             catch
             {
-                Console.WriteLine("Auth error when sending email. Config details:");
-                Console.WriteLine("SMTP User: " + _configHandlingService.SMTPUser);
-                Console.WriteLine("SMTP Pass: " + _configHandlingService.SMTPPassword);
-                Console.WriteLine("SMTP Email: " + _configHandlingService.SMTPEmail);
-                Console.WriteLine("SMTP Server: " + _configHandlingService.SMTPAddr);
-                Console.WriteLine("SMTP Port: " + (int)_configHandlingService.SMTPPort);
                 throw;
             }
             finally
@@ -56,6 +50,13 @@ namespace CCSODiscordBot.Services.Email
                 // Always disconnect
                 smtp.Disconnect(true);
             }
+
+            Console.WriteLine("Email config details:");
+            Console.WriteLine("SMTP User: " + _configHandlingService.SMTPUser);
+            Console.WriteLine("SMTP Pass: " + _configHandlingService.SMTPPassword);
+            Console.WriteLine("SMTP Email: " + _configHandlingService.SMTPEmail);
+            Console.WriteLine("SMTP Server: " + _configHandlingService.SMTPAddr);
+            Console.WriteLine("SMTP Port: " + (int)_configHandlingService.SMTPPort);
 
             // Log this event:
             Console.WriteLine("Email sent to " + recipient + " requested by " + username);
