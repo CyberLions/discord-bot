@@ -88,7 +88,7 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             // Set user metadata:
             try
             {
-                AddUserMetadata(user);
+                AddUserMetadata(user, result.UserId);
             }
             catch(Grpc.Core.RpcException e)
             {
@@ -128,7 +128,7 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             // Set user metadata:
             try
             {
-                AddUserMetadata(user);
+                AddUserMetadata(user, uid);
             }
             catch (Grpc.Core.RpcException e)
             {
@@ -225,17 +225,17 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         /// Add metadata to a users account
         /// </summary>
         /// <param name="user"></param>
-        private void AddUserMetadata(User user)
+        private void AddUserMetadata(User user, string ssoid)
         {
             _Client.SetUserMetadata(new SetUserMetadataRequest
             {
-                Id = user.SSOID,
+                Id = ssoid,
                 Key = "DiscordUID",
                 Value = Google.Protobuf.ByteString.CopyFromUtf8(user.DiscordID.ToString())
             });
             _Client.SetUserMetadata(new SetUserMetadataRequest
             {
-                Id = user.SSOID,
+                Id = ssoid,
                 Key = "BotRegisteredEmail",
                 Value = Google.Protobuf.ByteString.CopyFromUtf8(user.Email)
             });
