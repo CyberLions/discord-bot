@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
-    <PackageReference Include="Zitadel" Version="5.2.21" />
+    <PackageReference Include="Zitadel" Version="5.2.24" />
     <PackageReference Include="MailKit" Version="4.1.0" />
   </ItemGroup>
   <ItemGroup>
