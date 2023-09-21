@@ -11,7 +11,8 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
                 {
                     "ApiUrl",
                     "Pat",
-                    "ZitadelDiscordIDPId"
+                    "ZitadelDiscordIDPId",
+                    "ZitadelDiscordExternalSSOSync"
                 };
             Name = "Zitadel";
         }

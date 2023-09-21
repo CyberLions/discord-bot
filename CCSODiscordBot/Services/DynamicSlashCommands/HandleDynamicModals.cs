@@ -18,9 +18,9 @@ namespace CCSODiscordBot.Services.DynamicSlashCommands
 		{
             Provider = provider;
 		}
-        public async Task ModalExecuted(SocketModal modal)
+        public Task ModalExecuted(SocketModal modal)
         {
-            Console.WriteLine("Modal received");
+            Console.WriteLine("Modal received: " + modal.Data.CustomId);
             var methods = AppDomain.CurrentDomain.GetAssemblies() // Returns all currenlty loaded assemblies
                 .SelectMany(x => x.GetTypes()) // returns all types defined in this assemblies
                 .Where(x => x.IsClass) // only yields classes
@@ -45,6 +45,8 @@ namespace CCSODiscordBot.Services.DynamicSlashCommands
                     Console.WriteLine("Error creating dynamic slash command: " + e.Message);
                 }
             }
+
+            return Task.CompletedTask;
         }
     }
 }
