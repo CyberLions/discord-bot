@@ -16,6 +16,10 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
         private readonly ManagementServiceClient _Client;
         private readonly GRPCClient GRPCClient;
         /// <summary>
+        /// Enable linking of discord accounts with Zitadel
+        /// </summary>
+        private readonly bool EnableExternalSSOSync;
+        /// <summary>
         /// Initialize Zitadel API with PAT
         /// </summary>
         /// <param name="apiUrl"></param>
@@ -25,6 +29,14 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             _Client = Clients.ManagementService(new(conf.GetSetting("ApiUrl"), ITokenProvider.Static(conf.GetSetting("Pat"))));
 
             GRPCClient = new GRPCClient(conf.GetSetting("ApiUrl"), conf.GetSetting("Pat"), conf.GetSetting("ZitadelDiscordIDPId"));
+            try
+            {
+                EnableExternalSSOSync = Convert.ToBoolean(conf.GetSetting("ZitadelDiscordExternalSSOSync"));
+            }
+            catch(NullReferenceException)
+            {
+                EnableExternalSSOSync = true;
+            }
         }
 
         /// <summary>
@@ -83,7 +95,10 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             });
 
             // Link the Discord user for SSO:
-            GRPCClient.LinkUserIDP(result.UserId, user);
+            if(EnableExternalSSOSync)
+            {
+                GRPCClient.LinkUserIDP(result.UserId, user);
+            }
 
             // Set user metadata:
             try
@@ -117,7 +132,10 @@ namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
             string uid = GetUserID(user);
             try
             {
-                GRPCClient.LinkUserIDP(uid, user);
+                if(EnableExternalSSOSync)
+                {
+                    GRPCClient.LinkUserIDP(uid, user);
+                }
             }
             catch (Grpc.Core.RpcException e)
             when (e.StatusCode.Equals(Grpc.Core.StatusCode.AlreadyExists))
