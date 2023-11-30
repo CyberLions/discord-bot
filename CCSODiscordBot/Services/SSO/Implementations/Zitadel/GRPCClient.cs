@@ -1,9 +1,6 @@
-﻿using System;
-using Grpc.Net.Client;
-using CCSODiscordBot.Services.Database.DataTables;
-using Zitadel.User.V2Alpha;
+﻿using Grpc.Net.Client;
+using Zitadel.User.V2Beta;
 using Grpc.Core;
-using Zitadel.Credentials;
 
 namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
 {
