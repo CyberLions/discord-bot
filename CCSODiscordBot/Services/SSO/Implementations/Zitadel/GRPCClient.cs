@@ -1,5 +1,5 @@
 ﻿using Grpc.Net.Client;
-using Zitadel.User.V2Beta;
+using Zitadel.User.V2beta;
 using Grpc.Core;
 
 namespace CCSODiscordBot.Services.SSO.Implementations.Zitadel
